@@ -14,8 +14,12 @@ export const ButtonThemeToggle: FC<ButtonThemeToggleProps> = ({
   themeMode,
 }) => {
   return (
-    <IconButton sx={{ ml: 1 }} onClick={onClick} color="inherit">
-      {themeMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+    <IconButton size="small" sx={{ ml: 1 }} onClick={onClick} color="inherit">
+      {themeMode === 'dark' ? (
+        <Brightness7Icon fontSize="small" />
+      ) : (
+        <Brightness4Icon fontSize="small" />
+      )}
     </IconButton>
   );
 };

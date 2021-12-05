@@ -1,38 +1,44 @@
 import { Button, ButtonGroup } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Crop54Icon from '@mui/icons-material/Crop54';
-import IconButton from '@mui/material/IconButton';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
+
+import { createSymbols } from 'state/symbol/symbol-actions';
 
 const createButtons = [
   {
     label: 'create Text symbol',
     icon: TextFieldsIcon,
     onClick: () => {
-      console.log('clicked Text');
+      createSymbols([{ type: 'TEXT', id: 'text-one' }]);
     },
   },
   {
     label: 'create Image symbol',
     icon: AddPhotoAlternateIcon,
     onClick: () => {
-      console.log('clicked Image');
+      createSymbols([{ type: 'IMAGE', id: 'image-one' }]);
     },
   },
   {
     label: 'create Box symbol',
     icon: Crop54Icon,
     onClick: () => {
-      console.log('clicked Box');
+      createSymbols([{ type: 'RECT', id: 'rect-one' }]);
     },
   },
 ];
 
-export const ButtonGroupSymbolCreate = () => {
+export const ButtonsSymbolCreate = () => {
   return (
     <ButtonGroup variant="outlined" aria-label="symbol create bar">
       {createButtons.map((b) => (
-        <Button onClick={b.onClick} color="inherit" aria-label={b.label}>
+        <Button
+          key={b.label}
+          onClick={b.onClick}
+          color="inherit"
+          aria-label={b.label}
+        >
           <b.icon />
         </Button>
       ))}
