@@ -1,24 +1,33 @@
 import { useEffect } from 'react';
-import { useRecoilCallback } from 'recoil';
+import {
+  TransactionInterface_UNSTABLE,
+  useRecoilTransaction_UNSTABLE,
+} from 'recoil';
 
 export interface ActionObject<T, K> {
   type: T;
   data: K;
 }
 
+export type ActionFactory<T> = (
+  transactionInterface: TransactionInterface_UNSTABLE,
+  actions: T
+) => void;
+
 interface EventRootProps {
   scope?: string;
-  actionProcessor: (props: any, e: CustomEvent<any>) => void;
+  actionProcessor: ActionFactory<any>;
 }
 
 export const EventRoot = ({
   scope = 'root',
   actionProcessor,
 }: EventRootProps) => {
-  const actions = useRecoilCallback(
-    (...props) =>
+  // https://recoiljs.org/docs/api-reference/core/useRecoilTransaction
+  const actions = useRecoilTransaction_UNSTABLE(
+    (transactionInterface) =>
       (<T,>(e: CustomEvent<T>) => {
-        return actionProcessor(props, e);
+        return actionProcessor(transactionInterface, e.detail);
       }) as EventListener,
     [actionProcessor]
   );

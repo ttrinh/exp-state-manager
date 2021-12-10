@@ -1,5 +1,6 @@
 import { Box } from '@mui/system';
 import { ButtonsSymbolCreate } from './buttons-symbol-create';
+import { Symbols } from './symbols';
 
 export const Pasteboard = () => {
   return (
@@ -7,7 +8,6 @@ export const Pasteboard = () => {
       sx={{
         position: 'relative',
         height: '100%',
-        bgcolor: 'grey.200',
         overflow: 'hidden',
       }}
     >
@@ -21,6 +21,8 @@ export const Pasteboard = () => {
       >
         <ButtonsSymbolCreate />
       </Box>
+
+      <Symbols />
     </Box>
   );
 };
