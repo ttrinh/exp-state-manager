@@ -3,28 +3,28 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Crop54Icon from '@mui/icons-material/Crop54';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 
-import { createSymbols } from 'state/symbol/symbol-actions';
+import { actions } from 'state/action-processors';
 
 const createButtons = [
   {
     label: 'create Text symbol',
     icon: TextFieldsIcon,
     onClick: () => {
-      createSymbols([{ type: 'TEXT', id: 'text-one' }]);
+      actions.symbols.create([{ type: 'TEXT', id: 'text-one' }], 'stage');
     },
   },
   {
     label: 'create Image symbol',
     icon: AddPhotoAlternateIcon,
     onClick: () => {
-      createSymbols([{ type: 'IMAGE', id: 'image-one' }]);
+      actions.symbols.create([{ type: 'IMAGE', id: 'image-one' }], 'stage');
     },
   },
   {
     label: 'create Box symbol',
     icon: Crop54Icon,
     onClick: () => {
-      createSymbols([{ type: 'RECT', id: 'rect-one' }]);
+      actions.symbols.create([{ type: 'RECT', id: 'rect-one' }], 'stage');
     },
   },
 ];

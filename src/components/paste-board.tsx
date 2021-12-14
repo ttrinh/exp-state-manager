@@ -1,8 +1,15 @@
 import { Box } from '@mui/system';
+import { useEffect } from 'react';
+import { actions } from 'state/action-processors';
+
 import { ButtonsSymbolCreate } from './buttons-symbol-create';
-import { Symbols } from './symbols';
+import { Symbol } from './symbol';
 
 export const Pasteboard = () => {
+  useEffect(() => {
+    actions.symbols.create([{ id: 'stage', type: 'STAGE', children: [] }]);
+  }, []);
+
   return (
     <Box
       sx={{
@@ -22,7 +29,7 @@ export const Pasteboard = () => {
         <ButtonsSymbolCreate />
       </Box>
 
-      <Symbols />
+      <Symbol id="stage" />
     </Box>
   );
 };

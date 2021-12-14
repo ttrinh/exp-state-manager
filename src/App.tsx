@@ -19,6 +19,7 @@ function App() {
 
   return (
     <RecoilRoot>
+      <EventRoot actionProcessor={actionProcessors} />
       <Box
         sx={{
           display: 'flex',
@@ -51,7 +52,6 @@ function App() {
         <Box sx={{ flex: '1' }}>
           <Pasteboard />
         </Box>
-        <EventRoot actionProcessor={actionProcessors} />
       </Box>
     </RecoilRoot>
   );

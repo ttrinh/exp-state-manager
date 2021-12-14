@@ -1,6 +1,6 @@
 import { moleculeFamily } from 'lib/molecule';
 
-export type SymbolTypes = 'TEXT' | 'IMAGE' | 'RECT';
+export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'RECT';
 
 export interface Symbol {
   id: string;

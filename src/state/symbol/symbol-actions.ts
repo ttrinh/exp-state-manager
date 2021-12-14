@@ -10,11 +10,17 @@ export type SymbolActions =
   | ReturnType<typeof removeSymbols>
   | ReturnType<typeof editSymbols>;
 
-export const createSymbols = (symbols: Symbol[]) =>
-  dispatch({ type: CREATE_SYMBOLS, data: symbols });
+const createSymbols = (symbols: Symbol[], parentId?: string) =>
+  dispatch({ type: CREATE_SYMBOLS, data: { symbols, parentId } });
 
-export const editSymbols = (symbols: Symbol[]) =>
+const editSymbols = (symbols: Symbol[]) =>
   dispatch({ type: EDIT_SYMBOLS, data: symbols });
 
-export const removeSymbols = (symbolIds: string[]) =>
+const removeSymbols = (symbolIds: string[]) =>
   dispatch({ type: REMOVE_SYMBOLS, data: symbolIds });
+
+export const symbolActions = {
+  create: createSymbols,
+  edit: editSymbols,
+  remove: removeSymbols,
+};

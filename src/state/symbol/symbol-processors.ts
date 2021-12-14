@@ -9,16 +9,19 @@ export const symbolProcessors: ActionFactory<Actions> = async (
   transactionInterface,
   action
 ) => {
-  const { get } = transactionInterface;
+  const { get, set } = transactionInterface;
 
   switch (action.type) {
     case CREATE_SYMBOLS: {
-      action.data.forEach((data) => {
-        const symbol = data;
+      console.log('CREATE', action.data);
+
+      const { symbols, parentId } = action.data;
+      symbols.forEach((symbol) => {
         symbolState.addMolecule(symbol.id, symbol);
-        stylesState.addMolecule(symbol.id, {
-          id: symbol.id,
-          unit: 'px',
+
+        const styleId = `${symbol.id}_styles`;
+        stylesState.addMolecule(styleId, {
+          id: styleId,
           top: '50px',
           left: '50px',
           width: '120px',
@@ -26,19 +29,24 @@ export const symbolProcessors: ActionFactory<Actions> = async (
         });
       });
 
-      const newSymbol = get(
-        symbolState.getMolecule(action.data[0].id).getAtom('id')
-      );
+      if (parentId) {
+        const parentChildrenAtom = symbolState
+          .getMolecule(parentId)
+          .getAtom('children');
+        const prevChildren = get(parentChildrenAtom);
+
+        if (prevChildren) {
+          const symbolIds = symbols.map((s) => s.id);
+          set(parentChildrenAtom, prevChildren.concat(symbolIds));
+        }
+      }
+
       // NOT YET SUPPORT SELECTOR
       // const newPosition = get(
       //   stylesState
       //     .getMolecule(action.data[0].id)
       //     .getAtoms(['top', 'left', 'width', 'height'])
       // );
-      const newWidth = get(
-        stylesState.getMolecule(action.data[0].id).getAtom('width')
-      );
-      console.log(newSymbol, newWidth);
       break;
     }
 
