@@ -10,21 +10,51 @@ const createButtons = [
     label: 'create Text symbol',
     icon: TextFieldsIcon,
     onClick: () => {
-      actions.symbols.create([{ type: 'TEXT', id: 'text-one' }], 'stage');
+      actions.symbols.create(
+        [{ type: 'TEXT', id: 'text-one' }],
+        {
+          top: '0',
+          left: '0',
+          width: '100px',
+          height: '100px',
+          background: 'red',
+        },
+        'stage'
+      );
     },
   },
   {
     label: 'create Image symbol',
     icon: AddPhotoAlternateIcon,
     onClick: () => {
-      actions.symbols.create([{ type: 'IMAGE', id: 'image-one' }], 'stage');
+      actions.symbols.create(
+        [{ type: 'IMAGE', id: 'image-one' }],
+        {
+          top: '20px',
+          left: '20px',
+          width: '100px',
+          height: '100px',
+          background: 'blue',
+        },
+        'stage'
+      );
     },
   },
   {
     label: 'create Box symbol',
     icon: Crop54Icon,
     onClick: () => {
-      actions.symbols.create([{ type: 'RECT', id: 'rect-one' }], 'stage');
+      actions.symbols.create(
+        [{ type: 'RECT', id: 'rect-one' }],
+        {
+          top: '40px',
+          left: '40px',
+          width: '100px',
+          height: '100px',
+          background: 'orange',
+        },
+        'stage'
+      );
     },
   },
 ];

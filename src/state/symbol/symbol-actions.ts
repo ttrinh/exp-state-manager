@@ -1,4 +1,5 @@
 import { dispatch } from 'lib/event';
+import { Styles } from 'state/styles/styles-state';
 import { Symbol } from './symbol-state';
 
 export const CREATE_SYMBOLS = '[SYMBOL] create symbols' as const;
@@ -10,8 +11,11 @@ export type SymbolActions =
   | ReturnType<typeof removeSymbols>
   | ReturnType<typeof editSymbols>;
 
-const createSymbols = (symbols: Symbol[], parentId?: string) =>
-  dispatch({ type: CREATE_SYMBOLS, data: { symbols, parentId } });
+const createSymbols = (
+  symbols: Symbol[],
+  styles: Partial<Styles>,
+  parentId?: string
+) => dispatch({ type: CREATE_SYMBOLS, data: { symbols, styles, parentId } });
 
 const editSymbols = (symbols: Symbol[]) =>
   dispatch({ type: EDIT_SYMBOLS, data: symbols });

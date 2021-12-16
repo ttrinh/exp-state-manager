@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import { useRecoilValue } from 'recoil';
 import { symbolState } from 'state/symbol/symbol-state';
 import { stylesState } from 'state/styles/styles-state';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 
 interface SymbolProps {
   id: string;
@@ -10,31 +10,25 @@ interface SymbolProps {
 
 export const Symbol = memo(({ id }: SymbolProps) => {
   const symbolMolecule = symbolState.getMolecule(id);
-  const symbolId = useRecoilValue(symbolMolecule.getAtom('id'));
   const symbolChildren =
     useRecoilValue(symbolMolecule.getAtom('children')) ?? [];
-
-  useEffect(() => {
-    console.log('Changed', symbolId);
-  }, [symbolId]);
 
   const positionStyles = useRecoilValue(
     stylesState
       .getMolecule(`${id}_styles`)
-      .getAtoms(['top', 'left', 'width', 'height'])
+      .getAtoms(['top', 'left', 'width', 'height', 'background', 'border'])
   );
-
-  console.log(symbolId);
 
   return (
     <Box
       sx={{
         position: 'relative',
-        background: 'yellow',
         ...positionStyles,
       }}
     >
-      {symbolChildren.toString()}
+      {symbolChildren.map((childId) => (
+        <Symbol key={childId} id={childId} />
+      ))}
     </Box>
   );
 });

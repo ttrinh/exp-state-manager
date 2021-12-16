@@ -2,6 +2,7 @@ import { ActionFactory } from 'lib/event';
 
 import { Actions } from 'state/action-processors';
 import { stylesState } from 'state/styles/styles-state';
+import { uiState } from 'state/ui/ui-state';
 import { CREATE_SYMBOLS, EDIT_SYMBOLS, REMOVE_SYMBOLS } from './symbol-actions';
 import { symbolState } from './symbol-state';
 
@@ -15,17 +16,14 @@ export const symbolProcessors: ActionFactory<Actions> = async (
     case CREATE_SYMBOLS: {
       console.log('CREATE', action.data);
 
-      const { symbols, parentId } = action.data;
+      const { symbols, styles, parentId } = action.data;
       symbols.forEach((symbol) => {
         symbolState.addMolecule(symbol.id, symbol);
 
         const styleId = `${symbol.id}_styles`;
         stylesState.addMolecule(styleId, {
           id: styleId,
-          top: '50px',
-          left: '50px',
-          width: '120px',
-          height: '120px',
+          ...styles,
         });
       });
 
@@ -40,6 +38,8 @@ export const symbolProcessors: ActionFactory<Actions> = async (
           set(parentChildrenAtom, prevChildren.concat(symbolIds));
         }
       }
+
+      set(uiState.getAtom('activeStage'), parentId ?? 'stage');
 
       // NOT YET SUPPORT SELECTOR
       // const newPosition = get(
