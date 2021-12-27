@@ -5,13 +5,13 @@ import {
   selector,
   selectorFamily,
   waitForAll,
-} from "recoil";
+} from 'recoil';
 
-import { compareAndSet } from "./utils";
-import { GetAtomsValue, Molecule, MoleculeShape } from "./types";
+import { compareAndSet } from './utils';
+import { GetAtomsValue, Molecule, MoleculeShape, Paths } from './types';
 
 const emptyAtom = atom<undefined>({
-  key: "emptyAtom",
+  key: 'emptyAtom',
   default: undefined,
 });
 
@@ -43,7 +43,7 @@ export const molecule = <T extends MoleculeShape>(
    * Get an atom by key
    * @param key a key in entity
    */
-  const getAtom: Molecule<T>["getAtom"] = (key) => {
+  const getAtom: Molecule<T>['getAtom'] = (key) => {
     // Force assign type as it can be undefined when atom yet to be created.
     return (atoms[key] ?? emptyAtom) as RecoilState<T[keyof T] | undefined>;
   };
@@ -52,7 +52,7 @@ export const molecule = <T extends MoleculeShape>(
    * Get atoms by keys
    * @param keys keys in entity
    */
-  const getAtoms: Molecule<T>["getAtoms"] = selectorFamily({
+  const getAtoms: Molecule<T>['getAtoms'] = selectorFamily({
     key: `${moleculeKey}-atoms`,
     get:
       (keys) =>
@@ -117,3 +117,58 @@ export const molecule = <T extends MoleculeShape>(
     molecule: entity,
   };
 };
+
+type Primitive = string | boolean | number | null | undefined;
+
+const isPrimitive = (val: unknown): val is Primitive => val !== Object(val);
+
+export const createAtomsFromObject = <T extends Record<string, unknown>>(
+  obj: T,
+  prefix: string = ''
+): Record<Paths<T>, RecoilState<T[Paths<T>]>> => {
+  const atomKeys = Object.keys(obj);
+
+  const atoms = atomKeys.reduce((carrier, k) => {
+    const subAtoms = isPrimitive(obj[k])
+      ? {
+          [k]: atom({
+            key: prefix ? `${prefix}.${k}` : k,
+            default: obj[k],
+          }),
+        }
+      : createAtomsFromObject(obj[k] as Record<string, unknown>, k);
+
+    return {
+      ...carrier,
+      ...subAtoms,
+    };
+  }, {} as Record<Paths<T>, RecoilState<T[Paths<T>]>>);
+
+  return atoms;
+};
+
+interface Person {
+  name: string;
+  age: number;
+  actions: {
+    eat: string;
+    drink: string[];
+  };
+}
+
+const atoms = createAtomsFromObject<Person>(
+  {
+    name: 'John Doe',
+    age: 20,
+    test: 'dfasdf',
+    actions: {
+      eat: 'taco',
+      drink: ['coke', 'wine'],
+    },
+  },
+  'test'
+);
+
+// atoms['actions.eat'];
+const a = atoms['actions.drink.0'];
+console.log(a);

@@ -1,4 +1,4 @@
-import { GetRecoilValue, SetRecoilState, RecoilState } from "recoil";
+import { GetRecoilValue, SetRecoilState, RecoilState } from 'recoil';
 
 /**
  * Recoil helper to compare and set when new value differs from old value
