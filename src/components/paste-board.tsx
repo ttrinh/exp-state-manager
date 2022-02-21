@@ -1,24 +1,26 @@
 import { Box } from '@mui/system';
 import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { actions } from 'state/action-processors';
-import { uiState } from 'state/ui/ui-state';
+import { useStore } from 'state-zustand';
 
 import { ButtonsSymbolCreate } from './buttons-symbol-create';
 import { Symbol } from './symbol';
 
 export const Pasteboard = () => {
-  const activeStage = useRecoilValue(uiState.getAtom('activeStage'));
+  const activeStage = useStore((state) => state.ui.activeStage);
+  const createStage = useStore((state) => state.createStyles);
+  const createSymbol = useStore((state) => state.createSymbol);
 
   useEffect(() => {
-    actions.symbols.create([{ id: 'stage', type: 'STAGE', children: [] }], {
+    createSymbol('stage');
+
+    createStage('stage', {
       top: '0',
       left: '0',
       width: '500px',
       height: '500px',
       border: '1px solid white',
     });
-  }, []);
+  }, [createStage, createSymbol]);
 
   return (
     <Box

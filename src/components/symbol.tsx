@@ -1,32 +1,37 @@
 import { Box } from '@mui/system';
-import { useRecoilValue } from 'recoil';
-import { symbolState } from 'state/symbol/symbol-state';
-import { stylesState } from 'state/styles/styles-state';
 import { memo } from 'react';
+import shallow from 'zustand/shallow';
+
+import { useStore } from 'state-zustand';
 
 interface SymbolProps {
   id: string;
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
-  const symbolMolecule = symbolState.getMolecule(id);
-  const symbolChildren =
-    useRecoilValue(symbolMolecule.getAtom('children')) ?? [];
-
-  const positionStyles = useRecoilValue(
-    stylesState
-      .getMolecule(`${id}_styles`)
-      .getAtoms(['top', 'left', 'width', 'height', 'background', 'border'])
+  const sym = useStore(
+    (state) => ({
+      top: state.styles[id]?.top,
+      left: state.styles[id]?.left,
+      width: state.styles[id]?.width,
+      height: state.styles[id]?.height,
+      background: state.styles[id]?.background,
+      border: state.styles[id]?.border,
+      children: state.symbols[id]?.children ?? [],
+    }),
+    shallow
   );
+
+  const { children, ...symbolStyles } = sym;
 
   return (
     <Box
       sx={{
         position: 'relative',
-        ...positionStyles,
+        ...symbolStyles,
       }}
     >
-      {symbolChildren.map((childId) => (
+      {children.map((childId) => (
         <Symbol key={childId} id={childId} />
       ))}
     </Box>
