@@ -9,8 +9,8 @@ export interface UI {
 
 export interface UIStore {
   ui: UI;
-  editUI: (partialUI: Partial<UI>) => void;
-  resetUI: () => void;
+  // editUI: (partialUI: Partial<UI>) => void;
+  // resetUI: () => void;
 }
 
 export const defaultUI: UI = {
@@ -21,22 +21,22 @@ export const defaultUI: UI = {
 export const createUISlice: StoreSlice<UIStore> = (set) => ({
   ui: defaultUI,
 
-  /** Edit existing ui */
-  editUI: (partialUI) =>
-    set(
-      produce<Produce>((prev) => {
-        prev.ui = {
-          ...prev.ui,
-          ...partialUI,
-        };
-      })
-    ),
+  // /** Edit existing ui */
+  // editUI: (partialUI) =>
+  //   set(
+  //     produce<Produce>((prev) => {
+  //       prev.ui = {
+  //         ...prev.ui,
+  //         ...partialUI,
+  //       };
+  //     })
+  //   ),
 
-  /** Completely remove ui */
-  resetUI: () =>
-    set(
-      produce<Produce>((prev) => {
-        prev.ui = defaultUI;
-      })
-    ),
+  // /** Completely remove ui */
+  // resetUI: () =>
+  //   set(
+  //     produce<Produce>((prev) => {
+  //       prev.ui = defaultUI;
+  //     })
+  //   ),
 });

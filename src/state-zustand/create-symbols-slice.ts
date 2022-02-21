@@ -15,15 +15,15 @@ export interface Symbol {
 
 export interface SymbolsStore {
   symbols: Record<string, Symbol>;
-  createSymbol: (
-    id?: string,
-    partialSymbol?: WithoutId<Symbol>,
-    partialStyles?: WithoutId<Styles>
-  ) => void;
-  editSymbol: (id: string, partialSymbol: WithoutId<Symbol>) => void;
-  setSymbol: (id: string, partialSymbol: WithoutId<Symbol>) => void;
-  deleteSymbol: (id: string) => void;
-  resetSymbols: () => void;
+  // createSymbol: (
+  //   id?: string,
+  //   partialSymbol?: WithoutId<Symbol>,
+  //   partialStyles?: WithoutId<Styles>
+  // ) => void;
+  // editSymbol: (id: string, partialSymbol: WithoutId<Symbol>) => void;
+  // setSymbol: (id: string, partialSymbol: WithoutId<Symbol>) => void;
+  // deleteSymbol: (id: string) => void;
+  // resetSymbols: () => void;
 }
 
 export const defaultSymbol: WithoutId<Symbol> = {
@@ -33,52 +33,52 @@ export const defaultSymbol: WithoutId<Symbol> = {
 export const createSymbolsSlice: StoreSlice<SymbolsStore> = (set) => ({
   symbols: {},
 
-  /** Create a brand new symbol */
-  createSymbol: (
-    symbolId,
-    partialSymbol = defaultSymbol,
-    partialStyles = defaultStyles
-  ) =>
-    set(
-      produce<Produce>((prev) => {
-        const id = symbolId ?? generateId('symbols');
-        prev.symbols[id] = { id, ...partialSymbol };
-        prev.styles[id] = { id, ...partialStyles };
-      })
-    ),
+  // /** Create a brand new symbol */
+  // createSymbol: (
+  //   symbolId,
+  //   partialSymbol = defaultSymbol,
+  //   partialStyles = defaultStyles
+  // ) =>
+  //   set(
+  //     produce<Produce>((prev) => {
+  //       const id = symbolId ?? generateId('symbols');
+  //       prev.symbols[id] = { id, ...partialSymbol };
+  //       prev.styles[id] = { id, ...partialStyles };
+  //     })
+  //   ),
 
-  /** Edit existing symbol */
-  editSymbol: (id, partialSymbol) =>
-    set(
-      produce<Produce>((prev) => {
-        prev.symbols[id] = {
-          ...prev.symbols[id],
-          ...partialSymbol,
-        };
-      })
-    ),
+  // /** Edit existing symbol */
+  // editSymbol: (id, partialSymbol) =>
+  //   set(
+  //     produce<Produce>((prev) => {
+  //       prev.symbols[id] = {
+  //         ...prev.symbols[id],
+  //         ...partialSymbol,
+  //       };
+  //     })
+  //   ),
 
-  /** Set symbol */
-  setSymbol: (id, partialSymbol) =>
-    set(
-      produce<Produce>((prev) => {
-        prev.symbols[id] = { id, ...partialSymbol };
-      })
-    ),
+  // /** Set symbol */
+  // setSymbol: (id, partialSymbol) =>
+  //   set(
+  //     produce<Produce>((prev) => {
+  //       prev.symbols[id] = { id, ...partialSymbol };
+  //     })
+  //   ),
 
-  /** Completely remove symbol */
-  deleteSymbol: (id: string) =>
-    set(
-      produce<Produce>((prev) => {
-        delete prev.symbols[id];
-      })
-    ),
+  // /** Completely remove symbol */
+  // deleteSymbol: (id: string) =>
+  //   set(
+  //     produce<Produce>((prev) => {
+  //       delete prev.symbols[id];
+  //     })
+  //   ),
 
-  /** Completely reset all symbols */
-  resetSymbols: () =>
-    set(
-      produce<Produce>((prev) => {
-        prev.symbols = {};
-      })
-    ),
+  // /** Completely reset all symbols */
+  // resetSymbols: () =>
+  //   set(
+  //     produce<Produce>((prev) => {
+  //       prev.symbols = {};
+  //     })
+  //   ),
 });
