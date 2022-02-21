@@ -4,6 +4,7 @@ import Crop54Icon from '@mui/icons-material/Crop54';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 
 import { actions } from 'state/action-processors';
+import { useStore } from 'state-zustand';
 
 const createButtons = [
   {
@@ -60,6 +61,10 @@ const createButtons = [
 ];
 
 export const ButtonsSymbolCreate = () => {
+  const createSymbol = useStore((state) => state.createSymbol);
+
+  console.log(createSymbol);
+
   return (
     <ButtonGroup variant="outlined" aria-label="symbol create bar">
       {createButtons.map((b) => (

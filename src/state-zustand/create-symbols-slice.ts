@@ -3,6 +3,7 @@ import produce from 'immer';
 import { Produce, StoreSlice } from './use-store';
 import { generateId } from 'lib/generate-id';
 import { WithoutId } from 'lib/type-utils';
+import { defaultStyles, Styles } from './create-styles-slice';
 
 export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'RECT';
 
@@ -14,7 +15,11 @@ export interface Symbol {
 
 export interface SymbolsStore {
   symbols: Record<string, Symbol>;
-  createSymbol: (id?: string, partialSymbol?: WithoutId<Symbol>) => void;
+  createSymbol: (
+    id?: string,
+    partialSymbol?: WithoutId<Symbol>,
+    partialStyles?: WithoutId<Styles>
+  ) => void;
   editSymbol: (id: string, partialSymbol: WithoutId<Symbol>) => void;
   setSymbol: (id: string, partialSymbol: WithoutId<Symbol>) => void;
   deleteSymbol: (id: string) => void;
@@ -29,11 +34,16 @@ export const createSymbolsSlice: StoreSlice<SymbolsStore> = (set) => ({
   symbols: {},
 
   /** Create a brand new symbol */
-  createSymbol: (id, partialSymbol = defaultSymbol) =>
+  createSymbol: (
+    symbolId,
+    partialSymbol = defaultSymbol,
+    partialStyles = defaultStyles
+  ) =>
     set(
       produce<Produce>((prev) => {
-        const newId = id ?? generateId('symbols');
-        prev.symbols[newId] = { id: newId, ...partialSymbol };
+        const id = symbolId ?? generateId('symbols');
+        prev.symbols[id] = { id, ...partialSymbol };
+        prev.styles[id] = { id, ...partialStyles };
       })
     ),
 
