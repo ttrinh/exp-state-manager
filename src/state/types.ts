@@ -1,5 +1,3 @@
-import { moleculeFamily } from 'lib/molecule';
-
 export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'RECT';
 
 export interface Symbol {
@@ -8,4 +6,11 @@ export interface Symbol {
   children?: string[];
 }
 
-export const symbolState = moleculeFamily<Symbol>('symbolState');
+export interface Style extends Partial<CSSStyleDeclaration> {
+  id: string;
+}
+
+export interface UI {
+  activeStage: string;
+  selectedSymbols: string[];
+}

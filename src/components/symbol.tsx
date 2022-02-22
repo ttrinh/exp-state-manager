@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import { memo } from 'react';
 import shallow from 'zustand/shallow';
 
-import { useStore } from 'state-zustand';
+import { useStore } from 'state';
 
 interface SymbolProps {
   id: string;

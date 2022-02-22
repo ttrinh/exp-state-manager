@@ -18,8 +18,8 @@
     "moveable": "^0.27.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-moveable": "^0.30.3",
     "react-scripts": "4.0.3",
-    "recoil": "^0.5.2",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1",
     "zustand": "^3.7.0"

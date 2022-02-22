@@ -1,23 +1,35 @@
 import { Box } from '@mui/system';
 import { useEffect } from 'react';
-import { useStore } from 'state-zustand';
 
+import { dispatch, useStore } from 'state';
 import { ButtonsSymbolCreate } from './buttons-symbol-create';
 import { Symbol } from './symbol';
 
 export const Pasteboard = () => {
   const activeStage = useStore((state) => state.ui.activeStage);
-  const createSymbol = useStore((state) => state.createSymbol);
 
   useEffect(() => {
-    createSymbol('stage', undefined, {
-      top: '0',
-      left: '0',
-      width: '800px',
-      height: '800px',
-      border: '1px solid white',
+    dispatch({
+      type: '[symbol] create symbols',
+      payload: [
+        {
+          parentId: '',
+          symbolId: 'stage',
+          symbol: {
+            type: 'STAGE',
+            children: [],
+          },
+          styles: {
+            top: '0',
+            left: '0',
+            width: '800px',
+            height: '800px',
+            border: '1px solid white',
+          },
+        },
+      ],
     });
-  }, [createSymbol]);
+  }, []);
 
   return (
     <Box
