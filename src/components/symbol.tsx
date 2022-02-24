@@ -3,6 +3,7 @@ import { memo } from 'react';
 import shallow from 'zustand/shallow';
 
 import { useStore } from 'state';
+import { MoveableContainner } from './moveable-container';
 
 interface SymbolProps {
   id: string;
@@ -11,10 +12,6 @@ interface SymbolProps {
 export const Symbol = memo(({ id }: SymbolProps) => {
   const sym = useStore(
     (state) => ({
-      top: state.styles[id]?.top,
-      left: state.styles[id]?.left,
-      width: state.styles[id]?.width,
-      height: state.styles[id]?.height,
       background: state.styles[id]?.background,
       border: state.styles[id]?.border,
       children: state.symbols[id]?.children ?? [],
@@ -25,15 +22,21 @@ export const Symbol = memo(({ id }: SymbolProps) => {
   const { children, ...symbolStyles } = sym;
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        ...symbolStyles,
-      }}
-    >
-      {children.map((childId) => (
-        <Symbol key={childId} id={childId} />
-      ))}
-    </Box>
+    <MoveableContainner id={id}>
+      <Box
+        sx={{
+          position: 'relative',
+          top: '0px',
+          left: '0px',
+          width: '100%',
+          height: '100%',
+          ...symbolStyles,
+        }}
+      >
+        {children.map((childId) => (
+          <Symbol key={childId} id={childId} />
+        ))}
+      </Box>
+    </MoveableContainner>
   );
 });

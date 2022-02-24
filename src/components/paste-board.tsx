@@ -53,7 +53,14 @@ export const Pasteboard = () => {
         <ButtonsSymbolCreate />
       </Box>
 
-      <Symbol id={activeStage ?? ''} />
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+        }}
+      >
+        <Symbol id={activeStage ?? ''} />
+      </div>
     </Box>
   );
 };
