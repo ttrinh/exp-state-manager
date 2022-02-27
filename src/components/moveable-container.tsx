@@ -1,7 +1,7 @@
 import { FC, useRef } from 'react';
 import shallow from 'zustand/shallow';
 
-import { useStore } from 'state';
+import { actions, useStore } from 'state';
 import Moveable, {
   OnDrag,
   OnDragEnd,
@@ -56,7 +56,17 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
   }: OnDrag) => {
     // console.log('onDrag left, top', left, top);
     // console.log('onDrag translate', dist);
-    target!.style.transform = transform;
+    // target!.style.transform = transform;
+    actions.symbols.editStyle([
+      {
+        symbolId: id,
+        layoutId: 'base',
+        style: {
+          top: top + 'px',
+          left: left + 'px',
+        },
+      },
+    ]);
   };
 
   const handleResizeStart = ({

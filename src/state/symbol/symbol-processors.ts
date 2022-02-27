@@ -1,9 +1,9 @@
 import { Draft } from 'immer';
 
-import { CreateSymbols } from './symbol-actions';
+import { CreateSymbols, EditSymbolsStyle } from './symbol-actions';
 import { generateId } from 'lib/generate-id';
 import { initial } from 'state/initial';
-import { Processor, Symbol } from 'state/types';
+import { Processor, Symbol, Style } from 'state/types';
 
 export const createSymbolsProcess: Processor<CreateSymbols['payload']> = (
   draft,
@@ -28,4 +28,17 @@ export const createSymbolsProcess: Processor<CreateSymbols['payload']> = (
       }
     }
   );
+};
+
+export const editSymbolsStyleProcess: Processor<EditSymbolsStyle['payload']> = (
+  draft,
+  payload
+) => {
+  payload.forEach(({ symbolId, layoutId, style }) => {
+    const prevStyle = draft.symbols[symbolId].styles[layoutId];
+    draft.symbols[symbolId].styles[layoutId] = {
+      ...prevStyle,
+      ...style,
+    } as Draft<Style>;
+  });
 };

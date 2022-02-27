@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 import { useStore, actions } from 'state';
@@ -23,8 +23,8 @@ export const Pasteboard = () => {
             id: 'base',
             top: '0',
             left: '0',
-            width: '800px',
-            height: '800px',
+            width: '320px',
+            height: '550px',
             border: '1px solid white',
           },
         },

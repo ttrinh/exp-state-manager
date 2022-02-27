@@ -1,22 +1,18 @@
-import { Button, ButtonGroup } from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import Crop54Icon from '@mui/icons-material/Crop54';
-import TextFieldsIcon from '@mui/icons-material/TextFields';
-
+import { Button, ButtonGroup } from '@chakra-ui/react';
 import { dispatch } from 'state';
 
 const createButtons = [
   {
-    label: 'create Text symbol',
-    icon: TextFieldsIcon,
+    label: 'Text',
+    // icon: TextFieldsIcon,
   },
   {
-    label: 'create Image symbol',
-    icon: AddPhotoAlternateIcon,
+    label: 'Image',
+    // icon: AddPhotoAlternateIcon,
   },
   {
-    label: 'create Box symbol',
-    icon: Crop54Icon,
+    label: 'Box',
+    // icon: Crop54Icon,
   },
 ];
 
@@ -51,7 +47,7 @@ export const ButtonsSymbolCreate = () => {
           color="inherit"
           aria-label={b.label}
         >
-          <b.icon />
+          {b.label}
         </Button>
       ))}
     </ButtonGroup>

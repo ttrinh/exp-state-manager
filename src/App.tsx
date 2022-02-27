@@ -1,19 +1,8 @@
-import { Stack } from '@mui/material';
-import { useContext, createContext, useState, useMemo } from 'react';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { Box, ChakraProvider, Stack } from '@chakra-ui/react';
 
-import { ButtonThemeToggle } from 'components/button-theme-toggle';
 import { Pasteboard } from 'components/paste-board';
 
-const ColorModeContext = createContext({
-  toggleColorMode: () => {},
-});
-
 function App() {
-  const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
-
   return (
     <Box
       sx={{
@@ -36,12 +25,6 @@ function App() {
         >
           <b>File</b>
           <b>Edit</b>
-          <b>
-            <ButtonThemeToggle
-              themeMode={theme.palette.mode}
-              onClick={colorMode.toggleColorMode}
-            />
-          </b>
         </Stack>
       </Box>
       <Box sx={{ flex: '1' }}>
@@ -52,32 +35,10 @@ function App() {
 }
 
 function ThemeToggle() {
-  const [mode, setMode] = useState<'light' | 'dark'>('dark');
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    []
-  );
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
-
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <ChakraProvider>
+      <App />
+    </ChakraProvider>
   );
 }
 
