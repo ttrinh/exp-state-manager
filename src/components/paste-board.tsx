@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import { useEffect } from 'react';
 
-import { dispatch, useStore } from 'state';
+import { useStore, actions } from 'state';
 import { ButtonsSymbolCreate } from './buttons-symbol-create';
 import { Symbol } from './symbol';
 
@@ -9,17 +9,18 @@ export const Pasteboard = () => {
   const activeStage = useStore((state) => state.ui.activeStage);
 
   useEffect(() => {
-    dispatch({
-      type: '[symbol] create symbols',
-      payload: [
-        {
-          parentId: '',
-          symbolId: 'stage',
-          symbol: {
-            type: 'STAGE',
-            children: [],
-          },
-          styles: {
+    actions.symbols.create([
+      {
+        parentId: '',
+        symbolId: 'stage',
+        symbol: {
+          type: 'STAGE',
+          children: [],
+          styles: {},
+        },
+        styles: {
+          base: {
+            id: 'base',
             top: '0',
             left: '0',
             width: '800px',
@@ -27,8 +28,8 @@ export const Pasteboard = () => {
             border: '1px solid white',
           },
         },
-      ],
-    });
+      },
+    ]);
   }, []);
 
   return (

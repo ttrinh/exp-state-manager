@@ -1,5 +1,5 @@
 import { WithoutId } from 'lib/type-utils';
-import { Style, Symbol, UI } from './types';
+import { Style, Symbol, UI, State } from './types';
 
 const style: WithoutId<Style> = {
   top: '0px',
@@ -10,6 +10,12 @@ const style: WithoutId<Style> = {
 
 const symbol: WithoutId<Symbol> = {
   type: 'TEXT',
+  styles: {
+    base: {
+      id: 'base',
+      ...style,
+    },
+  },
 };
 
 const ui: UI = {
@@ -17,8 +23,15 @@ const ui: UI = {
   selectedSymbols: [],
 };
 
+const state: State = {
+  styles: {},
+  symbols: {},
+  ui,
+};
+
 export const initial = {
   style,
   symbol,
   ui,
+  state,
 };

@@ -12,8 +12,8 @@ interface SymbolProps {
 export const Symbol = memo(({ id }: SymbolProps) => {
   const sym = useStore(
     (state) => ({
-      background: state.styles[id]?.background,
-      border: state.styles[id]?.border,
+      background: state.symbols[id]?.styles['base']?.background,
+      border: state.symbols[id]?.styles['base']?.border,
       children: state.symbols[id]?.children ?? [],
     }),
     shallow

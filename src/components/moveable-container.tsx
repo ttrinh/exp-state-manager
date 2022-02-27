@@ -24,10 +24,10 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
 
   const positionStyles = useStore(
     (state) => ({
-      top: state.styles[id]?.top,
-      left: state.styles[id]?.left,
-      width: state.styles[id]?.width,
-      height: state.styles[id]?.height,
+      top: state.symbols[id]?.styles['base']?.top,
+      left: state.symbols[id]?.styles['base']?.left,
+      width: state.symbols[id]?.styles['base']?.width,
+      height: state.symbols[id]?.styles['base']?.height,
     }),
     shallow
   );

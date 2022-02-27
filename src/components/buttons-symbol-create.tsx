@@ -23,15 +23,18 @@ const createButtons = [
 export const ButtonsSymbolCreate = () => {
   const createSymbol = () => {
     dispatch({
-      type: '[symbol] create symbols',
+      type: '[SYMBOLS] Create',
       payload: [
         {
           styles: {
-            top: '40px',
-            left: '40px',
-            width: '100px',
-            height: '100px',
-            background: 'orange',
+            base: {
+              id: 'base',
+              top: '40px',
+              left: '40px',
+              width: '100px',
+              height: '100px',
+              background: 'orange',
+            },
           },
           parentId: 'stage',
         },
