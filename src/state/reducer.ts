@@ -1,27 +1,27 @@
 import produce from 'immer';
 
-import {
-  createSymbolsProcess,
-  editSymbolsStyleProcess,
-} from './symbol/symbol-processors';
-import {
-  CreateSymbols,
-  CREATE_SYMBOLS,
-  EditSymbolsStyle,
-  EDIT_SYMBOLS_STYLE,
-} from './symbol/symbol-actions';
 import { State } from './types';
+import {
+  StyleUpdate,
+  styleUpdateProcessor,
+  STYLE_UPDATE,
+} from './symbol/style-update';
+import {
+  SymbolsCreate,
+  symbolsCreateProcessor,
+  SYMBOLS_CREATE,
+} from './symbol/symbol-create';
 
-export type Action = CreateSymbols | EditSymbolsStyle;
+export type Action = StyleUpdate | SymbolsCreate;
 
 export const reducer = (state: State, action: Action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case CREATE_SYMBOLS:
-        return createSymbolsProcess(draft, action.payload);
+      case SYMBOLS_CREATE:
+        return symbolsCreateProcessor(draft, action.payload);
 
-      case EDIT_SYMBOLS_STYLE:
-        return editSymbolsStyleProcess(draft, action.payload);
+      case STYLE_UPDATE:
+        return styleUpdateProcessor(draft, action.payload);
 
       default:
         break;

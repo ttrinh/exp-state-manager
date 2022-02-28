@@ -26,7 +26,7 @@ const ControlCom = ({ styleKey, label }: ControlProps) => {
   );
 
   const handleChange: UseCounterProps['onChange'] = (valueString) => {
-    actions.symbols.editStyle([
+    actions.symbols.updateStyle([
       {
         symbolId: id,
         layoutId: 'base',

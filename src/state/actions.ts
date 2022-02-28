@@ -1,20 +1,16 @@
-import {
-  CreateSymbols,
-  CREATE_SYMBOLS,
-  EditSymbolsStyle,
-  EDIT_SYMBOLS_STYLE,
-} from './symbol/symbol-actions';
+import { StyleUpdatePayload, STYLE_UPDATE } from './symbol/style-update';
+import { SymbolsCreatePayload, SYMBOLS_CREATE } from './symbol/symbol-create';
 import { dispatch } from './use-store';
 
-const createSymbols = (payload: CreateSymbols['payload']) =>
-  dispatch({ type: CREATE_SYMBOLS, payload });
+const createSymbols = (payload: SymbolsCreatePayload) =>
+  dispatch({ type: SYMBOLS_CREATE, payload });
 
-const editSymbolsStyle = (payload: EditSymbolsStyle['payload']) =>
-  dispatch({ type: EDIT_SYMBOLS_STYLE, payload });
+const updateStyle = (payload: StyleUpdatePayload) =>
+  dispatch({ type: STYLE_UPDATE, payload });
 
 export const actions = {
   symbols: {
     create: createSymbols,
-    editStyle: editSymbolsStyle,
+    updateStyle,
   },
 };

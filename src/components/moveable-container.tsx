@@ -42,7 +42,7 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
   };
 
   const handleDrag = ({ left, top }: OnDrag) => {
-    actions.symbols.editStyle([
+    actions.symbols.updateStyle([
       {
         symbolId: id,
         layoutId: 'base',
@@ -60,7 +60,7 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
     const h = delta[1] ? `${height}px` : undefined;
 
     if (w || h) {
-      actions.symbols.editStyle([
+      actions.symbols.updateStyle([
         {
           symbolId: id,
           layoutId: 'base',
