@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import shallow from 'zustand/shallow';
-import { Box } from '@chakra-ui/react';
 
 import { useStore } from 'state';
 import { MoveableContainner } from './moveable-container';
@@ -10,21 +9,21 @@ interface SymbolProps {
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
-  const sym = useStore(
-    (state) => ({
-      background: state.symbols[id]?.styles['base']?.background,
-      border: state.symbols[id]?.styles['base']?.border,
-      children: state.symbols[id]?.children,
-    }),
-    shallow
-  );
+  const { children, ...symbolStyles } = useStore((state) => {
+    const sym = state.symbols[id];
+    const s = sym?.styles['base'];
 
-  const { children, ...symbolStyles } = sym;
+    return {
+      background: s?.background,
+      border: s?.border,
+      children: sym?.children,
+    };
+  }, shallow);
 
   return (
     <MoveableContainner id={id}>
-      <Box
-        sx={{
+      <div
+        style={{
           position: 'relative',
           top: '0px',
           left: '0px',
@@ -35,7 +34,7 @@ export const Symbol = memo(({ id }: SymbolProps) => {
       >
         {children &&
           children.map((childId) => <Symbol key={childId} id={childId} />)}
-      </Box>
+      </div>
     </MoveableContainner>
   );
 });

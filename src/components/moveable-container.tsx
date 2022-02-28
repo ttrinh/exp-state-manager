@@ -22,15 +22,16 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
-  const positionStyles = useStore(
-    (state) => ({
-      top: state.symbols[id]?.styles['base']?.top,
-      left: state.symbols[id]?.styles['base']?.left,
-      width: state.symbols[id]?.styles['base']?.width,
-      height: state.symbols[id]?.styles['base']?.height,
-    }),
-    shallow
-  );
+  const positionStyles = useStore((state) => {
+    const style = state.symbols[id]?.styles['base'];
+
+    return {
+      top: style?.top,
+      left: style?.left,
+      width: style?.width,
+      height: style?.height,
+    };
+  }, shallow);
 
   const handleDragStart = ({ target, clientX, clientY }: OnDragStart) => {
     // console.log('onDragStart', target);
@@ -40,23 +41,7 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
     // console.log('onDragEnd', target, isDrag);
   };
 
-  const handleDrag = ({
-    target,
-    beforeDelta,
-    beforeDist,
-    left,
-    top,
-    right,
-    bottom,
-    delta,
-    dist,
-    transform,
-    clientX,
-    clientY,
-  }: OnDrag) => {
-    // console.log('onDrag left, top', left, top);
-    // console.log('onDrag translate', dist);
-    // target!.style.transform = transform;
+  const handleDrag = ({ left, top }: OnDrag) => {
     actions.symbols.editStyle([
       {
         symbolId: id,
@@ -69,40 +54,36 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
     ]);
   };
 
+  // https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
+  const handleResize = ({ width, height, delta }: OnResize) => {
+    const w = delta[0] ? `${width}px` : undefined;
+    const h = delta[1] ? `${height}px` : undefined;
+
+    if (w || h) {
+      actions.symbols.editStyle([
+        {
+          symbolId: id,
+          layoutId: 'base',
+          style: {
+            width: w,
+            height: h,
+          },
+        },
+      ]);
+    }
+  };
+
   const handleResizeStart = ({
-    target,
     clientX,
     clientY,
     setOrigin,
-    dragStart,
   }: OnResizeStart) => {
     // console.log('onResizeStart', target);
     // setOrigin(['%', '%']);
     // dragStart?.set()
   };
 
-  // https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
-  const handleResize = ({
-    target,
-    width,
-    height,
-    dist,
-    delta,
-    direction,
-    clientX,
-    clientY,
-  }: OnResize) => {
-    // console.log('onResize', target);
-    delta[0] && (target!.style.width = `${width}px`);
-    delta[1] && (target!.style.height = `${height}px`);
-  };
-
-  const handleResizeEnd = ({
-    target,
-    isDrag,
-    clientX,
-    clientY,
-  }: OnResizeEnd) => {
+  const handleResizeEnd = ({ isDrag, clientX, clientY }: OnResizeEnd) => {
     // console.log('onResizeEnd', target, isDrag);
   };
 

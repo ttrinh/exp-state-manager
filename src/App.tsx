@@ -1,36 +1,21 @@
-import { Box, ChakraProvider, Stack } from '@chakra-ui/react';
+import { Box, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
+import { Control } from 'components/control';
 
 import { Pasteboard } from 'components/paste-board';
 
 function App() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        height: '100%',
-        bgcolor: 'background.default',
-        color: 'text.primary',
-      }}
-    >
-      <Box sx={{ flex: '0 0 30px' }}>
-        <Stack
-          spacing={2}
-          direction="row"
-          alignItems="center"
-          height="100%"
-          padding="0 1rem"
-          fontSize="12px"
-        >
-          <b>File</b>
-          <b>Edit</b>
-        </Stack>
-      </Box>
+    <VStack justify="stretch" align="stretch" w="100%" h="100%">
+      <HStack>
+        <Control label="X" styleKey="left" />
+        <Control label="Y" styleKey="top" />
+        <Control label="W" styleKey="width" />
+        <Control label="H" styleKey="height" />
+      </HStack>
       <Box sx={{ flex: '1' }}>
         <Pasteboard />
       </Box>
-    </Box>
+    </VStack>
   );
 }
 

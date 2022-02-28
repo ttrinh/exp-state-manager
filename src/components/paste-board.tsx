@@ -25,7 +25,7 @@ export const Pasteboard = () => {
             left: '0',
             width: '320px',
             height: '550px',
-            border: '1px solid white',
+            border: '1px solid black',
           },
         },
       },

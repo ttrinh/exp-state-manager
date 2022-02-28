@@ -4,6 +4,7 @@ import { CreateSymbols, EditSymbolsStyle } from './symbol-actions';
 import { generateId } from 'lib/generate-id';
 import { initial } from 'state/initial';
 import { Processor, Symbol, Style } from 'state/types';
+import { cleanObject } from 'lib/clean-object';
 
 export const createSymbolsProcess: Processor<CreateSymbols['payload']> = (
   draft,
@@ -36,9 +37,11 @@ export const editSymbolsStyleProcess: Processor<EditSymbolsStyle['payload']> = (
 ) => {
   payload.forEach(({ symbolId, layoutId, style }) => {
     const prevStyle = draft.symbols[symbolId].styles[layoutId];
+    const s = cleanObject(style);
+
     draft.symbols[symbolId].styles[layoutId] = {
       ...prevStyle,
-      ...style,
+      ...s,
     } as Draft<Style>;
   });
 };
