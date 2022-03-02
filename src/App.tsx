@@ -1,5 +1,6 @@
 import { Box, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
 import { Control } from 'components/control';
+import { ControlText } from 'components/control-text';
 
 import { Pasteboard } from 'components/paste-board';
 
@@ -11,6 +12,7 @@ function App() {
         <Control label="Y" styleKey="top" />
         <Control label="W" styleKey="width" />
         <Control label="H" styleKey="height" />
+        <ControlText label="Class" symbolKey="className" />
       </HStack>
       <Box sx={{ flex: '1' }}>
         <Pasteboard />

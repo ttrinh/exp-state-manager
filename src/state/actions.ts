@@ -1,5 +1,6 @@
 import { StyleUpdatePayload, STYLE_UPDATE } from './symbol/style-update';
 import { SymbolsCreatePayload, SYMBOLS_CREATE } from './symbol/symbol-create';
+import { symbolsUpdate } from './symbol/symbols-update';
 import { dispatch } from './use-store';
 
 const createSymbols = (payload: SymbolsCreatePayload) =>
@@ -11,6 +12,7 @@ const updateStyle = (payload: StyleUpdatePayload) =>
 export const actions = {
   symbols: {
     create: createSymbols,
+    update: symbolsUpdate.actionDispatch(dispatch),
     updateStyle,
   },
 };

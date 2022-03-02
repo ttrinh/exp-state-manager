@@ -9,6 +9,7 @@ export interface Style extends Partial<CSSStyleDeclaration> {
 export interface Symbol {
   id: string;
   type: SymbolTypes;
+  className?: string;
   defaultLayout?: string;
   children?: string[];
   styles: Record<string, Style>;
@@ -25,7 +26,4 @@ export type State = Immutable<{
   ui: UI;
 }>;
 
-export type Processor<T extends object = object> = (
-  draft: Draft<State>,
-  payload: T
-) => void;
+export type Processor<T> = (draft: Draft<State>, payload: T) => void;
