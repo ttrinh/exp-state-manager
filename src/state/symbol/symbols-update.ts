@@ -2,7 +2,7 @@ import { Draft } from 'immer';
 
 import { Symbol } from 'state/types';
 import { Without } from 'lib/type-utils';
-import { makeAction } from 'state/make-action';
+import { makeAction } from 'state/state-utils/make-action';
 
 const SYMBOLS_UPDATE = '[SYMBOLS] Update' as const;
 
