@@ -1,7 +1,6 @@
 import { FC, useRef } from 'react';
-import shallow from 'zustand/shallow';
 
-import { actions, useStore } from 'state';
+import { actions, shallow, useStore } from 'state';
 import Moveable, {
   OnDrag,
   OnDragEnd,

@@ -1,7 +1,6 @@
 import { memo } from 'react';
-import shallow from 'zustand/shallow';
 
-import { useStore } from 'state';
+import { useStore, shallow } from 'state';
 import { MoveableContainner } from './moveable-container';
 
 interface SymbolProps {

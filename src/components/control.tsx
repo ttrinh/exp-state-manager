@@ -11,9 +11,8 @@ import {
   UseCounterProps,
 } from '@chakra-ui/react';
 
-import { actions, useStore } from 'state';
+import { actions, useStore, shallow } from 'state';
 import { Style } from 'state/types';
-import shallow from 'zustand/shallow';
 
 interface ControlProps {
   label: string;
