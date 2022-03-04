@@ -1,5 +1,4 @@
-// import { create } from 'zundo';
-import create from 'zustand';
+import { create } from 'zundo';
 import { devtools, redux } from 'zustand/middleware';
 import shallowCompare from 'zustand/shallow';
 
@@ -7,7 +6,11 @@ import { makeDispatchableActions, reducer } from './action-reducer';
 import { initial } from './initial';
 
 const reduxState = devtools(redux(reducer, initial.state));
-export const useStore = create(reduxState);
+// @ts-ignore - Zundo typing https://github.com/charkour/zundo/issues/21
+export const useStore = create(reduxState, {
+  coolOffDurationMs: 500,
+  historyDepthLimit: 30,
+});
 /**
  * Action dispatch
  */
