@@ -1,4 +1,5 @@
 import { Draft, Immutable } from 'immer';
+// import { UndoState } from 'zundo';
 
 export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'RECT';
 
@@ -25,5 +26,11 @@ export type State = Immutable<{
   symbols: Record<string, Symbol>;
   ui: UI;
 }>;
+
+// export interface State extends UndoState {
+//   styles: Record<string, Style>;
+//   symbols: Record<string, Symbol>;
+//   ui: UI;
+// }
 
 export type Processor<T> = (draft: Draft<State>, payload: T) => void;

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import { useStore, shallow } from 'state';
-import { MoveableContainner } from './moveable-container';
+import { MoveableContainer } from './moveable-container';
 
 interface SymbolProps {
   id: string;
@@ -22,7 +22,7 @@ export const Symbol = memo(({ id }: SymbolProps) => {
   }, shallow);
 
   return (
-    <MoveableContainner id={id}>
+    <MoveableContainer id={id}>
       <div
         style={{
           position: 'relative',
@@ -36,6 +36,6 @@ export const Symbol = memo(({ id }: SymbolProps) => {
         {children &&
           children.map((childId) => <Symbol key={childId} id={childId} />)}
       </div>
-    </MoveableContainner>
+    </MoveableContainer>
   );
 });

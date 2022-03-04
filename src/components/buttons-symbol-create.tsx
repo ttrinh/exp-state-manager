@@ -6,7 +6,7 @@ const commonStyles = {
   id: 'base',
   top: '40px',
   left: '40px',
-  width: '100px',
+  width: '150px',
   height: '100px',
 };
 
@@ -15,6 +15,7 @@ const createButtons = [
     label: 'Text',
     style: {
       ...commonStyles,
+
       border: '1px solid blue',
     },
     // icon: TextFieldsIcon,
@@ -23,6 +24,8 @@ const createButtons = [
     label: 'Image',
     style: {
       ...commonStyles,
+      top: '60px',
+      left: '60px',
       background: 'url(https://picsum.photos/200)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
@@ -33,6 +36,8 @@ const createButtons = [
     label: 'Box',
     style: {
       ...commonStyles,
+      top: '80px',
+      left: '80px',
       background: 'orange',
     },
     // icon: Crop54Icon,

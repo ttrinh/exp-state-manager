@@ -13,11 +13,11 @@ import { State } from 'state/types';
 
 const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
 
-interface MoveableContainnerProps {
+interface MoveableContainerProps {
   id: string;
 }
 
-export const MoveableContainner: FC<MoveableContainnerProps> = ({
+export const MoveableContainer: FC<MoveableContainerProps> = ({
   id,
   children,
 }) => {

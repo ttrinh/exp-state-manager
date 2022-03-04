@@ -1,3 +1,4 @@
+// import { create } from 'zundo';
 import create from 'zustand';
 import { devtools, redux } from 'zustand/middleware';
 import shallowCompare from 'zustand/shallow';
@@ -5,11 +6,12 @@ import shallowCompare from 'zustand/shallow';
 import { makeDispatchableActions, reducer } from './action-reducer';
 import { initial } from './initial';
 
-export const useStore = create(devtools(redux(reducer, initial.state)));
-
+const reduxState = devtools(redux(reducer, initial.state));
+export const useStore = create(reduxState);
 /**
  * Action dispatch
  */
+// @ts-ignore
 export const dispatch = useStore.dispatch;
 
 /**

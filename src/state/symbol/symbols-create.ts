@@ -35,7 +35,8 @@ export const symbolsCreate = makeAction<
 
         // append into parent
         if (parentId) {
-          const prevChildren = draft.symbols[parentId].children ?? [];
+          const parent = draft.symbols[parentId];
+          const prevChildren = parent?.children ?? [];
           draft.symbols[parentId].children = prevChildren.concat(id);
         }
       }

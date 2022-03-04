@@ -1,11 +1,10 @@
-import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 import { useStore, actions } from 'state';
-import { ButtonsSymbolCreate } from './buttons-symbol-create';
 import { Symbol } from './symbol';
 
 export const Pasteboard = () => {
+  // const activeStage = useStore((state) => state.ui.activeStage);
   const activeStage = useStore((state) => state.ui.activeStage);
 
   useEffect(() => {
@@ -33,8 +32,8 @@ export const Pasteboard = () => {
   }, []);
 
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         position: 'relative',
         height: '100%',
         overflow: 'hidden',
@@ -42,26 +41,10 @@ export const Pasteboard = () => {
         flexDirection: 'column',
         justifyItems: 'center',
         alignItems: 'center',
+        background: 'rgba(0,0,0,0.1)',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          padding: 2,
-        }}
-      >
-        <ButtonsSymbolCreate />
-      </Box>
-
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-        }}
-      >
-        <Symbol id={activeStage ?? ''} />
-      </div>
-    </Box>
+      <Symbol id={activeStage ?? ''} />
+    </div>
   );
 };
