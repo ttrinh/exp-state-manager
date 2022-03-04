@@ -10,6 +10,9 @@ import Moveable, {
   OnResizeEnd,
   OnResizeStart,
 } from 'react-moveable';
+import { State } from 'state/types';
+
+const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
 
 interface MoveableContainnerProps {
   id: string;
@@ -22,6 +25,7 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
+  const selectedSymbols = useStore(getSelectedSymbols);
   const positionStyles = useStore((state) => {
     const style = state.symbols[id]?.styles['base'];
 
@@ -87,6 +91,18 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
     // console.log('onResizeEnd', target, isDrag);
   };
 
+  const handleClick = () => {
+    if (id === 'stage') {
+      return;
+    }
+
+    actions.ui.update({
+      selectedSymbols: [id],
+    });
+  };
+
+  const isActive = selectedSymbols.includes(id);
+
   return (
     <>
       <div
@@ -96,6 +112,7 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
           position: 'absolute',
           ...positionStyles,
         }}
+        onClick={handleClick}
       >
         {children}
       </div>
@@ -103,8 +120,8 @@ export const MoveableContainner: FC<MoveableContainnerProps> = ({
         ref={moveableRef}
         target={elementRef}
         origin={true}
-        draggable={true}
-        resizable={true}
+        draggable={isActive}
+        resizable={isActive}
         renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
         onDragStart={handleDragStart}
         onDrag={handleDrag}

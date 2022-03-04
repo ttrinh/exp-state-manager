@@ -13,6 +13,7 @@ import {
 
 import { actions, useStore } from 'state';
 import { Style } from 'state/types';
+import shallow from 'zustand/shallow';
 
 interface ControlProps {
   label: string;
@@ -20,10 +21,10 @@ interface ControlProps {
 }
 
 const ControlCom = ({ styleKey, label }: ControlProps) => {
-  const id = 'stage';
-  const value = useStore(
-    (state) => state.symbols[id]?.styles['base']?.[styleKey]
-  );
+  const [id, value] = useStore((state) => {
+    const id = state.ui.selectedSymbols[0] ?? 'stage';
+    return [id, state.symbols[id]?.styles['base']?.[styleKey]];
+  }, shallow);
 
   const handleChange: UseCounterProps['onChange'] = (valueString) => {
     actions.symbols.updateStyles([

@@ -15,6 +15,8 @@ export const Symbol = memo(({ id }: SymbolProps) => {
 
     return {
       background: s?.background,
+      backgroundRepeat: s?.backgroundRepeat,
+      backgroundSize: s?.backgroundSize,
       border: s?.border,
       children: sym?.children,
     };
