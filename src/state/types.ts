@@ -21,11 +21,12 @@ export interface UI {
   selectedSymbols: string[];
 }
 
-export type State = UndoState &
-  Immutable<{
+export type State = Immutable<
+  UndoState & {
     styles: Record<string, Style>;
     symbols: Record<string, Symbol>;
     ui: UI;
-  }>;
+  }
+>;
 
 export type Processor<T> = (draft: Draft<State>, payload: T) => void;
