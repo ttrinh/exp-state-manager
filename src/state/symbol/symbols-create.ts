@@ -6,8 +6,6 @@ import { Symbol } from 'state/types';
 import { WithoutId } from 'lib/type-utils';
 import { makeAction } from 'state/state-utils/make-action';
 
-const SYMBOLS_CREATE = '[SYMBOLS] Create' as const;
-
 type SymbolsCreatePayload = Array<{
   parentId: string;
   symbolId?: string;
@@ -15,11 +13,8 @@ type SymbolsCreatePayload = Array<{
   symbol?: WithoutId<Symbol>;
 }>;
 
-export const symbolsCreate = makeAction<
-  typeof SYMBOLS_CREATE,
-  SymbolsCreatePayload
->({
-  type: SYMBOLS_CREATE,
+export const symbolsCreate = makeAction<SymbolsCreatePayload>({
+  type: '[SYMBOLS] Create',
   processor: (draft, payload) => {
     payload.forEach(
       ({

@@ -5,19 +5,14 @@ import { WithoutId } from 'lib/type-utils';
 import { makeAction } from 'state/state-utils/make-action';
 import { Style } from 'state/types';
 
-const STYLES_UPDATE = '[STYLES] Update' as const;
-
 type StylesUpdatePayload = Array<{
   symbolId: string;
   layoutId: string;
   style: WithoutId<Style>;
 }>;
 
-export const stylesUpdate = makeAction<
-  typeof STYLES_UPDATE,
-  StylesUpdatePayload
->({
-  type: STYLES_UPDATE,
+export const stylesUpdate = makeAction<StylesUpdatePayload>({
+  type: '[STYLES] Update',
   processor: (draft, payload) => {
     payload.forEach(({ symbolId, layoutId, style }) => {
       const prevStyle = draft.symbols[symbolId].styles[layoutId];

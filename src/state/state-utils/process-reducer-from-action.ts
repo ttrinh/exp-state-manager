@@ -5,7 +5,7 @@ import { GenericAction, MakeAction } from './make-action';
 export const processReducerFromAction = (
   draft: Draft<State>,
   action: GenericAction,
-  actionMap: MakeAction<any, any>[]
+  actionMap: MakeAction<any>[]
 ) => {
   for (const item of actionMap) {
     if (item.type === action.type) {

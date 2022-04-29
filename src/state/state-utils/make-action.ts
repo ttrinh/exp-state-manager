@@ -7,15 +7,15 @@ export interface GenericAction<T extends string = string, K = unknown> {
   payload: K;
 }
 
-export interface MakeAction<T, K> {
-  type: T;
+export interface MakeAction<K> {
+  type: string;
   processor: Processor<K>;
 }
 
 /**
  * Create typed action to combine with reducers
  */
-export const makeAction = <T, K>({ type, processor }: MakeAction<T, K>) => {
+export const makeAction = <K>({ type, processor }: MakeAction<K>) => {
   return {
     type,
     action: (payload: K) => ({ type, payload }),
