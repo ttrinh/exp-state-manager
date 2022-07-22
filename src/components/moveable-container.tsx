@@ -115,20 +115,22 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
       >
         {children}
       </div>
-      <Moveable
-        ref={moveableRef}
-        target={elementRef}
-        origin={true}
-        draggable={isActive}
-        resizable={isActive}
-        renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
-        onDragStart={handleDragStart}
-        onDrag={handleDrag}
-        onDragEnd={handleDragEnd}
-        onResize={handleResize}
-        onResizeStart={handleResizeStart}
-        onResizeEnd={handleResizeEnd}
-      ></Moveable>
+      {isActive && (
+        <Moveable
+          ref={moveableRef}
+          target={elementRef}
+          origin={true}
+          draggable={isActive}
+          resizable={isActive}
+          renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
+          onDragStart={handleDragStart}
+          onDrag={handleDrag}
+          onDragEnd={handleDragEnd}
+          onResize={handleResize}
+          onResizeStart={handleResizeStart}
+          onResizeEnd={handleResizeEnd}
+        ></Moveable>
+      )}
     </>
   );
 };

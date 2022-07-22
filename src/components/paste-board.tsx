@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { useStore, actions } from 'state';
+import { SymbolsCreatePayload } from 'state/symbol/symbols-create';
 import { Symbol } from './symbol';
 
 export const Pasteboard = () => {
@@ -29,6 +30,11 @@ export const Pasteboard = () => {
         },
       },
     ]);
+
+    const mockSymbols = Array.from({ length: 1000 }, (_, i) => i + 1).map((i) =>
+      generateSymbol(i * 20, i * 5)
+    );
+    actions.symbols.create(mockSymbols);
   }, []);
 
   return (
@@ -47,4 +53,27 @@ export const Pasteboard = () => {
       <Symbol id={activeStage ?? ''} />
     </div>
   );
+};
+
+const generateSymbol = (left: number, top: number): SymbolsCreatePayload[0] => {
+  return {
+    parentId: 'stage',
+    symbol: {
+      type: 'IMAGE',
+      styles: {},
+    },
+    styles: {
+      base: {
+        id: 'base',
+        top: `${top}px`,
+        left: `${left}px`,
+        width: '150px',
+        height: '100px',
+        border: '1px solid black',
+        background: 'url(https://picsum.photos/200)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+      },
+    },
+  };
 };

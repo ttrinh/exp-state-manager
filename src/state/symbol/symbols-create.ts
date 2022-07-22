@@ -6,7 +6,7 @@ import { Symbol } from 'state/types';
 import { WithoutId } from 'lib/type-utils';
 import { makeAction } from 'state/state-utils/make-action';
 
-type SymbolsCreatePayload = Array<{
+export type SymbolsCreatePayload = Array<{
   parentId: string;
   symbolId?: string;
   styles?: Symbol['styles'];
