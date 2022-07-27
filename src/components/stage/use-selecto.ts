@@ -1,8 +1,9 @@
-import { RefObject, useRef } from 'react';
+import { RefObject } from 'react';
 import { SelectoProps } from 'react-selecto';
-import { actions } from 'state';
+import { useActions } from 'state/use-store';
 
 export const useSelecto = (stageRef: RefObject<HTMLDivElement>) => {
+  const actions = useActions();
   const selectableTargets = ['.selectable'];
 
   const onSelect: SelectoProps['onSelect'] = (e) => {

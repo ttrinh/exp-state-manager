@@ -1,9 +1,6 @@
-import { Draft } from 'immer';
-
 import { cleanObject } from 'lib/clean-object';
 import { WithoutId } from 'lib/type-utils';
-import { makeAction } from 'state/state-utils/make-action';
-import { Style } from 'state/types';
+import { State, Style } from 'state/types';
 
 type StylesUpdatePayload = Array<{
   symbolId: string;
@@ -11,17 +8,16 @@ type StylesUpdatePayload = Array<{
   style: WithoutId<Style>;
 }>;
 
-export const stylesUpdate = makeAction<StylesUpdatePayload>({
-  type: '[STYLES] Update',
-  processor: (draft, payload) => {
-    payload.forEach(({ symbolId, layoutId, style }) => {
-      const prevStyle = draft.symbols[symbolId].styles[layoutId];
-      const s = cleanObject(style);
+export function stylesUpdate(draft: State, payload: StylesUpdatePayload) {
+  payload.forEach(({ symbolId, layoutId, style }) => {
+    const prevStyle = draft.symbols[symbolId].styles[layoutId];
+    const s = cleanObject(style);
 
-      draft.symbols[symbolId].styles[layoutId] = {
-        ...prevStyle,
-        ...s,
-      } as Draft<Style>;
-    });
-  },
-});
+    draft.symbols[symbolId].styles[layoutId] = {
+      ...prevStyle,
+      ...s,
+    };
+  });
+
+  return draft;
+}

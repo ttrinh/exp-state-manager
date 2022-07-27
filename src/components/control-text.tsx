@@ -1,8 +1,8 @@
-import { ChangeEventHandler, memo } from 'react';
 import { FormControl, FormLabel, HStack, Input } from '@chakra-ui/react';
+import { ChangeEventHandler, memo } from 'react';
 
-import { actions, useStore } from 'state';
 import { Symbol } from 'state/types';
+import { useActions, useStore } from 'state/use-store';
 
 interface ControlTextProps {
   label: string;
@@ -10,6 +10,7 @@ interface ControlTextProps {
 }
 
 const ControlTextCom = ({ symbolKey, label }: ControlTextProps) => {
+  const actions = useActions();
   const id = 'stage';
   const value = useStore((state) => state.symbols[id]?.[symbolKey]);
 

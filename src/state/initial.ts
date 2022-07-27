@@ -1,5 +1,5 @@
-import { WithoutId } from 'lib/type-utils';
-import { Style, Symbol, UI, State } from './types';
+import type { WithoutId } from 'lib/type-utils';
+import type { Style, Symbol, UI, State } from './types';
 
 const style: WithoutId<Style> = {
   top: '0px',

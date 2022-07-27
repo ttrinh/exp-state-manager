@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 
-import { useStore, actions } from 'state';
 import { SymbolsCreatePayload } from 'state/symbol/symbols-create';
+import { useActions, useStore } from 'state/use-store';
 import { Symbol } from './symbol';
 
 export const Pasteboard = () => {
+  const actions = useActions();
+
   // const activeStage = useStore((state) => state.ui.activeStage);
   const activeStage = useStore((state) => state.ui.activeStage);
 
@@ -35,7 +37,7 @@ export const Pasteboard = () => {
       generateSymbol(i * 20, i * 5)
     );
     actions.symbols.create(mockSymbols);
-  }, []);
+  }, [actions.symbols]);
 
   return (
     <div

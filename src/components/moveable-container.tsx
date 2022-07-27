@@ -1,6 +1,5 @@
 import { FC, useRef } from 'react';
 
-import { actions, shallow, useStore } from 'state';
 import Moveable, {
   OnDrag,
   OnDragEnd,
@@ -10,6 +9,7 @@ import Moveable, {
   OnResizeStart,
 } from 'react-moveable';
 import { State } from 'state/types';
+import { shallow, useActions, useStore } from 'state/use-store';
 
 const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
 
@@ -21,6 +21,8 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
   id,
   children,
 }) => {
+  const actions = useActions();
+
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 

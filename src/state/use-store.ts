@@ -1,26 +1,34 @@
-import { create } from 'zundo';
-import { devtools, redux } from 'zustand/middleware';
+// TODO: Update zundo for Zustand v4.
+// import { create } from 'zundo';
+import create from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 import shallowCompare from 'zustand/shallow';
-
-import { makeDispatchableActions, reducer } from './action-reducer';
+import { actionMap } from './action-map/middleware';
 import { initial } from './initial';
+import { stylesUpdate } from './symbol/styles-update';
+import { symbolsCreate } from './symbol/symbols-create';
+import { symbolsUpdate } from './symbol/symbols-update';
+import { uiUpdate } from './ui/ui-update';
 
-const reduxState = devtools(redux(reducer, initial.state));
-// @ts-ignore - Zundo typing https://github.com/charkour/zundo/issues/21
-export const useStore = create(reduxState, {
-  coolOffDurationMs: 500,
-  historyDepthLimit: 30,
-});
-/**
- * Action dispatch
- */
-// @ts-ignore
-export const dispatch = useStore.dispatch;
+const actions = {
+  symbols: {
+    create: symbolsCreate,
+    update: symbolsUpdate,
+    updateStyles: stylesUpdate,
+  },
+  ui: {
+    update: uiUpdate,
+  },
+};
 
-/**
- * Collection of organized actions
- */
-export const actions = makeDispatchableActions(dispatch);
+export const useStore = create(
+  devtools(immer(actionMap(actions, initial.state)))
+);
+
+export function useActions() {
+  return useStore((state) => state.actions);
+}
 
 /**
  * Zustand's shallow compare prev and next props
