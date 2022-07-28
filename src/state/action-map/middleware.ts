@@ -63,6 +63,7 @@ type Cast<T, U> = T extends U ? T : U;
  */
 type StoreActionMap<AM extends AnyActionMap> = {
   actions: WrappedActionMap<AM>;
+  dispatchFromDevtools: true;
 };
 
 /**
@@ -117,6 +118,10 @@ const actionMapImpl: ActionMapImpl =
       actionMap,
       set as StoreApi<S>['setState']
     );
+
+    (api as any).dispatchFromDevtools = true;
+
+    return initialState;
   };
 
 export const actionMap = actionMapImpl as ActionMapMiddleware;
