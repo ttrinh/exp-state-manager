@@ -59,13 +59,6 @@ type MergeRight<T extends object, U extends object> = Omit<T, keyof U> & U;
 type Cast<T, U> = T extends U ? T : U;
 
 /**
- * The additional state added by this middleware.
- */
-type ActionMapState<AM extends AnyActionMap> = {
-  actions: StoreActionMap<AM>['actions'];
-};
-
-/**
  * Additional property added to the Zustand store.
  */
 type StoreActionMap<AM extends AnyActionMap> = {
@@ -77,7 +70,7 @@ type StoreActionMap<AM extends AnyActionMap> = {
  */
 type WithActionMap<S, AM> = MergeRight<
   Cast<S, object>,
-  StoreActionMap<Cast<AM, ActionMap<Cast<S, object>>>>
+  StoreActionMap<Cast<AM, AnyActionMap>>
 >;
 
 type ActionMapMiddleware = <
@@ -87,7 +80,7 @@ type ActionMapMiddleware = <
 >(
   actionMap: AM,
   initialState: S
-) => StateCreator<MergeRight<S, ActionMapState<AM>>, Cms, [['actionMap', AM]]>;
+) => StateCreator<S, Cms, [['actionMap', AM]]>;
 
 /**
  * Inform Zustand of the modifications this middleware makes to the store.
@@ -114,16 +107,16 @@ type PopArgument<T extends (...a: never[]) => unknown> = T extends (
 type ActionMapImpl = <S extends object, AM extends ActionMap<S>>(
   actionMap: AM,
   initialState: S
-) => PopArgument<StateCreator<S & ActionMapState<AM>, [], []>>;
+) => PopArgument<StateCreator<S, [], []>>;
 
 const actionMapImpl: ActionMapImpl =
-  (actionMap, initialState) => (set, _get, _api) => {
+  (actionMap, initialState) => (set, _get, api) => {
     type S = typeof initialState;
 
-    return {
-      actions: wrapActionMap(actionMap, set as StoreApi<S>['setState']),
-      ...initialState,
-    };
+    (api as any).actions = wrapActionMap(
+      actionMap,
+      set as StoreApi<S>['setState']
+    );
   };
 
 export const actionMap = actionMapImpl as ActionMapMiddleware;

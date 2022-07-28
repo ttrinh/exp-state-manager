@@ -2,7 +2,7 @@ import { FormControl, FormLabel, HStack, Input } from '@chakra-ui/react';
 import { ChangeEventHandler, memo } from 'react';
 
 import { Symbol } from 'state/types';
-import { useActions, useStore } from 'state/use-store';
+import { campaignActions, useCampaignStore } from 'state/use-store';
 
 interface ControlTextProps {
   label: string;
@@ -10,12 +10,11 @@ interface ControlTextProps {
 }
 
 const ControlTextCom = ({ symbolKey, label }: ControlTextProps) => {
-  const actions = useActions();
   const id = 'stage';
-  const value = useStore((state) => state.symbols[id]?.[symbolKey]);
+  const value = useCampaignStore((state) => state.symbols[id]?.[symbolKey]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    actions.symbols.update([
+    campaignActions.symbols.update([
       {
         symbolId: id,
         partialSymbol: {

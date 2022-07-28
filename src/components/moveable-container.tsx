@@ -9,7 +9,7 @@ import Moveable, {
   OnResizeStart,
 } from 'react-moveable';
 import { State } from 'state/types';
-import { shallow, useActions, useStore } from 'state/use-store';
+import { campaignActions, shallow, useCampaignStore } from 'state/use-store';
 
 const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
 
@@ -21,13 +21,11 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
   id,
   children,
 }) => {
-  const actions = useActions();
-
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
-  const selectedSymbols = useStore(getSelectedSymbols);
-  const positionStyles = useStore((state) => {
+  const selectedSymbols = useCampaignStore(getSelectedSymbols);
+  const positionStyles = useCampaignStore((state) => {
     const style = state.symbols[id]?.styles['base'];
 
     return {
@@ -47,7 +45,7 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
   };
 
   const handleDrag = ({ left, top }: OnDrag) => {
-    actions.symbols.updateStyles([
+    campaignActions.symbols.updateStyles([
       {
         symbolId: id,
         layoutId: 'base',
@@ -65,7 +63,7 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
     const h = delta[1] ? `${height}px` : undefined;
 
     if (w || h) {
-      actions.symbols.updateStyles([
+      campaignActions.symbols.updateStyles([
         {
           symbolId: id,
           layoutId: 'base',
@@ -97,7 +95,7 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
       return;
     }
 
-    actions.ui.update({
+    campaignActions.ui.update({
       selectedSymbols: [id],
     });
   };

@@ -11,7 +11,7 @@ import { symbolsCreate } from './symbol/symbols-create';
 import { symbolsUpdate } from './symbol/symbols-update';
 import { uiUpdate } from './ui/ui-update';
 
-const actions = {
+const campaignActionMap = {
   symbols: {
     create: symbolsCreate,
     update: symbolsUpdate,
@@ -22,13 +22,11 @@ const actions = {
   },
 };
 
-export const useStore = create(
-  devtools(immer(actionMap(actions, initial.state)))
+export const useCampaignStore = create(
+  devtools(immer(actionMap(campaignActionMap, initial.state)))
 );
 
-export function useActions() {
-  return useStore((state) => state.actions);
-}
+export const campaignActions = useCampaignStore.actions;
 
 /**
  * Zustand's shallow compare prev and next props

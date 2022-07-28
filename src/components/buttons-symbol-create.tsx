@@ -1,6 +1,6 @@
 import { Button, ButtonGroup } from '@chakra-ui/react';
 import { Style } from 'state/types';
-import { useActions } from 'state/use-store';
+import { campaignActions } from 'state/use-store';
 
 const commonStyles = {
   id: 'base',
@@ -45,10 +45,8 @@ const createButtons = [
 ];
 
 export const ButtonsSymbolCreate = () => {
-  const actions = useActions();
-
   const createSymbol = (style: Style) => {
-    actions.symbols.create([
+    campaignActions.symbols.create([
       {
         styles: {
           base: style,
