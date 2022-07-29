@@ -1,5 +1,5 @@
-import { FC, useRef } from 'react';
-
+import { ReactNode, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import Moveable, {
   OnDrag,
   OnDragEnd,
@@ -8,6 +8,7 @@ import Moveable, {
   OnResizeEnd,
   OnResizeStart,
 } from 'react-moveable';
+
 import { State } from 'state/types';
 import { campaignActions, shallow, useCampaignStore } from 'state/use-store';
 
@@ -15,12 +16,10 @@ const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
 
 interface MoveableContainerProps {
   id: string;
+  children: ReactNode;
 }
 
-export const MoveableContainer: FC<MoveableContainerProps> = ({
-  id,
-  children,
-}) => {
+export const MoveableContainer = ({ id, children }: MoveableContainerProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
@@ -58,7 +57,7 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
   };
 
   // https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
-  const handleResize = ({ width, height, delta }: OnResize) => {
+  const handleResize = ({ target, width, height, delta }: OnResize) => {
     const w = delta[0] ? `${width}px` : undefined;
     const h = delta[1] ? `${height}px` : undefined;
 
@@ -73,6 +72,8 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
           },
         },
       ]);
+      // w && (target!.style.width = w);
+      // h && (target!.style.height = h);
     }
   };
 
@@ -117,11 +118,14 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
       </div>
       {isActive && (
         <Moveable
+          flushSync={flushSync}
           ref={moveableRef}
           target={elementRef}
           origin={true}
           draggable={isActive}
           resizable={isActive}
+          throttleResize={0}
+          edgeDraggable={true}
           renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
           onDragStart={handleDragStart}
           onDrag={handleDrag}
@@ -129,7 +133,7 @@ export const MoveableContainer: FC<MoveableContainerProps> = ({
           onResize={handleResize}
           onResizeStart={handleResizeStart}
           onResizeEnd={handleResizeEnd}
-        ></Moveable>
+        />
       )}
     </>
   );

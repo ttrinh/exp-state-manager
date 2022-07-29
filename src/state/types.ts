@@ -1,4 +1,4 @@
-export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'RECT';
+export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'BOX';
 
 export interface Style extends Partial<CSSStyleDeclaration> {
   id: string;
