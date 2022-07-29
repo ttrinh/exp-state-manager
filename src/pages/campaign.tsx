@@ -6,10 +6,10 @@ import { ControlText } from 'components/control-text';
 import { History } from 'components/history';
 import { Pasteboard } from 'components/paste-board';
 import { ThemeSwitch } from 'components/theme-switch';
-import { useStore } from 'state';
+// import { useStore } from 'state';
 
 function Campaign() {
-  const [undo, redo] = useStore((state) => [state.undo, state.redo]);
+  // const [undo, redo] = useStore((state) => [state.undo, state.redo]);
 
   return (
     <div
@@ -37,8 +37,8 @@ function Campaign() {
       </div>
       <VStack p="6">
         <HStack>
-          <Button onClick={undo}>Undo</Button>
-          <Button onClick={redo}>Redo</Button>
+          <Button onClick={() => {}}>Undo</Button>
+          <Button onClick={() => {}}>Redo</Button>
         </HStack>
 
         <Control label="X" styleKey="left" />

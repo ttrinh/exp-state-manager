@@ -11,7 +11,7 @@ import {
   UseCounterProps,
 } from '@chakra-ui/react';
 
-import { actions, useStore, shallow } from 'state';
+import { campaignActions, useCampaignStore, shallow } from 'state/use-store';
 import { Style } from 'state/types';
 
 interface ControlProps {
@@ -20,13 +20,13 @@ interface ControlProps {
 }
 
 const ControlCom = ({ styleKey, label }: ControlProps) => {
-  const [id, value] = useStore((state) => {
+  const [id, value] = useCampaignStore((state) => {
     const id = state.ui.selectedSymbols[0] ?? 'stage';
     return [id, state.symbols[id]?.styles['base']?.[styleKey]];
   }, shallow);
 
   const handleChange: UseCounterProps['onChange'] = (valueString) => {
-    actions.symbols.updateStyles([
+    campaignActions.symbols.updateStyles([
       {
         symbolId: id,
         layoutId: 'base',

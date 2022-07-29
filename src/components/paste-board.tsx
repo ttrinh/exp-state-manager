@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 
-import { useStore, actions } from 'state';
 import { SymbolsCreatePayload } from 'state/symbol/symbols-create';
+import { campaignActions, useCampaignStore } from 'state/use-store';
 import { Symbol } from './symbol';
 
 export const Pasteboard = () => {
-  // const activeStage = useStore((state) => state.ui.activeStage);
-  const activeStage = useStore((state) => state.ui.activeStage);
+  const activeStage = useCampaignStore((state) => state.ui.activeStage);
 
   useEffect(() => {
-    actions.symbols.create([
+    campaignActions.symbols.create([
       {
         parentId: '',
         symbolId: 'stage',
@@ -34,7 +33,7 @@ export const Pasteboard = () => {
     const mockSymbols = Array.from({ length: 1000 }, (_, i) => i + 1).map((i) =>
       generateSymbol(i * 20, i * 5)
     );
-    actions.symbols.create(mockSymbols);
+    campaignActions.symbols.create(mockSymbols);
   }, []);
 
   return (

@@ -1,10 +1,7 @@
-import { Draft } from 'immer';
-
 import { generateId } from 'lib/generate-id';
-import { initial } from 'state';
-import { Symbol } from 'state/types';
 import { WithoutId } from 'lib/type-utils';
-import { makeAction } from 'state/state-utils/make-action';
+import { initial } from 'state/initial';
+import { State, Symbol } from 'state/types';
 
 export type SymbolsCreatePayload = Array<{
   parentId: string;
@@ -13,28 +10,26 @@ export type SymbolsCreatePayload = Array<{
   symbol?: WithoutId<Symbol>;
 }>;
 
-export const symbolsCreate = makeAction<SymbolsCreatePayload>({
-  type: '[SYMBOLS] Create',
-  processor: (draft, payload) => {
-    payload.forEach(
-      ({
-        symbolId,
-        symbol = initial.symbol,
-        styles = initial.style,
-        parentId,
-      }) => {
-        // create symbol & styles
-        const id = symbolId ?? generateId('symbol');
-        const s = styles as Draft<Symbol['styles']>;
-        draft.symbols[id] = { id, ...symbol, styles: s };
+export function symbolsCreate(draft: State, payload: SymbolsCreatePayload) {
+  payload.forEach(
+    ({
+      symbolId,
+      symbol = initial.symbol,
+      styles = { base: { id: 'base', ...initial.style } },
+      parentId,
+    }) => {
+      // create symbol & styles
+      const id = symbolId ?? generateId('symbol');
+      draft.symbols[id] = { id, ...symbol, styles };
 
-        // append into parent
-        if (parentId) {
-          const parent = draft.symbols[parentId];
-          const prevChildren = parent?.children ?? [];
-          draft.symbols[parentId].children = prevChildren.concat(id);
-        }
+      // append into parent
+      if (parentId) {
+        const parent = draft.symbols[parentId];
+        const prevChildren = parent?.children ?? [];
+        draft.symbols[parentId].children = prevChildren.concat(id);
       }
-    );
-  },
-});
+    }
+  );
+
+  return draft;
+}

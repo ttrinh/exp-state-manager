@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { useStore, shallow } from 'state';
+import { useCampaignStore, shallow } from 'state/use-store';
 import { MoveableContainer } from './moveable-container';
 
 interface SymbolProps {
@@ -8,7 +8,7 @@ interface SymbolProps {
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
-  const { children, ...symbolStyles } = useStore((state) => {
+  const { children, ...symbolStyles } = useCampaignStore((state) => {
     const sym = state.symbols[id];
     const s = sym?.styles['base'];
 

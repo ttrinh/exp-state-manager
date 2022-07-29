@@ -1,6 +1,6 @@
-import { RefObject, useRef } from 'react';
+import { RefObject } from 'react';
 import { SelectoProps } from 'react-selecto';
-import { actions } from 'state';
+import { campaignActions } from 'state/use-store';
 
 export const useSelecto = (stageRef: RefObject<HTMLDivElement>) => {
   const selectableTargets = ['.selectable'];
@@ -10,7 +10,7 @@ export const useSelecto = (stageRef: RefObject<HTMLDivElement>) => {
     const removedSymbols = e.removed.map((el) => el.id);
     console.log(addedSymbols, removedSymbols);
 
-    actions.ui.update({
+    campaignActions.ui.update({
       selectedSymbols: addedSymbols,
     });
   };
