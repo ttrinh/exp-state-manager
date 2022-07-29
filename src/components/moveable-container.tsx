@@ -1,5 +1,4 @@
 import { ReactNode, useRef } from 'react';
-import { flushSync } from 'react-dom';
 import Moveable, {
   OnDrag,
   OnDragEnd,
@@ -43,14 +42,21 @@ export const MoveableContainer = ({ id, children }: MoveableContainerProps) => {
     // console.log('onDragEnd', target, isDrag);
   };
 
-  const handleDrag = ({ left, top }: OnDrag) => {
+  const handleDrag = ({ left, top, target }: OnDrag) => {
+    const l = `${left}px`;
+    const t = `${top}px`;
+
+    // React 18 optimize rendering, so we need to adjust dom to sync the fast motion
+    target!.style.left = l;
+    target!.style.top = t;
+
     campaignActions.symbols.updateStyles([
       {
         symbolId: id,
         layoutId: 'base',
         style: {
-          top: top + 'px',
-          left: left + 'px',
+          top: t,
+          left: l,
         },
       },
     ]);
@@ -62,6 +68,10 @@ export const MoveableContainer = ({ id, children }: MoveableContainerProps) => {
     const h = delta[1] ? `${height}px` : undefined;
 
     if (w || h) {
+      // React 18 optimize rendering, so we need to adjust dom to sync the fast motion
+      w && (target!.style.width = w);
+      h && (target!.style.height = h);
+
       campaignActions.symbols.updateStyles([
         {
           symbolId: id,
@@ -72,8 +82,6 @@ export const MoveableContainer = ({ id, children }: MoveableContainerProps) => {
           },
         },
       ]);
-      // w && (target!.style.width = w);
-      // h && (target!.style.height = h);
     }
   };
 
@@ -118,7 +126,7 @@ export const MoveableContainer = ({ id, children }: MoveableContainerProps) => {
       </div>
       {isActive && (
         <Moveable
-          flushSync={flushSync}
+          // flushSync={flushSync} // NOTE: use flushSync will not improve performance in fast motion
           ref={moveableRef}
           target={elementRef}
           origin={true}
