@@ -17,6 +17,7 @@
     "immer": "9.0.15",
     "lodash": "4.17.21",
     "moveable": "0.33.0",
+    "polished": "^4.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.4.0",
