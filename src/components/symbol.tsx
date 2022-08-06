@@ -8,17 +8,13 @@ interface SymbolProps {
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
-  const { children, ...symbolStyles } = useCampaignStore((state) => {
+  const { children, layoutStyles } = useCampaignStore((state) => {
     const sym = state.symbols[id];
-    const s = sym?.styles['base'];
+    const layoutStyles = sym?.styles['base'];
 
     return {
-      background: s?.background,
-      backgroundRepeat: s?.backgroundRepeat,
-      backgroundSize: s?.backgroundSize,
-      border: s?.border,
-      borderRadius: s?.borderRadius,
       children: sym?.children,
+      layoutStyles,
     };
   }, shallow);
 
@@ -26,12 +22,12 @@ export const Symbol = memo(({ id }: SymbolProps) => {
     <MoveableContainer id={id}>
       <div
         style={{
+          ...layoutStyles,
           position: 'relative',
           top: '0px',
           left: '0px',
           width: '100%',
           height: '100%',
-          ...symbolStyles,
         }}
       >
         {children &&

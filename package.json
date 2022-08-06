@@ -26,6 +26,7 @@
     "react-selecto": "1.17.0",
     "typescript": "4.7.4",
     "web-vitals": "2.1.4",
+    "zundo": "^1.6.0",
     "zustand": "4.0.0"
   },
   "scripts": {

@@ -15,16 +15,15 @@ export const Pasteboard = () => {
         symbol: {
           type: 'STAGE',
           children: [],
-          styles: {},
-        },
-        styles: {
-          base: {
-            id: 'base',
-            top: '0',
-            left: '0',
-            width: '320px',
-            height: '550px',
-            border: '1px solid black',
+          styles: {
+            base: {
+              id: 'base',
+              top: '0',
+              left: '0',
+              width: '320px',
+              height: '550px',
+              border: '1px solid black',
+            },
           },
         },
       },
@@ -59,21 +58,17 @@ const generateSymbol = (left: number, top: number): SymbolsCreatePayload[0] => {
     parentId: 'stage',
     symbol: {
       type: 'BOX',
-      styles: {},
-    },
-    styles: {
-      base: {
-        id: 'base',
-        top: `${top}px`,
-        left: `${left}px`,
-        width: '150px',
-        height: '100px',
-        border: '1px solid black',
-        // background: 'url(https://picsum.photos/200)',
-        // backgroundRepeat: 'no-repeat',
-        // backgroundSize: 'cover',
-        background: 'rgba(255, 255, 255, 0.1)',
-        borderRadius: '5px',
+      styles: {
+        base: {
+          id: 'base',
+          top: `${top}px`,
+          left: `${left}px`,
+          width: '150px',
+          height: '100px',
+          border: '1px solid black',
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '5px',
+        },
       },
     },
   };

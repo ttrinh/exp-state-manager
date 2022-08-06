@@ -24,7 +24,6 @@ const ui: UI = {
 };
 
 const state: State = {
-  styles: {},
   symbols: {},
   ui,
 };

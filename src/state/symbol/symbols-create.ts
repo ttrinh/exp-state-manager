@@ -11,25 +11,21 @@ export type SymbolsCreatePayload = Array<{
 }>;
 
 export function symbolsCreate(draft: State, payload: SymbolsCreatePayload) {
-  payload.forEach(
-    ({
-      symbolId,
-      symbol = initial.symbol,
-      styles = { base: { id: 'base', ...initial.style } },
-      parentId,
-    }) => {
-      // create symbol & styles
-      const id = symbolId ?? generateId('symbol');
-      draft.symbols[id] = { id, ...symbol, styles };
+  payload.forEach(({ symbolId, symbol = initial.symbol, parentId }) => {
+    // create symbol & styles
+    const id = symbolId ?? generateId('symbol');
+    const styles = symbol.styles ?? {
+      base: { id: 'base', ...initial.style },
+    };
+    draft.symbols[id] = { id, ...symbol, styles };
 
-      // append into parent
-      if (parentId) {
-        const parent = draft.symbols[parentId];
-        const prevChildren = parent?.children ?? [];
-        draft.symbols[parentId].children = prevChildren.concat(id);
-      }
+    // append into parent
+    if (parentId) {
+      const parent = draft.symbols[parentId];
+      const prevChildren = parent?.children ?? [];
+      draft.symbols[parentId].children = prevChildren.concat(id);
     }
-  );
+  });
 
   return draft;
 }
