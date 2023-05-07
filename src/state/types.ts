@@ -19,6 +19,8 @@ export interface Symbol {
   styles: Record<string, Style>;
 
   layouts?: Record<string, LayoutData>;
+
+  className?: string;
 }
 
 // store styles/attributes/data for a particular layout
