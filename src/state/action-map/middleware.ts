@@ -105,12 +105,13 @@ type PopArgument<T extends (...a: never[]) => unknown> = T extends (
  * S - State
  * AM - Action Map
  */
-type ActionMapImpl = <S extends object, AM extends ActionMap<S>>(
+type ActionMapImpl = <AM extends ActionMap<S>, S extends object>(
   actionMap: AM,
   initialState: S
 ) => PopArgument<StateCreator<S, [], []>>;
 
 const actionMapImpl: ActionMapImpl =
+  // @ts-ignore complex typing
   (actionMap, initialState) => (set, _get, api) => {
     type S = typeof initialState;
 

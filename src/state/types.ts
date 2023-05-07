@@ -6,22 +6,11 @@ export interface Style extends CSSProperties {
   id: string;
 }
 
-export interface Attribute {
-  id: string;
-  [key: string]: unknown;
-}
-
 export interface Symbol {
   id: string;
 
-  // Symbol type affects its acecptable attributes
+  // Symbol type affects its acceptable attributes
   type: SymbolTypes;
-
-  // className
-  className?: string;
-
-  // default/base layout which all other layouts depends on
-  defaultLayout?: string;
 
   // children ids
   children?: string[];
@@ -29,18 +18,60 @@ export interface Symbol {
   // basic box styles
   styles: Record<string, Style>;
 
-  // // attributes based on symbol type;
-  // attributes?: Record<string, Attribute>;
+  layouts?: Record<string, LayoutData>;
 
-  // layouts?: Record<string, Layout>;
+  className?: string;
 }
 
-// export interface Layout {
-//   id: string;
-//   name: string;
-//   style: Style;
-//   attribute: Attribute;
-// }
+// store styles/attributes/data for a particular layout
+export interface LayoutData<T extends object = {}> {
+  // connected layout id
+  connectLayoutId: string;
+
+  // styles of the symbol for this layout
+  style: CSSProperties;
+
+  // data for the symbol for this particular layout to be processed
+  data?: T;
+
+  // trackings
+  clickUrl?: string;
+  impressions?: string[];
+}
+
+// Store layout information
+export interface Layout<T extends object = {}> {
+  id: string;
+
+  // Base layout that this bases upon. `undefined` is the base itself
+  baseLayoutId?: string;
+
+  // user-friendly name of the layout
+  name: string;
+
+  // dimension. can be string or number
+  width: number | string;
+  height: number | string;
+
+  // styles of the symbol for this layout
+  style: CSSProperties;
+
+  // data for the symbol for this particular layout to be processed
+  data?: T;
+
+  // trackings
+  clickUrl?: string;
+  impressions?: string[];
+}
+
+export interface Layouts {
+  // default/base layout which all other layouts depends on
+  // Note: Changing this should recalculate all other layouts'
+  // properties that differs from the new default layout
+  defaultLayout: string;
+
+  layouts: Record<string, Layout>;
+}
 
 export interface UI {
   // indicate which layout's size is active
@@ -52,5 +83,6 @@ export interface UI {
 
 export type State = {
   symbols: Record<string, Symbol>;
+  layouts: Layouts;
   ui: UI;
 };
