@@ -29,7 +29,7 @@ export const Pasteboard = () => {
       },
     ]);
 
-    const mockSymbols = Array.from({ length: 20 }, (_, i) => i + 1).map((i) =>
+    const mockSymbols = Array.from({ length: 1000 }, (_, i) => i + 1).map((i) =>
       generateSymbol(i * 20, i * 5)
     );
     campaignActions.symbols.create(mockSymbols);
