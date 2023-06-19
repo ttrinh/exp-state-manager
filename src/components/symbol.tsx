@@ -8,13 +8,14 @@ interface SymbolProps {
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
-  const { children, layoutStyles } = useCampaignStore((state) => {
+  const { children, layoutStyles, type } = useCampaignStore((state) => {
     const sym = state.symbols[id];
     const layoutStyles = sym?.styles['base'];
 
     return {
       children: sym?.children,
       layoutStyles,
+      type: sym?.type,
     };
   }, shallow);
 

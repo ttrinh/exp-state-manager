@@ -4,7 +4,7 @@ import type { Style, Symbol, UI, State, Layout } from './types';
 const style: WithoutId<Style> = {
   top: '0px',
   left: '0px',
-  width: '150px',
+  width: '100px',
   height: '100px',
 };
 

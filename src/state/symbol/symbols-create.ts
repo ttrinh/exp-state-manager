@@ -1,3 +1,4 @@
+import { DeepPartial } from '@chakra-ui/react';
 import { generateId } from 'lib/generate-id';
 import { WithoutId } from 'lib/type-utils';
 import { initial } from 'state/initial';
@@ -6,7 +7,7 @@ import { State, Symbol } from 'state/types';
 export type SymbolsCreatePayload = Array<{
   parentId: string;
   symbolId?: string;
-  styles?: Symbol['styles'];
+  // styles?: Symbol['styles'];
   symbol?: WithoutId<Symbol>;
 }>;
 

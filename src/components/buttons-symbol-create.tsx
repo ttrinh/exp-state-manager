@@ -1,5 +1,5 @@
 import { Button, ButtonGroup } from '@chakra-ui/react';
-import { Style } from 'state/types';
+import { Style, Symbol } from 'state/types';
 import { campaignActions } from 'state/use-store';
 
 const commonStyles = {
@@ -15,8 +15,8 @@ const createButtons = [
     label: 'Text',
     style: {
       ...commonStyles,
-
       border: '1px solid blue',
+      content: 'Text',
     },
     // icon: TextFieldsIcon,
   },
@@ -45,13 +45,16 @@ const createButtons = [
 ];
 
 export const ButtonsSymbolCreate = () => {
-  const createSymbol = (style: Style) => {
+  const createSymbol = (type: string, style: Style) => {
     campaignActions.symbols.create([
       {
-        styles: {
-          base: style,
-        },
         parentId: 'stage',
+        symbol: {
+          type: type as Symbol['type'],
+          styles: {
+            base: style,
+          },
+        },
       },
     ]);
   };
@@ -61,7 +64,7 @@ export const ButtonsSymbolCreate = () => {
       {createButtons.map((b) => (
         <Button
           key={b.label}
-          onClick={() => createSymbol(b.style)}
+          onClick={() => createSymbol(b.label, b.style)}
           color="inherit"
           aria-label={b.label}
         >
