@@ -1,43 +1,51 @@
-// import { Button, Heading, VStack } from '@chakra-ui/react';
-// import { memo } from 'react';
-// import { VscDebugBreakpointLogUnverified as IconItem } from 'react-icons/vsc';
-// import { useStore } from 'state';
-// import { State } from 'state/types';
-
-// const getPrevStates = (state: State) => state.getState?.().prevStates ?? [];
-// const getSetStore = (state: State) => state.getState?.().setStore;
+import { Button, Heading, VStack } from '@chakra-ui/react';
+import { memo } from 'react';
+import { State } from 'state/types';
+import { useTemporalStore } from 'state/use-store';
+import { VscDebugBreakpointLogUnverified as IconItem } from 'react-icons/vsc';
 
 export const History = () => {
-  return null;
-  // const prevStates = useStore(getPrevStates);
+  const { pastStates } = useTemporalStore((state) => state);
 
-  // return (
-  //   <VStack w="100%" align="stretch">
-  //     <Heading as="h2" fontSize="md">
-  //       History
-  //     </Heading>
-  //     <VStack spacing="1px" maxH="300px" overflowY="auto">
-  //       {prevStates.map((state, index) => (
-  //         <HistoryItem key={index} state={state} />
-  //       ))}
-  //     </VStack>
-  //   </VStack>
-  // );
+  return (
+    <VStack w="100%" align="stretch">
+      <Heading as="h2" fontSize="md">
+        History
+      </Heading>
+      <VStack spacing="1px" maxH="300px" overflowY="auto">
+        {pastStates.map((state, index, ar) => (
+          <HistoryItem
+            key={index}
+            state={state}
+            stepNumber={index + 1}
+            total={ar.length}
+          />
+        ))}
+      </VStack>
+    </VStack>
+  );
 };
 
-// const HistoryItem = memo(({ state }: { state: State }) => {
-//   const setStore = useStore(getSetStore);
+interface HistoryItemProps {
+  state: Partial<State>;
+  stepNumber: number;
+  total: number;
+}
 
-//   return (
-//     <Button
-//       textAlign="left"
-//       display="flex"
-//       justifyContent="flex-start"
-//       isFullWidth
-//       leftIcon={<IconItem />}
-//       onClick={() => setStore?.(state)}
-//     >
-//       State
-//     </Button>
-//   );
-// });
+const HistoryItem = memo(({ state, stepNumber, total }: HistoryItemProps) => {
+  const { undo } = useTemporalStore((state) => state);
+
+  return (
+    <Button
+      textAlign="left"
+      display="flex"
+      justifyContent="flex-start"
+      w="100%"
+      flex="0 0 25px"
+      leftIcon={<IconItem />}
+      onClick={() => undo(total - stepNumber)}
+    >
+      State
+    </Button>
+  );
+});
