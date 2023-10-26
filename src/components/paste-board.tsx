@@ -12,7 +12,8 @@ const generateSymbol = (
   return {
     parentId: 'stage',
     symbol: {
-      type: 'BOX',
+      id: '',
+      type: 'box',
       styles: {
         base: {
           id: 'base',
@@ -41,8 +42,8 @@ export const Pasteboard = () => {
     campaignActions.symbols.create([
       {
         parentId: '',
-        symbolId: 'stage',
         symbol: {
+          id: 'stage',
           type: 'stage',
           children: [],
           styles: {

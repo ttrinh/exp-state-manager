@@ -13,9 +13,7 @@ const symbol: Symbol = {
   id: 'text1',
   type: 'text',
   styles: {
-    base: {
-      ...style,
-    },
+    base: style,
   },
 };
 

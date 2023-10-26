@@ -1,28 +1,5 @@
 import { CSSProperties } from 'react';
 
-// export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'BOX';
-
-// export interface Style extends CSSProperties {
-//   id: string;
-// }
-
-// export interface Symbol {
-//   id: string;
-
-//   // Symbol type affects its acceptable attributes
-//   type: SymbolTypes;
-
-//   // children ids
-//   children?: string[];
-
-//   // basic box styles
-//   styles: Record<string, Style>;
-
-//   layouts?: Record<string, LayoutData>;
-
-//   className?: string;
-// }
-
 export interface BaseSymbol {
   id: string;
   symbolIdRef?: string; // reference to original copied symbol if any
@@ -46,7 +23,7 @@ export interface Group extends BaseSymbol {
 export interface Stage extends BaseSymbol {
   type: 'stage';
   children?: string[];
-  layout: Layout;
+  layout?: Layout;
 }
 
 export interface Style extends CSSProperties {

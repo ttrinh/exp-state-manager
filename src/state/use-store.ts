@@ -1,16 +1,16 @@
+import { actionMap } from './action-map/middleware';
 import { create, useStore } from 'zustand';
-import { temporal } from 'zundo';
-import type { TemporalState } from 'zundo';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { actionMap } from './action-map/middleware';
 import { initial } from './initial';
+import { State } from './types';
 import { stylesUpdate } from './symbol/styles-update';
 import { symbolsCreate } from './symbol/symbols-create';
 import { symbolsUpdate } from './symbol/symbols-update';
-import { uiUpdate } from './ui/ui-update';
-import { State } from './types';
+import { temporal } from 'zundo';
 import { throttle } from 'lodash';
+import { uiUpdate } from './ui/ui-update';
+import type { TemporalState } from 'zundo';
 
 const ZUNDO_THOTTLE_TIME = 1000; // ms
 const ZUNDO_LIMIT = 50;

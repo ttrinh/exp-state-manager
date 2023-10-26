@@ -50,6 +50,7 @@ export const ButtonsSymbolCreate = () => {
       {
         parentId: 'stage',
         symbol: {
+          id: '',
           type: type as Symbol['type'],
           styles: {
             base: style,

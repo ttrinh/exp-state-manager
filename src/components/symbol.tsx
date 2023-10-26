@@ -1,7 +1,7 @@
+import { isGroupType } from 'state/type-check';
 import { memo } from 'react';
-
-import { useCampaignStore, shallow } from 'state/use-store';
 import { MoveableContainer } from './moveable-container';
+import { useCampaignStore, shallow } from 'state/use-store';
 
 interface SymbolProps {
   id: string;
@@ -13,7 +13,7 @@ export const Symbol = memo(({ id }: SymbolProps) => {
     const layoutStyles = sym?.styles['base'];
 
     return {
-      children: sym?.children,
+      children: sym && isGroupType(sym) ? sym?.children : undefined,
       layoutStyles,
       type: sym?.type,
     };

@@ -5,15 +5,14 @@ import { Stage, State, Symbol } from 'state/types';
 
 export type SymbolsCreatePayload = Array<{
   parentId: string;
-  symbolId?: string;
   // styles?: Symbol['styles'];
   symbol?: Symbol | Stage;
 }>;
 
 export function symbolsCreate(draft: State, payload: SymbolsCreatePayload) {
-  payload.forEach(({ symbolId, symbol = initial.symbol, parentId }) => {
+  payload.forEach(({ symbol = initial.symbol, parentId }) => {
     // create symbol & styles
-    const id = symbolId ?? generateId('symbol');
+    const id = symbol.id || generateId('symbol');
     const styles = symbol.styles ?? {
       base: { ...initial.style, id: 'base' },
     };
