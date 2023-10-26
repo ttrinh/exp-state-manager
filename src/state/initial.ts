@@ -18,9 +18,9 @@ const symbol: Symbol = {
 };
 
 const layout: Without<Layout, 'id' | 'name'> = {
-  w: '0',
-  h: '0',
   deliverable: 'a',
+  w: '800px',
+  h: '800px',
 };
 
 const ui: UI = {

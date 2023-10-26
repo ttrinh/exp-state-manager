@@ -5,7 +5,6 @@ import { Stage, State, Symbol } from 'state/types';
 
 export type SymbolsCreatePayload = Array<{
   parentId: string;
-  // styles?: Symbol['styles'];
   symbol?: Symbol | Stage;
 }>;
 
