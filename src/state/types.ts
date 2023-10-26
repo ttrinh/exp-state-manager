@@ -1,26 +1,110 @@
 import { CSSProperties } from 'react';
 
-export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'BOX';
+// export type SymbolTypes = 'STAGE' | 'SCENE' | 'TEXT' | 'IMAGE' | 'BOX';
+
+// export interface Style extends CSSProperties {
+//   id: string;
+// }
+
+// export interface Symbol {
+//   id: string;
+
+//   // Symbol type affects its acceptable attributes
+//   type: SymbolTypes;
+
+//   // children ids
+//   children?: string[];
+
+//   // basic box styles
+//   styles: Record<string, Style>;
+
+//   layouts?: Record<string, LayoutData>;
+
+//   className?: string;
+// }
+
+export interface BaseSymbol {
+  id: string;
+  symbolIdRef?: string; // reference to original copied symbol if any
+  name?: string;
+  styles: Record<string, Style>;
+  interactions?: Record<string, Interaction>;
+  timeline?: Record<string, Timeline>;
+}
+
+export type Symbol = BasicSymbol | Group;
+
+export interface BasicSymbol extends BaseSymbol {
+  type: 'image' | 'text' | 'box';
+}
+
+export interface Group extends BaseSymbol {
+  type: 'group' | 'scene';
+  children?: string[];
+}
+
+export interface Stage extends BaseSymbol {
+  type: 'stage';
+  children?: string[];
+  layout: Layout;
+}
 
 export interface Style extends CSSProperties {
   id: string;
+  layoutIdRef?: string;
 }
 
-export interface Symbol {
+/******************
+ * Interaction
+ ******************/
+
+export interface Interaction {
   id: string;
+  layoutIdRef: string;
+  interactionList: InteractionItem[];
+}
 
-  // Symbol type affects its acceptable attributes
-  type: SymbolTypes;
+export type InteractionItem =
+  | InteractionLink
+  | InteractionGoTo
+  | InteractionTrack;
 
-  // children ids
-  children?: string[];
+interface InteractionBase {
+  trigger: 'click' | 'mouseover' | 'mouseout' | 'onShow' | 'onHide';
+}
 
-  // basic box styles
-  styles: Record<string, Style>;
+interface InteractionLink extends InteractionBase {
+  action: 'link';
+  href: string;
+}
 
-  layouts?: Record<string, LayoutData>;
+interface InteractionGoTo extends InteractionBase {
+  action: 'goTo';
+  time: number;
+}
 
-  className?: string;
+interface InteractionTrack extends InteractionBase {
+  action: 'track';
+  url: string;
+  script: string;
+}
+
+/******************
+ * Timeline
+ ******************/
+
+interface Timeline {
+  id: string;
+  layoutIdRef: string;
+  name?: string;
+  animations: Animation[];
+}
+
+interface Animation {
+  name?: string;
+  time: number;
+  easing: string;
+  style: Style;
 }
 
 // store styles/attributes/data for a particular layout
@@ -82,7 +166,7 @@ export interface UI {
 }
 
 export type State = {
-  symbols: Record<string, Symbol>;
+  symbols: Record<string, Symbol | Stage>;
   layouts: Layouts;
   ui: UI;
 };

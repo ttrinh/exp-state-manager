@@ -43,7 +43,7 @@ export const Pasteboard = () => {
         parentId: '',
         symbolId: 'stage',
         symbol: {
-          type: 'STAGE',
+          type: 'stage',
           children: [],
           styles: {
             base: {

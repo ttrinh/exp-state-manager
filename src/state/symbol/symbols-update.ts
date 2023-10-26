@@ -1,9 +1,11 @@
 import { Without } from 'lib/type-utils';
-import { State, Symbol } from 'state/types';
+import { Stage, State, Symbol } from 'state/types';
 
 type SymbolsUpdatePayload = Array<{
   symbolId: string;
-  partialSymbol: Without<Symbol, 'id' | 'styles' | 'type' | 'children'>;
+  partialSymbol:
+    | Without<Symbol, 'id' | 'styles' | 'type'>
+    | Without<Stage, 'children'>;
 }>;
 
 export function symbolsUpdate(draft: State, payload: SymbolsUpdatePayload) {

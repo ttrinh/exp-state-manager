@@ -1,18 +1,19 @@
-import type { Without, WithoutId } from 'lib/type-utils';
+import type { Without } from 'lib/type-utils';
 import type { Style, Symbol, UI, State, Layout } from './types';
 
-const style: WithoutId<Style> = {
+const style: Style = {
+  id: 'base',
   top: '0px',
   left: '0px',
   width: '100px',
   height: '100px',
 };
 
-const symbol: WithoutId<Symbol> = {
-  type: 'TEXT',
+const symbol: Symbol = {
+  id: 'text1',
+  type: 'text',
   styles: {
     base: {
-      id: 'base',
       ...style,
     },
   },
