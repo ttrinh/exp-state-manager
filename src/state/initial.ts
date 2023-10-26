@@ -17,10 +17,10 @@ const symbol: Symbol = {
   },
 };
 
-const layout: Without<Layout, 'id' | 'name' | 'baseLayoutId'> = {
-  width: 0,
-  height: 0,
-  style: style,
+const layout: Without<Layout, 'id' | 'name'> = {
+  w: '0',
+  h: '0',
+  deliverable: 'a',
 };
 
 const ui: UI = {
@@ -30,10 +30,7 @@ const ui: UI = {
 
 const state: State = {
   symbols: {},
-  layouts: {
-    defaultLayout: '',
-    layouts: {},
-  },
+  layouts: {},
   ui,
 };
 

@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 export interface BaseSymbol {
   id: string;
@@ -50,17 +50,17 @@ interface InteractionBase {
   trigger: 'click' | 'mouseover' | 'mouseout' | 'onShow' | 'onHide';
 }
 
-interface InteractionLink extends InteractionBase {
+export interface InteractionLink extends InteractionBase {
   action: 'link';
   href: string;
 }
 
-interface InteractionGoTo extends InteractionBase {
+export interface InteractionGoTo extends InteractionBase {
   action: 'goTo';
   time: number;
 }
 
-interface InteractionTrack extends InteractionBase {
+export interface InteractionTrack extends InteractionBase {
   action: 'track';
   url: string;
   script: string;
@@ -70,68 +70,54 @@ interface InteractionTrack extends InteractionBase {
  * Timeline
  ******************/
 
-interface Timeline {
+export interface Timeline {
   id: string;
   layoutIdRef: string;
   name?: string;
   animations: Animation[];
 }
 
-interface Animation {
+export interface Animation {
   name?: string;
   time: number;
   easing: string;
   style: Style;
 }
 
-// store styles/attributes/data for a particular layout
-export interface LayoutData<T extends object = {}> {
-  // connected layout id
-  connectLayoutId: string;
+/******************
+ * Layout
+ ******************/
 
-  // styles of the symbol for this layout
-  style: CSSProperties;
-
-  // data for the symbol for this particular layout to be processed
-  data?: T;
-
-  // trackings
-  clickUrl?: string;
-  impressions?: string[];
-}
-
-// Store layout information
-export interface Layout<T extends object = {}> {
+export interface Layout {
   id: string;
-
-  // Base layout that this bases upon. `undefined` is the base itself
-  baseLayoutId?: string;
-
-  // user-friendly name of the layout
-  name: string;
-
-  // dimension. can be string or number
-  width: number | string;
-  height: number | string;
-
-  // styles of the symbol for this layout
-  style: CSSProperties;
-
-  // data for the symbol for this particular layout to be processed
-  data?: T;
-
-  // trackings
-  clickUrl?: string;
-  impressions?: string[];
+  deliverable: string;
+  name?: string;
+  w: string;
+  h: string;
+  minW?: string;
+  maxW?: string;
+  minH?: string;
+  maxH?: string;
 }
 
-export interface Layouts {
-  // default/base layout which all other layouts depends on
-  // Note: Changing this should recalculate all other layouts'
-  // properties that differs from the new default layout
-  defaultLayout: string;
-
-  layouts: Record<string, Layout>;
+export interface Addon {
+  id: string;
+  name: string;
+  validation: (passingAppState: { state: State; action: unknown }) => void;
+  sizes: string[];
+  placement:
+    | 'free'
+    | 'MainPanel.Images'
+    | 'MainPanel.Text'
+    | 'DesignPanel.Images';
+  outerDisplay: (passingAppState: {
+    state: State;
+    action: unknown;
+  }) => ReactNode; // display this component in the `placement` above. Ex: a button to go into innerDisplay, or a search component
+  innerDisplay?: (passingAppState: {
+    state: State;
+    action: unknown;
+  }) => ReactNode;
 }
 
 export interface UI {
@@ -144,6 +130,6 @@ export interface UI {
 
 export type State = {
   symbols: Record<string, Symbol | Stage>;
-  layouts: Layouts;
+  layouts: Record<string, Layout>;
   ui: UI;
 };
