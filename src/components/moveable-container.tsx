@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { CSSProperties, ReactNode, useRef } from 'react';
 import Moveable, {
   OnDrag,
   OnDragEnd,
@@ -12,27 +12,27 @@ import { State } from 'state/types';
 import { campaignActions, shallow, useCampaignStore } from 'state/use-store';
 
 const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
+const getActiveLayout = (state: State) => state.ui.activeLayout;
 
 interface MoveableContainerProps {
   id: string;
   children: ReactNode;
+  top: CSSProperties['top'];
+  left: CSSProperties['left'];
+  width: CSSProperties['width'];
+  height: CSSProperties['height'];
 }
 
-export const MoveableContainer = ({ id, children }: MoveableContainerProps) => {
+export const MoveableContainer = ({
+  id,
+  children,
+  ...positionStyles
+}: MoveableContainerProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
   const selectedSymbols = useCampaignStore(getSelectedSymbols);
-  const positionStyles = useCampaignStore((state) => {
-    const style = state.symbols[id]?.styles['base'];
-
-    return {
-      top: style?.top,
-      left: style?.left,
-      width: style?.width,
-      height: style?.height,
-    };
-  }, shallow);
+  const activeLayout = useCampaignStore(getActiveLayout);
 
   const handleDragStart = ({ target, clientX, clientY }: OnDragStart) => {
     // console.log('onDragStart', target);
@@ -53,7 +53,7 @@ export const MoveableContainer = ({ id, children }: MoveableContainerProps) => {
     campaignActions.symbols.updateStyles([
       {
         symbolId: id,
-        layoutId: 'base',
+        layoutId: activeLayout,
         style: {
           top: t,
           left: l,

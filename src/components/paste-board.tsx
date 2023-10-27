@@ -1,66 +1,16 @@
-import { useEffect } from 'react';
-
-import { SymbolsCreatePayload } from 'state/symbol/symbols-create';
 import { campaignActions, useCampaignStore } from 'state/use-store';
+import { layout1, layout2, mockStage, mockSymbols } from 'mocks';
 import { Symbol } from './symbol';
-
-const generateSymbol = (
-  left: number,
-  top: number,
-  hue: number
-): SymbolsCreatePayload[0] => {
-  return {
-    parentId: 'stage',
-    symbol: {
-      id: '',
-      type: 'box',
-      styles: {
-        base: {
-          id: 'base',
-          top: `${top}px`,
-          left: `${left}px`,
-          width: '50px',
-          height: '50px',
-          border: '1px solid black',
-          background: `hsl(${hue}, 100%, 75%)`,
-          borderRadius: '5px',
-        },
-      },
-    },
-  };
-};
-
-const mockSymbols = Array.from({ length: 500 }, (_, i) => i + 1).map((i) => {
-  const hue = i % 360;
-  return generateSymbol(i * 10, i * 5, hue);
-});
+import { useEffect } from 'react';
 
 export const Pasteboard = () => {
   const activeStage = useCampaignStore((state) => state.ui.activeStage);
 
   useEffect(() => {
-    campaignActions.symbols.create([
-      {
-        parentId: '',
-        symbol: {
-          id: 'stage',
-          type: 'stage',
-          children: [],
-          styles: {
-            base: {
-              id: 'base',
-              top: '0',
-              left: '0',
-              width: '600px',
-              height: '600px',
-              border: '1px solid black',
-            },
-          },
-        },
-      },
-    ]);
-
+    campaignActions.layouts.create([{ layout: layout1 }, { layout: layout2 }]);
+    campaignActions.symbols.create([{ parentId: '', symbol: mockStage }]);
     campaignActions.symbols.create(mockSymbols);
+    campaignActions.ui.update({ activeLayout: layout1.id });
   }, []);
 
   return (

@@ -1,6 +1,6 @@
 import { cleanObject } from 'lib/clean-object';
-import { WithoutId } from 'lib/type-utils';
 import { State, Style } from 'state/types';
+import { WithoutId } from 'lib/type-utils';
 
 type StylesUpdatePayload = Array<{
   symbolId: string;
@@ -8,6 +8,9 @@ type StylesUpdatePayload = Array<{
   style: WithoutId<Style>;
 }>;
 
+/**
+ * Shallowly update styles of symbols
+ */
 export function stylesUpdate(draft: State, payload: StylesUpdatePayload) {
   payload.forEach(({ symbolId, layoutId, style }) => {
     const prevStyle = draft.symbols[symbolId].styles[layoutId];

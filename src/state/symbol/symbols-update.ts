@@ -4,10 +4,13 @@ import { Stage, State, Symbol } from 'state/types';
 type SymbolsUpdatePayload = Array<{
   symbolId: string;
   partialSymbol:
-    | Without<Symbol, 'id' | 'styles' | 'type'>
+    | Without<Symbol, 'id' | 'type' | 'styles' | 'interactions' | 'timeline'>
     | Without<Stage, 'children'>;
 }>;
 
+/**
+ * Shallowly update multiple symbols' values
+ */
 export function symbolsUpdate(draft: State, payload: SymbolsUpdatePayload) {
   payload.forEach(({ symbolId, partialSymbol }) => {
     draft.symbols[symbolId] = {

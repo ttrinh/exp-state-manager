@@ -8,19 +8,25 @@ interface SymbolProps {
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
-  const { children, layoutStyles, type } = useCampaignStore((state) => {
+  const { children, layoutStyles, ...position } = useCampaignStore((state) => {
+    const activeLayout = state.ui.activeLayout;
     const sym = state.symbols[id];
-    const layoutStyles = sym?.styles['base'];
+    const layoutStyles = sym?.styles[activeLayout] ?? {};
+    const children = sym && isGroupType(sym) ? sym?.children : undefined;
+    const { top, left, width, height } = layoutStyles;
 
     return {
-      children: sym && isGroupType(sym) ? sym?.children : undefined,
+      children,
       layoutStyles,
-      type: sym?.type,
+      top,
+      left,
+      width,
+      height,
     };
   }, shallow);
 
   return (
-    <MoveableContainer id={id}>
+    <MoveableContainer id={id} {...position}>
       <div
         style={{
           ...layoutStyles,

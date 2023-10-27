@@ -3,6 +3,7 @@ import { create, useStore } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { initial } from './initial';
+import { layoutsCreate } from './layout/layouts-create';
 import { State } from './types';
 import { stylesUpdate } from './symbol/styles-update';
 import { symbolsCreate } from './symbol/symbols-create';
@@ -20,6 +21,9 @@ const campaignActionMap = {
     create: symbolsCreate,
     update: symbolsUpdate,
     updateStyles: stylesUpdate,
+  },
+  layouts: {
+    create: layoutsCreate,
   },
   ui: {
     update: uiUpdate,

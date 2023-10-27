@@ -17,7 +17,8 @@ const symbol: Symbol = {
   },
 };
 
-const layout: Without<Layout, 'id' | 'name'> = {
+const layout: Layout = {
+  id: '',
   deliverable: 'a',
   w: '800px',
   h: '800px',
@@ -26,6 +27,7 @@ const layout: Without<Layout, 'id' | 'name'> = {
 const ui: UI = {
   activeStage: 'stage',
   selectedSymbols: [],
+  activeLayout: undefined,
 };
 
 const state: State = {

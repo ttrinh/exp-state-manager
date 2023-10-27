@@ -81,7 +81,7 @@ export interface Animation {
   name?: string;
   time: number;
   easing: string;
-  style: Style;
+  styles: Style;
 }
 
 /******************
@@ -126,6 +126,9 @@ export interface UI {
 
   // mark selected symbols on stage
   selectedSymbols: string[];
+
+  // indicate which layout's size is active
+  activeLayout: string;
 }
 
 export type State = {

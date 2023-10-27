@@ -2,6 +2,7 @@ import { Button, HStack, VStack } from '@chakra-ui/react';
 import { ButtonsSymbolCreate } from 'components/buttons-symbol-create';
 import { Control } from 'components/control';
 import { History } from 'components/history';
+import { LayoutList } from 'components/layout-list';
 import { Pasteboard } from 'components/paste-board';
 import { ThemeSwitch } from 'components/theme-switch';
 import { useTemporalStore } from 'state/use-store';
@@ -30,6 +31,9 @@ function Campaign() {
         <HStack justify="space-between">
           <ButtonsSymbolCreate />
           <ThemeSwitch />
+        </HStack>
+        <HStack>
+          <LayoutList />
         </HStack>
         <Pasteboard />
       </div>
