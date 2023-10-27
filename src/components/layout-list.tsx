@@ -1,12 +1,15 @@
 import { ButtonGroup } from '@chakra-ui/react';
 import { LayoutItem } from './layout-item';
-import { useCampaignStore } from 'state/use-store';
+import { shallow, useCampaignStore } from 'state/use-store';
 
 export const LayoutList = () => {
-  const allLayoutIds = useCampaignStore((state) => Object.keys(state.layouts));
+  const allLayoutIds = useCampaignStore(
+    (state) => Object.keys(state.layouts),
+    shallow
+  );
 
   return (
-    <ButtonGroup variant="outlined" aria-label="symbol create bar">
+    <ButtonGroup variant="outlined">
       {allLayoutIds.map((layoutId) => (
         <LayoutItem key={layoutId} layoutId={layoutId} />
       ))}

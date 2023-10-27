@@ -13,6 +13,7 @@ import {
 
 import { campaignActions, useCampaignStore, shallow } from 'state/use-store';
 import { Style } from 'state/types';
+import { getSymbolStyles, getUIValue } from 'state/selectors';
 
 interface ControlProps {
   label: string;
@@ -20,16 +21,20 @@ interface ControlProps {
 }
 
 const ControlCom = ({ styleKey, label }: ControlProps) => {
-  const [id, value] = useCampaignStore((state) => {
-    const id = state.ui.selectedSymbols[0] ?? 'stage';
-    return [id, state.symbols[id]?.styles['base']?.[styleKey]];
+  const activeLayout = useCampaignStore(getUIValue('activeLayout'));
+  const selectedSymbols = useCampaignStore(getUIValue('selectedSymbols'));
+  const symbolId = selectedSymbols?.[0] ?? 'stage';
+
+  const value = useCampaignStore((state) => {
+    const styles = getSymbolStyles(symbolId)(state);
+    return styles?.[styleKey];
   }, shallow);
 
   const handleChange: UseCounterProps['onChange'] = (valueString) => {
     campaignActions.symbols.updateStyles([
       {
-        symbolId: id,
-        layoutId: 'base',
+        symbolId,
+        layoutId: activeLayout,
         style: {
           [styleKey]: `${valueString}px`,
         },
@@ -45,16 +50,16 @@ const ControlCom = ({ styleKey, label }: ControlProps) => {
   const val = parseInt(`${value}`);
 
   return (
-    <FormControl size="sm">
+    <FormControl>
       <HStack>
-        <FormLabel flex="0 0 50px" m="0" fontSize="sm" htmlFor={key}>
+        <FormLabel flex="0 0 50px" m="0" fontSize="xs" htmlFor={key}>
           {label}
         </FormLabel>
-        <NumberInput size="sm" value={val} onChange={handleChange}>
+        <NumberInput size="xs" value={val} onChange={handleChange}>
           <NumberInputField id={key} />
           <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
+            <NumberIncrementStepper border="none" />
+            <NumberDecrementStepper border="none" />
           </NumberInputStepper>
         </NumberInput>
       </HStack>

@@ -37,14 +37,16 @@ const generateSymbol = (
   };
 };
 
-export const mockSymbols = Array.from({ length: 500 }, (_, i) => i).map((i) => {
-  const rowLength = 25;
-  const pad = 50;
-  const hue = i % 360;
-  const offsetTop = Math.floor(i / rowLength) * 40 + pad;
-  const offsetLeft = (i % rowLength) * 40 + pad;
-  return generateSymbol(offsetLeft, offsetTop, hue);
-});
+export const mockSymbols = Array.from({ length: 1000 }, (_, i) => i).map(
+  (i) => {
+    const rowLength = 30;
+    const pad = 10;
+    const hue = i % 360;
+    const offsetTop = Math.floor(i / rowLength) * 40 + pad;
+    const offsetLeft = (i % rowLength) * 40 + pad;
+    return generateSymbol(offsetLeft, offsetTop, hue);
+  }
+);
 
 export const mockStage: Stage = {
   id: 'stage',
@@ -74,7 +76,7 @@ export const mockStage: Stage = {
 
 export const layout1: Layout = {
   id: 'base',
-  name: 'base',
+  name: '300x600',
   deliverable: 'a',
   w: '300px',
   h: '600px',
@@ -82,7 +84,7 @@ export const layout1: Layout = {
 
 export const layout2: Layout = {
   id: 'layout2',
-  name: 'layout2',
+  name: '728x90',
   deliverable: 'a',
   w: '728px',
   h: '90px',

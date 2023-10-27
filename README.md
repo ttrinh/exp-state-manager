@@ -5,6 +5,7 @@
 - Explore how actions, reducers/processors interconnect. How to make them ease to use or combine.
 - Explore performance differences between the tools.
 - Relationship between the states (local and global) and how they typed.
+- Stress test components and selectors.
 
 # Experimental State Management Architect
 

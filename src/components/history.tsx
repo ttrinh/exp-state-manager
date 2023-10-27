@@ -2,7 +2,6 @@ import { Button, Heading, VStack } from '@chakra-ui/react';
 import { memo } from 'react';
 import { State } from 'state/types';
 import { useTemporalStore } from 'state/use-store';
-import { VscDebugBreakpointLogUnverified as IconItem } from 'react-icons/vsc';
 
 export const History = () => {
   const { pastStates } = useTemporalStore((state) => state);
@@ -42,7 +41,6 @@ const HistoryItem = memo(({ state, stepNumber, total }: HistoryItemProps) => {
       justifyContent="flex-start"
       w="100%"
       flex="0 0 25px"
-      leftIcon={<IconItem />}
       onClick={() => undo(total - stepNumber)}
     >
       State

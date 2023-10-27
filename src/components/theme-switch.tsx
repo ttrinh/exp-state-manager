@@ -1,6 +1,6 @@
 import { IconButton, Tooltip, useColorMode } from '@chakra-ui/react';
 import { memo } from 'react';
-import { VscColorMode as IconTheme } from 'react-icons/vsc';
+import { SunDim, Moon } from '@phosphor-icons/react';
 
 const ThemeSwitchCom = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -13,7 +13,7 @@ const ThemeSwitchCom = () => {
         background="transparent"
         border="transparent"
         color={colorMode === 'dark' ? 'gray.400' : 'gray.600'}
-        icon={<IconTheme />}
+        icon={colorMode === 'dark' ? <SunDim /> : <Moon />}
         onClick={toggleColorMode}
       />
     </Tooltip>
