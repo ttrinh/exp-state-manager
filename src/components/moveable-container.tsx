@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useRef } from 'react';
+import { CSSProperties, MouseEventHandler, ReactNode, useRef } from 'react';
 import Moveable, {
   OnDrag,
   OnDragEnd,
@@ -9,7 +9,7 @@ import Moveable, {
 } from 'react-moveable';
 
 import { State } from 'state/types';
-import { campaignActions, shallow, useCampaignStore } from 'state/use-store';
+import { campaignActions, useCampaignStore } from 'state/use-store';
 
 const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
 const getActiveLayout = (state: State) => state.ui.activeLayout;
@@ -99,14 +99,14 @@ export const MoveableContainer = ({
     // console.log('onResizeEnd', target, isDrag);
   };
 
-  const handleClick = () => {
-    if (id === 'stage') {
-      return;
-    }
+  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
 
-    campaignActions.ui.update({
-      selectedSymbols: [id],
-    });
+    if (id !== 'stage') {
+      campaignActions.ui.update({
+        selectedSymbols: [id],
+      });
+    }
   };
 
   const isActive = selectedSymbols.includes(id);
