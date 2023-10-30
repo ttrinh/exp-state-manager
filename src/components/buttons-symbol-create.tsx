@@ -17,6 +17,7 @@ const createButtons = [
     style: {
       ...commonStyles,
       border: '1px solid blue',
+      background: 'gray',
       content: 'Text',
     },
     icon: TextT,
