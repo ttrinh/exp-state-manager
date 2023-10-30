@@ -8,7 +8,7 @@ const StyleLibListCom = () => {
   const activeSymbolIds = useCampaignStore(getUIValue('selectedSymbols'));
   const layoutIds = useCampaignStore(getLayoutIds, shallow);
 
-  if (layoutIds.length < 2 || activeSymbolIds.length > 0) {
+  if (layoutIds.length < 2 && activeSymbolIds.length > 0) {
     return null;
   }
 
