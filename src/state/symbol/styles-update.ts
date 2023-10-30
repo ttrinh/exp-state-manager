@@ -13,7 +13,7 @@ type StylesUpdatePayload = Array<{
  */
 export function stylesUpdate(draft: State, payload: StylesUpdatePayload) {
   payload.forEach(({ symbolId, layoutId, style }) => {
-    const prevStyle = draft.symbols[symbolId].styles[layoutId];
+    const prevStyle = draft.symbols[symbolId].styles[layoutId] ?? {};
     const s = cleanObject(style);
 
     draft.symbols[symbolId].styles[layoutId] = {

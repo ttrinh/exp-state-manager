@@ -1,8 +1,6 @@
-import type { Without } from 'lib/type-utils';
 import type { Style, Symbol, UI, State, Layout } from './types';
 
 const style: Style = {
-  id: 'base',
   top: '0px',
   left: '0px',
   width: '100px',
@@ -12,9 +10,7 @@ const style: Style = {
 const symbol: Symbol = {
   id: 'text1',
   type: 'text',
-  styles: {
-    base: style,
-  },
+  styles: {},
 };
 
 const layout: Layout = {
@@ -27,7 +23,7 @@ const layout: Layout = {
 const ui: UI = {
   activeStage: 'stage',
   selectedSymbols: [],
-  activeLayout: undefined,
+  activeLayout: '',
 };
 
 const state: State = {

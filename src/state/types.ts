@@ -27,8 +27,7 @@ export interface Stage extends BaseSymbol {
 }
 
 export interface Style extends CSSProperties {
-  id: string;
-  layoutIdRef?: string;
+  // id: string;
 }
 
 /******************

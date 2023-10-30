@@ -3,7 +3,7 @@ import { Style, Symbol } from 'state/types';
 import { campaignActions } from 'state/use-store';
 
 const commonStyles = {
-  id: 'base',
+  id: '',
   top: '40px',
   left: '40px',
   width: '150px',
@@ -52,10 +52,9 @@ export const ButtonsSymbolCreate = () => {
         symbol: {
           id: '',
           type: type as Symbol['type'],
-          styles: {
-            base: style,
-          },
+          styles: {},
         },
+        baseStyle: style,
       },
     ]);
   };

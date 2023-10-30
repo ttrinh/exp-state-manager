@@ -1,9 +1,11 @@
 import { actionMap } from './action-map/middleware';
+import { appInit } from './app-init';
 import { create, useStore } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { initial } from './initial';
 import { layoutsCreate } from './layout/layouts-create';
+import { layoutsDelete } from './layout/layouts-delete';
 import { State } from './types';
 import { stylesUpdate } from './symbol/styles-update';
 import { symbolsCreate } from './symbol/symbols-create';
@@ -24,9 +26,13 @@ const campaignActionMap = {
   },
   layouts: {
     create: layoutsCreate,
+    delete: layoutsDelete,
   },
   ui: {
     update: uiUpdate,
+  },
+  app: {
+    init: appInit,
   },
 };
 

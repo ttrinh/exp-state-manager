@@ -1,5 +1,6 @@
+import { generateId } from 'lib/generate-id';
 import { SymbolsCreatePayload } from 'state/symbol/symbols-create';
-import { Layout, Stage } from 'state/types';
+import { Layout } from 'state/types';
 
 const generateSymbol = (
   left: number,
@@ -9,30 +10,24 @@ const generateSymbol = (
   return {
     parentId: 'stage',
     symbol: {
-      id: '',
+      id: generateId('box'),
       type: 'box',
       styles: {
-        base: {
-          id: 'base',
-          top: `${top}px`,
-          left: `${left}px`,
-          width: '40px',
-          height: '40px',
-          border: '1px solid black',
-          background: `hsl(${hue}, 100%, 75%)`,
+        layout1: {
           borderRadius: '5px',
         },
         layout2: {
-          id: 'layout2',
-          top: `${top}px`,
-          left: `${left}px`,
-          width: '40px',
-          height: '40px',
-          border: '1px solid black',
-          background: `hsl(${hue}, 100%, 75%)`,
           borderRadius: '50%',
         },
       },
+    },
+    baseStyle: {
+      top: `${top}px`,
+      left: `${left}px`,
+      width: '40px',
+      height: '40px',
+      border: '1px solid black',
+      background: `hsl(${hue}, 100%, 75%)`,
     },
   };
 };
@@ -48,34 +43,34 @@ export const mockSymbols = Array.from({ length: 1000 }, (_, i) => i).map(
   }
 );
 
-export const mockStage: Stage = {
-  id: 'stage',
-  type: 'stage',
-  children: [],
-  styles: {
-    base: {
-      id: 'base',
-      top: '0',
-      left: '0',
-      width: '600px',
-      height: '600px',
-      border: '1px solid black',
-      background: 'white',
+export const mockStage: SymbolsCreatePayload = [
+  {
+    parentId: '',
+    symbol: {
+      id: 'stage',
+      type: 'stage',
+      children: [],
+      styles: {
+        layout1: {
+          background: 'lightblue',
+        },
+        layout2: {
+          background: 'antiquewhite',
+        },
+      },
     },
-    layout2: {
-      id: 'layout2',
+    baseStyle: {
       top: '0',
       left: '0',
       width: '600px',
       height: '600px',
       border: '1px solid black',
-      background: 'red',
     },
   },
-};
+];
 
 export const layout1: Layout = {
-  id: 'base',
+  id: 'layout1',
   name: '300x600',
   deliverable: 'a',
   w: '300px',

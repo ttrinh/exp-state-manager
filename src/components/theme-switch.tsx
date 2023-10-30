@@ -9,6 +9,7 @@ const ThemeSwitchCom = () => {
     <Tooltip label="Switch theme">
       <IconButton
         aria-label="Theme toggle"
+        size="sm"
         variant="ghost"
         background="transparent"
         border="transparent"

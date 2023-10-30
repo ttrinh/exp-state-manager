@@ -31,7 +31,6 @@ function Campaign() {
       >
         <HStack justify="space-between">
           <ButtonsSymbolCreate />
-          <ThemeSwitch />
         </HStack>
         <HStack>
           <LayoutList />
@@ -46,6 +45,7 @@ function Campaign() {
           <Button leftIcon={<ArrowUUpRight />} size="sm" onClick={() => redo()}>
             Redo
           </Button>
+          <ThemeSwitch />
         </HStack>
 
         <VStack align="start">

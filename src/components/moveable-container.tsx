@@ -75,7 +75,7 @@ export const MoveableContainer = ({
       campaignActions.symbols.updateStyles([
         {
           symbolId: id,
-          layoutId: 'base',
+          layoutId: activeLayout,
           style: {
             width: w,
             height: h,

@@ -1,6 +1,7 @@
-import { ButtonGroup } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 import { LayoutItem } from './layout-item';
 import { shallow, useCampaignStore } from 'state/use-store';
+import { ButtonLayoutCreate } from './button-layout-create';
 
 export const LayoutList = () => {
   const allLayoutIds = useCampaignStore(
@@ -9,10 +10,11 @@ export const LayoutList = () => {
   );
 
   return (
-    <ButtonGroup variant="outlined">
+    <HStack p="2">
       {allLayoutIds.map((layoutId) => (
         <LayoutItem key={layoutId} layoutId={layoutId} />
       ))}
-    </ButtonGroup>
+      <ButtonLayoutCreate />
+    </HStack>
   );
 };
