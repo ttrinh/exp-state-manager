@@ -1,5 +1,5 @@
 import { difference, omit } from 'remeda';
-import { getUIValue } from 'state/selectors';
+import { getLayoutIds, getUIValue } from 'state/selectors';
 import { stylesDelete } from 'state/symbol/styles-delete';
 import { State } from 'state/types';
 import { uiUpdate } from 'state/ui/ui-update';
@@ -8,7 +8,7 @@ export type LayoutsDeletePayload = string[];
 
 export function layoutsDelete(draft: State, payload: LayoutsDeletePayload) {
   const activeLayout = getUIValue('activeLayout')(draft);
-  const layoutIds = Object.keys(draft.layouts);
+  const layoutIds = getLayoutIds(draft);
 
   // no delete on the last layout
   if (payload.length === layoutIds.length) {

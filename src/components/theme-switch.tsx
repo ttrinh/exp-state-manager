@@ -14,7 +14,7 @@ const ThemeSwitchCom = () => {
         background="transparent"
         border="transparent"
         color={colorMode === 'dark' ? 'gray.400' : 'gray.600'}
-        icon={colorMode === 'dark' ? <SunDim /> : <Moon />}
+        icon={colorMode === 'dark' ? <SunDim size="18" /> : <Moon size="18" />}
         onClick={toggleColorMode}
       />
     </Tooltip>

@@ -15,9 +15,11 @@ const generateSymbol = (
       styles: {
         layout1: {
           borderRadius: '5px',
+          background: `hsl(${hue}, 100%, 75%)`,
         },
         layout2: {
           borderRadius: '50%',
+          background: `hsl(${hue - 50}, 100%, 75%)`,
         },
       },
     },
@@ -27,7 +29,6 @@ const generateSymbol = (
       width: '40px',
       height: '40px',
       border: '1px solid black',
-      background: `hsl(${hue}, 100%, 75%)`,
     },
   };
 };

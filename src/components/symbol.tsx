@@ -5,6 +5,8 @@ import {
   getSymbolChildren,
   getSymbolPosition,
   getSymbolStyles,
+  getSymbolStylesByLayout,
+  getUIValue,
 } from 'state/selectors';
 
 interface SymbolProps {
@@ -12,15 +14,19 @@ interface SymbolProps {
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
+  const activeLayout = useCampaignStore(getUIValue('activeLayout'));
   const children = useCampaignStore(getSymbolChildren(id), shallow);
-  const styles = useCampaignStore(getSymbolStyles(id), shallow);
+  const style = useCampaignStore(
+    getSymbolStylesByLayout(id, activeLayout),
+    shallow
+  );
   const position = useCampaignStore(getSymbolPosition(id), shallow);
 
   return (
     <MoveableContainer id={id} {...position}>
       <div
         style={{
-          ...styles,
+          ...style,
           position: 'relative',
           top: '0px',
           left: '0px',
@@ -34,3 +40,27 @@ export const Symbol = memo(({ id }: SymbolProps) => {
     </MoveableContainer>
   );
 });
+
+interface SymbolWithoutPositionProps {
+  layoutId: string;
+  symbolId: string;
+}
+
+/** Symbol rendered without position based on layout, its nested children should also positioned correctly */
+export const SymbolWithoutPosition = ({
+  symbolId,
+  layoutId,
+}: SymbolWithoutPositionProps) => {
+  const children = useCampaignStore(getSymbolChildren(symbolId), shallow);
+  const style = useCampaignStore(
+    getSymbolStylesByLayout(symbolId, layoutId),
+    shallow
+  );
+
+  return (
+    <div style={style}>
+      {children &&
+        children.map((childId) => <Symbol key={childId} id={childId} />)}
+    </div>
+  );
+};

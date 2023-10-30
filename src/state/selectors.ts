@@ -21,8 +21,15 @@ export const getSymbolStyles =
   (symbolId: string) =>
   (state: State): Style | undefined => {
     const activeLayout = getUIValue('activeLayout')(state);
+    return getSymbolStylesByLayout(symbolId, activeLayout)(state);
+  };
+
+/** Get symbol's styles by layout */
+export const getSymbolStylesByLayout =
+  (symbolId: string, layoutId: string) =>
+  (state: State): Style | undefined => {
     const symbol = getSymbol(symbolId)(state);
-    return symbol?.styles?.[activeLayout];
+    return symbol?.styles?.[layoutId];
   };
 
 // export const getSymbolStyleValue =
@@ -61,6 +68,9 @@ export const getLayout =
   (layoutId: string) =>
   (state: State): Layout | undefined =>
     state.layouts[layoutId];
+
+export const getLayoutIds = (state: State): string[] =>
+  Object.keys(state.layouts);
 
 export const getLayoutValue =
   <T extends keyof Layout>(layoutId: string, key: T) =>

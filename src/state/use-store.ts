@@ -7,6 +7,7 @@ import { initial } from './initial';
 import { layoutsCreate } from './layout/layouts-create';
 import { layoutsDelete } from './layout/layouts-delete';
 import { State } from './types';
+import { stylesApplyByLayout } from './symbol/styles-apply-by-layout';
 import { stylesUpdate } from './symbol/styles-update';
 import { symbolsCreate } from './symbol/symbols-create';
 import { symbolsUpdate } from './symbol/symbols-update';
@@ -23,6 +24,7 @@ const campaignActionMap = {
     create: symbolsCreate,
     update: symbolsUpdate,
     updateStyles: stylesUpdate,
+    applyStyles: stylesApplyByLayout,
   },
   layouts: {
     create: layoutsCreate,

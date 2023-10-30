@@ -1,6 +1,7 @@
-import { Button, ButtonGroup } from '@chakra-ui/react';
+import { IconButton, VStack } from '@chakra-ui/react';
 import { Style, Symbol } from 'state/types';
 import { campaignActions } from 'state/use-store';
+import { TextT, Image, Rectangle } from '@phosphor-icons/react';
 
 const commonStyles = {
   id: '',
@@ -18,7 +19,7 @@ const createButtons = [
       border: '1px solid blue',
       content: 'Text',
     },
-    // icon: TextFieldsIcon,
+    icon: TextT,
   },
   {
     label: 'Image',
@@ -30,7 +31,7 @@ const createButtons = [
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     },
-    // icon: AddPhotoAlternateIcon,
+    icon: Image,
   },
   {
     label: 'Box',
@@ -40,12 +41,12 @@ const createButtons = [
       left: '80px',
       background: 'orange',
     },
-    // icon: Crop54Icon,
+    icon: Rectangle,
   },
 ];
 
 export const ButtonsSymbolCreate = () => {
-  const createSymbol = (type: string, style: Style) => {
+  const createSymbol = (type: string, style: Style) => () => {
     campaignActions.symbols.create([
       {
         parentId: 'stage',
@@ -60,17 +61,18 @@ export const ButtonsSymbolCreate = () => {
   };
 
   return (
-    <ButtonGroup variant="outlined" aria-label="symbol create bar">
+    <VStack align="stretch" px="2" py="20" spacing="5" pl="18">
       {createButtons.map((b) => (
-        <Button
+        <IconButton
           key={b.label}
-          onClick={() => createSymbol(b.label, b.style)}
+          size="sm"
           color="inherit"
+          variant="ghost"
+          icon={<b.icon size="24" />}
+          onClick={createSymbol(b.label, b.style)}
           aria-label={b.label}
-        >
-          {b.label}
-        </Button>
+        />
       ))}
-    </ButtonGroup>
+    </VStack>
   );
 };
