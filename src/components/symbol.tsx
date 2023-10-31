@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { MoveableContainer } from './moveable-container';
 import { useStore, shallow } from 'state/use-store';
 import {
@@ -7,6 +6,7 @@ import {
   getSymbolStylesByLayout,
   getUIValue,
 } from 'state/selectors';
+import { memo } from 'react';
 
 interface SymbolProps {
   id: string;
@@ -30,8 +30,9 @@ export const Symbol = memo(({ id }: SymbolProps) => {
           height: '100%',
         }}
       >
-        {children &&
-          children.map((childId) => <Symbol key={childId} id={childId} />)}
+        {children?.map((childId) => (
+          <Symbol key={childId} id={childId} />
+        ))}
       </div>
     </MoveableContainer>
   );

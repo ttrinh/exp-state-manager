@@ -84,3 +84,8 @@ export const getUIValue =
   <T extends keyof UI>(key: T) =>
   (state: State): UI[T] =>
     state.ui[key];
+
+export const checkSymbolActive = (symbolId: string) => (state: State) => {
+  const selectedSymbols = getUIValue('selectedSymbols')(state);
+  return selectedSymbols.includes(symbolId);
+};

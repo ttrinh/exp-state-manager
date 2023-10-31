@@ -1,22 +1,18 @@
-import { CSSProperties, MouseEventHandler, ReactNode, useRef } from 'react';
-import Moveable, {
-  OnDrag,
-  OnDragEnd,
-  OnDragStart,
-  OnResize,
-  OnResizeEnd,
-  OnResizeStart,
-} from 'react-moveable';
-
-import { State } from 'state/types';
 import { actions, useStore } from 'state/use-store';
-
-const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
-const getActiveLayout = (state: State) => state.ui.activeLayout;
+import {
+  CSSProperties,
+  MouseEventHandler,
+  ReactNode,
+  useMemo,
+  useRef,
+} from 'react';
+import { getUIValue, checkSymbolActive } from 'state/selectors';
+import Moveable, { OnDrag, OnResize } from 'react-moveable';
 
 interface MoveableContainerProps {
   id: string;
   children: ReactNode;
+  disabled?: boolean;
   top: CSSProperties['top'];
   left: CSSProperties['left'];
   width: CSSProperties['width'];
@@ -26,105 +22,30 @@ interface MoveableContainerProps {
 export const MoveableContainer = ({
   id,
   children,
-  ...positionStyles
+  disabled = false,
+  ...position
 }: MoveableContainerProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
-  const selectedSymbols = useStore(getSelectedSymbols);
-  const activeLayout = useStore(getActiveLayout);
+  const isActive = useStore(checkSymbolActive(id));
+  const activeLayout = useStore(getUIValue('activeLayout'));
 
-  const handleDragStart = ({ target, clientX, clientY }: OnDragStart) => {
-    // console.log('onDragStart', target);
-  };
-
-  const handleDragEnd = ({ target, isDrag, clientX, clientY }: OnDragEnd) => {
-    // console.log('onDragEnd', target, isDrag);
-  };
-
-  const handleDrag = ({ left, top, target }: OnDrag) => {
-    const l = `${left}px`;
-    const t = `${top}px`;
-
-    // React 18 optimize rendering, so we need to adjust dom to sync the fast motion
-    target!.style.left = l;
-    target!.style.top = t;
-
-    actions.symbols.updateStyles([
-      {
-        symbolId: id,
-        layoutId: activeLayout,
-        style: {
-          top: t,
-          left: l,
-        },
-      },
-    ]);
-  };
-
-  // https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
-  const handleResize = ({ target, width, height, delta }: OnResize) => {
-    const w = delta[0] ? `${width}px` : undefined;
-    const h = delta[1] ? `${height}px` : undefined;
-
-    if (w || h) {
-      // React 18 optimize rendering, so we need to adjust dom to sync the fast motion
-      w && (target!.style.width = w);
-      h && (target!.style.height = h);
-
-      actions.symbols.updateStyles([
-        {
-          symbolId: id,
-          layoutId: activeLayout,
-          style: {
-            width: w,
-            height: h,
-          },
-        },
-      ]);
-    }
-  };
-
-  const handleResizeStart = ({
-    clientX,
-    clientY,
-    setOrigin,
-  }: OnResizeStart) => {
-    // console.log('onResizeStart', target);
-    // setOrigin(['%', '%']);
-    // dragStart?.set()
-  };
-
-  const handleResizeEnd = ({ isDrag, clientX, clientY }: OnResizeEnd) => {
-    // console.log('onResizeEnd', target, isDrag);
-  };
-
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    e.stopPropagation();
-
-    if (id !== 'stage') {
-      actions.ui.update({
-        selectedSymbols: [id],
-      });
-    }
-  };
-
-  const isActive = selectedSymbols.includes(id);
+  const drag = useMemo(() => dragFn(id, activeLayout), [id, activeLayout]);
+  const resize = useMemo(() => resizeFn(id, activeLayout), [id, activeLayout]);
 
   return (
     <>
       <div
         id={id}
         ref={elementRef}
-        style={{
-          position: 'absolute',
-          ...positionStyles,
-        }}
-        onClick={handleClick}
+        style={{ position: 'absolute', ...position }}
+        onClick={clickFn(id)}
       >
         {children}
       </div>
-      {isActive && (
+
+      {!disabled && isActive && (
         <Moveable
           // flushSync={flushSync} // NOTE: use flushSync will not improve performance in fast motion
           ref={moveableRef}
@@ -135,14 +56,82 @@ export const MoveableContainer = ({
           throttleResize={0}
           edgeDraggable={true}
           renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
-          onDragStart={handleDragStart}
-          onDrag={handleDrag}
-          onDragEnd={handleDragEnd}
-          onResize={handleResize}
-          onResizeStart={handleResizeStart}
-          onResizeEnd={handleResizeEnd}
+          onDrag={drag}
+          onResize={resize}
         />
       )}
     </>
   );
 };
+
+// select on click
+const clickFn =
+  (symbolId: string): MouseEventHandler<HTMLDivElement> =>
+  (e) => {
+    e.stopPropagation();
+    const selectedSymbols = symbolId === 'stage' ? [] : [symbolId];
+    actions.ui.update({ selectedSymbols });
+  };
+
+const dragFn =
+  (symbolId: string, layoutId: string) =>
+  ({ left, top, target }: OnDrag) => {
+    const l = `${left}px`;
+    const t = `${top}px`;
+
+    // React 18 optimize rendering, so we need to adjust dom to sync the fast motion
+    target!.style.left = l;
+    target!.style.top = t;
+
+    actions.symbols.updateStyles([
+      {
+        symbolId,
+        layoutId,
+        style: {
+          top: t,
+          left: l,
+        },
+      },
+    ]);
+  };
+
+// https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
+const resizeFn =
+  (symbolId: string, layoutId: string) =>
+  ({ target, width, height, delta }: OnResize) => {
+    const w = delta[0] ? `${width}px` : undefined;
+    const h = delta[1] ? `${height}px` : undefined;
+
+    if (w || h) {
+      // React 18 optimize rendering, so we need to adjust dom to sync the fast motion
+      w && (target!.style.width = w);
+      h && (target!.style.height = h);
+
+      actions.symbols.updateStyles([
+        {
+          symbolId,
+          layoutId,
+          style: {
+            width: w,
+            height: h,
+          },
+        },
+      ]);
+    }
+  };
+
+// const resizeStart = ({ clientX, clientY, setOrigin }: OnResizeStart) => {
+//   console.log('onResizeStart', target); setOrigin(['%', '%']); dragStart?.set()
+// };
+
+// const resizeEnd = ({ isDrag, clientX, clientY }: OnResizeEnd) => {
+//   console.log('onResizeEnd', target, isDrag);
+// };
+
+// const dragStart = ({ target, clientX, clientY }: OnDragStart) => {
+//   console.log('onDragStart', target);
+// };
+
+// const dragEnd = ({ target, isDrag, clientX, clientY }: OnDragEnd) => {
+//   console.log('onDragEnd', target, isDrag);
+// };
