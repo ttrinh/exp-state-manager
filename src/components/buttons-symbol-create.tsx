@@ -2,6 +2,7 @@ import { IconButton, VStack } from '@chakra-ui/react';
 import { Style, Symbol } from 'state/types';
 import { campaignActions } from 'state/use-store';
 import { TextT, Image, Rectangle } from '@phosphor-icons/react';
+import { memo } from 'react';
 
 const commonStyles = {
   id: '',
@@ -13,7 +14,7 @@ const commonStyles = {
 
 const createButtons = [
   {
-    label: 'Text',
+    label: 'text',
     style: {
       ...commonStyles,
       border: '1px solid blue',
@@ -23,7 +24,7 @@ const createButtons = [
     icon: TextT,
   },
   {
-    label: 'Image',
+    label: 'image',
     style: {
       ...commonStyles,
       top: '60px',
@@ -35,7 +36,7 @@ const createButtons = [
     icon: Image,
   },
   {
-    label: 'Box',
+    label: 'box',
     style: {
       ...commonStyles,
       top: '80px',
@@ -46,21 +47,7 @@ const createButtons = [
   },
 ];
 
-export const ButtonsSymbolCreate = () => {
-  const createSymbol = (type: string, style: Style) => () => {
-    campaignActions.symbols.create([
-      {
-        parentId: 'stage',
-        symbol: {
-          id: '',
-          type: type as Symbol['type'],
-          styles: {},
-        },
-        baseStyle: style,
-      },
-    ]);
-  };
-
+const ButtonsSymbolCreateCom = () => {
   return (
     <VStack align="stretch" px="2" py="20" spacing="5" pl="18">
       {createButtons.map((b) => (
@@ -76,4 +63,20 @@ export const ButtonsSymbolCreate = () => {
       ))}
     </VStack>
   );
+};
+
+export const ButtonsSymbolCreate = memo(ButtonsSymbolCreateCom);
+
+const createSymbol = (type: string, style: Style) => () => {
+  campaignActions.symbols.create([
+    {
+      parentId: 'stage',
+      symbol: {
+        id: '',
+        type: type as Symbol['type'],
+        styles: {},
+      },
+      baseStyle: style,
+    },
+  ]);
 };

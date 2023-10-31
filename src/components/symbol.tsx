@@ -4,7 +4,6 @@ import { useCampaignStore, shallow } from 'state/use-store';
 import {
   getSymbolChildren,
   getSymbolPosition,
-  getSymbolStyles,
   getSymbolStylesByLayout,
   getUIValue,
 } from 'state/selectors';

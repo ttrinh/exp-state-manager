@@ -13,7 +13,7 @@ export const LayoutItem = memo(({ layoutId }: LayoutItemProps) => {
   const name = useCampaignStore(getLayoutValue(layoutId, 'name'));
 
   const setActiveLayout = () => {
-    campaignActions.ui.update({ activeLayout: layoutId, selectedSymbols: [] });
+    campaignActions.ui.update({ activeLayout: layoutId });
   };
 
   const deleteLayout = () => {

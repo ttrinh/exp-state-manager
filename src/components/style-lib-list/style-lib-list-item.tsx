@@ -42,7 +42,7 @@ const StyleLibListItemCom = ({ symbolId, layoutId }: StyleLibListItemProps) => {
       <Text as="span" fontSize="xs" fontWeight="bold">
         {layoutName}
       </Text>
-      <Box>
+      <Box w="100%" h="50px" overflow="auto">
         <SymbolWithoutPosition symbolId={symbolId} layoutId={layoutId} />
       </Box>
     </VStack>

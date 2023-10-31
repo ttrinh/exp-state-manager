@@ -20,7 +20,14 @@ function Campaign() {
         <LayoutList />
         <Pasteboard />
       </VStack>
-      <VStack align="start" spacing="10" p="6" bg="whiteAlpha.100">
+      <VStack
+        flex="0 0 250px"
+        maxW="250px"
+        align="start"
+        spacing="10"
+        p="6"
+        bg="whiteAlpha.100"
+      >
         <HStack justify="start">
           <Button leftIcon={<ArrowUUpLeft />} size="sm" onClick={() => undo()}>
             Undo
