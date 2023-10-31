@@ -38,11 +38,15 @@ function Campaign() {
           <ThemeSwitch />
         </HStack>
 
-        <VStack align="start">
-          <Control label="X" styleKey="left" />
-          <Control label="Y" styleKey="top" />
-          <Control label="W" styleKey="width" />
-          <Control label="H" styleKey="height" />
+        <VStack align="start" spacing="4">
+          <HStack spacing="6">
+            <Control label="X" styleKey="left" />
+            <Control label="Y" styleKey="top" />
+          </HStack>
+          <HStack spacing="6">
+            <Control label="W" styleKey="width" />
+            <Control label="H" styleKey="height" />
+          </HStack>
         </VStack>
 
         <VStack w="100%" align="stretch">

@@ -51,11 +51,18 @@ const ControlCom = ({ styleKey, label }: ControlProps) => {
   return (
     <FormControl>
       <HStack>
-        <FormLabel flex="0 0 50px" m="0" fontSize="xs" htmlFor={key}>
+        <FormLabel
+          flex="0 0 12px"
+          m="0"
+          fontSize="xs"
+          fontWeight="bold"
+          opacity="0.6"
+          htmlFor={key}
+        >
           {label}
         </FormLabel>
         <NumberInput size="xs" value={val} onChange={handleChange}>
-          <NumberInputField id={key} />
+          <NumberInputField rounded="md" id={key} />
           <NumberInputStepper>
             <NumberIncrementStepper border="none" />
             <NumberDecrementStepper border="none" />

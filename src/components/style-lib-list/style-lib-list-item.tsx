@@ -30,7 +30,8 @@ const StyleLibListItemCom = ({ symbolId, layoutId }: StyleLibListItemProps) => {
       justify="stretch"
       bg="whiteAlpha.100"
       rounded="md"
-      p="2"
+      px="2"
+      py="1"
       border="1px dashed"
       borderColor="blackAlpha.200"
       _hover={{

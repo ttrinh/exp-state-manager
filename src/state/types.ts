@@ -12,7 +12,7 @@ export interface BaseSymbol {
 export type Symbol = BasicSymbol | Group;
 
 export interface BasicSymbol extends BaseSymbol {
-  type: 'image' | 'text' | 'box';
+  type: 'image' | 'text' | 'box' | 'element';
 }
 
 export interface Group extends BaseSymbol {
