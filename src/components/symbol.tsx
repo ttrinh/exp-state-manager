@@ -3,6 +3,7 @@ import { useStore, shallow } from 'state/use-store';
 import {
   getSymbolChildren,
   getSymbolPosition,
+  getSymbolPositionByLayout,
   getSymbolStylesByLayout,
   getUIValue,
 } from 'state/selectors';
@@ -50,9 +51,13 @@ export const SymbolWithoutPosition = ({
 }: SymbolWithoutPositionProps) => {
   const children = useStore(getSymbolChildren(symbolId), shallow);
   const style = useStore(getSymbolStylesByLayout(symbolId, layoutId), shallow);
+  const { width, height } = useStore(
+    getSymbolPositionByLayout(symbolId, layoutId),
+    shallow
+  );
 
   return (
-    <div style={style}>
+    <div style={{ ...style, width, height }}>
       {children &&
         children.map((childId) => <Symbol key={childId} id={childId} />)}
     </div>

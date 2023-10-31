@@ -10,10 +10,9 @@ import {
   NumberInputStepper,
   UseCounterProps,
 } from '@chakra-ui/react';
-
 import { actions, useStore, shallow } from 'state/use-store';
 import { Style } from 'state/types';
-import { getSymbolStyles, getUIValue } from 'state/selectors';
+import { getSymbolAllStylesByLayout, getUIValue } from 'state/selectors';
 
 interface ControlProps {
   label: string;
@@ -26,7 +25,7 @@ const ControlCom = ({ styleKey, label }: ControlProps) => {
   const symbolId = selectedSymbols?.[0] ?? 'stage';
 
   const value = useStore((state) => {
-    const styles = getSymbolStyles(symbolId)(state);
+    const styles = getSymbolAllStylesByLayout(symbolId, activeLayout)(state);
     return styles?.[styleKey];
   }, shallow);
 

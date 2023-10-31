@@ -1,14 +1,8 @@
-import { State, Style } from 'state/types';
-import { getSymbolStylesByLayout } from 'state/selectors';
-import { pick } from 'remeda';
-
-const positionKeys: (keyof Style)[] = [
-  'top',
-  'left',
-  'width',
-  'height',
-  'rotate',
-];
+import {
+  getSymbolPositionByLayout,
+  getSymbolStylesByLayout,
+} from 'state/selectors';
+import { State } from 'state/types';
 
 type StylesApplyByLayoutPayload = Array<{
   symbolId: string;
@@ -26,12 +20,12 @@ export function stylesApplyByLayout(
   payload.forEach(({ symbolId, targetLayoutId, sourceLayoutId }) => {
     const sourceStyle =
       getSymbolStylesByLayout(symbolId, sourceLayoutId)(draft) ?? {};
-    const targetStyle =
-      getSymbolStylesByLayout(symbolId, targetLayoutId)(draft) ?? {};
+    const targetPosition =
+      getSymbolPositionByLayout(symbolId, targetLayoutId)(draft) ?? {};
 
     draft.symbols[symbolId].styles[targetLayoutId] = {
       ...sourceStyle,
-      ...pick(targetStyle, positionKeys), // keep target position
+      ...targetPosition, // keep target position
     };
   });
 

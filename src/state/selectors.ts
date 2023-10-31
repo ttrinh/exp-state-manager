@@ -1,5 +1,14 @@
+import { omit } from 'remeda';
 import { isGroupType, isStage } from './type-check';
 import { Layout, Stage, State, Style, Symbol, UI } from './types';
+
+export const POSITION_KEYS: (keyof Style)[] = [
+  'top',
+  'left',
+  'width',
+  'height',
+  'rotate',
+];
 
 /**
  * Symbols
@@ -16,20 +25,20 @@ export const getSymbolChildren =
     return isGroupType(symbol) ? symbol.children : [];
   };
 
-/** Get symbol's styles of the current layout */
-export const getSymbolStyles =
-  (symbolId: string) =>
-  (state: State): Style | undefined => {
-    const activeLayout = getUIValue('activeLayout')(state);
-    return getSymbolStylesByLayout(symbolId, activeLayout)(state);
-  };
-
-/** Get symbol's styles by layout */
-export const getSymbolStylesByLayout =
+/** Get all symbol's styles (including positions) by layout */
+export const getSymbolAllStylesByLayout =
   (symbolId: string, layoutId: string) =>
   (state: State): Style | undefined => {
     const symbol = getSymbol(symbolId)(state);
     return symbol?.styles?.[layoutId];
+  };
+
+/** Get symbol's styles (without position) by layout */
+export const getSymbolStylesByLayout =
+  (symbolId: string, layoutId: string) =>
+  (state: State): Style | undefined => {
+    const style = getSymbolAllStylesByLayout(symbolId, layoutId)(state);
+    return style ? omit(style, POSITION_KEYS) : undefined;
   };
 
 // export const getSymbolStyleValue =
@@ -37,23 +46,40 @@ export const getSymbolStylesByLayout =
 //   (state: State): Style[T] =>
 //     getSymbolStyles(symbolId)(state)?.[key];
 
+/** Get symbol's position by layout */
+export const getSymbolPositionByLayout =
+  (symbolId: string, layoutId: string) => (state: State) => {
+    const symbol = getSymbol(symbolId)(state);
+    const layout = getLayout(layoutId)(state);
+    const styles = getSymbolAllStylesByLayout(symbolId, layoutId)(state);
+
+    // width and height of Stage depends on the current layout
+    const isLayoutPosition = isStage(symbol) && layout;
+    const width = isLayoutPosition ? layout.w : `${styles?.width ?? '100px'}`;
+    const height = isLayoutPosition ? layout.h : `${styles?.height ?? '100px'}`;
+    const rotate = isLayoutPosition ? '0deg' : `${styles?.rotate}`;
+
+    return {
+      top: `${styles?.top ?? '0px'}`,
+      left: `${styles?.left ?? '0px'}`,
+      width,
+      height,
+      rotate,
+    };
+  };
+
+/** Get symbol's styles (without position) of the current layout */
+export const getSymbolStyles =
+  (symbolId: string) =>
+  (state: State): Style | undefined => {
+    const activeLayout = getUIValue('activeLayout')(state);
+    return getSymbolStylesByLayout(symbolId, activeLayout)(state);
+  };
+
 /** Get symbol's position of the current layout */
 export const getSymbolPosition = (symbolId: string) => (state: State) => {
-  const symbol = getSymbol(symbolId)(state);
-  const styles = getSymbolStyles(symbolId)(state);
-  const layout = getActiveLayout(state);
-
-  // width and height of Stage depends on the current layout
-  const isLayoutPosition = isStage(symbol) && layout;
-  const width = isLayoutPosition ? layout.w : `${styles?.width ?? '100px'}`;
-  const height = isLayoutPosition ? layout.h : `${styles?.height ?? '100px'}`;
-
-  return {
-    top: `${styles?.top ?? '0px'}`,
-    left: `${styles?.left ?? '0px'}`,
-    width,
-    height,
-  };
+  const activeLayout = getUIValue('activeLayout')(state);
+  return getSymbolPositionByLayout(symbolId, activeLayout)(state);
 };
 
 /**
