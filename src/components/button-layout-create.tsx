@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { generateId } from 'lib/generate-id';
-import { campaignActions } from 'state/use-store';
+import { actions } from 'state/use-store';
 import { Plus } from '@phosphor-icons/react';
 
 export const ButtonLayoutCreate = () => {
@@ -8,7 +8,7 @@ export const ButtonLayoutCreate = () => {
     const w = randomNumber(100, 500);
     const h = randomNumber(100, 500);
 
-    campaignActions.layouts.create([
+    actions.layouts.create([
       {
         layout: {
           id: generateId('layout'),

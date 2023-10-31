@@ -1,6 +1,6 @@
 import { IconButton, VStack } from '@chakra-ui/react';
 import { Style, Symbol } from 'state/types';
-import { campaignActions } from 'state/use-store';
+import { actions } from 'state/use-store';
 import { TextT, Image, Rectangle } from '@phosphor-icons/react';
 import { memo } from 'react';
 
@@ -68,7 +68,7 @@ const ButtonsSymbolCreateCom = () => {
 export const ButtonsSymbolCreate = memo(ButtonsSymbolCreateCom);
 
 const createSymbol = (type: string, style: Style) => () => {
-  campaignActions.symbols.create([
+  actions.symbols.create([
     {
       parentId: 'stage',
       symbol: {

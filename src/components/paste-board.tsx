@@ -1,14 +1,14 @@
-import { campaignActions, useCampaignStore } from 'state/use-store';
+import { actions, useStore } from 'state/use-store';
 import { Symbol } from './symbol';
 import { useEffect, useRef } from 'react';
 import { getUIValue } from 'state/selectors';
 
-const deselectAll = () => campaignActions.ui.update({ selectedSymbols: [] });
+const deselectAll = () => actions.ui.update({ selectedSymbols: [] });
 
 export const Pasteboard = () => {
-  const activeStage = useCampaignStore(getUIValue('activeStage'));
+  const activeStage = useStore(getUIValue('activeStage'));
 
-  useEffectOnce(campaignActions.app.init);
+  useEffectOnce(actions.app.init);
 
   return (
     <div

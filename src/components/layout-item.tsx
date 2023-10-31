@@ -1,5 +1,5 @@
 import { Button, ButtonGroup, IconButton } from '@chakra-ui/react';
-import { campaignActions, useCampaignStore } from 'state/use-store';
+import { actions, useStore } from 'state/use-store';
 import { getLayoutValue, getUIValue } from 'state/selectors';
 import { memo } from 'react';
 import { TrashSimple } from '@phosphor-icons/react';
@@ -9,15 +9,15 @@ interface LayoutItemProps {
 }
 
 export const LayoutItem = memo(({ layoutId }: LayoutItemProps) => {
-  const activeLayout = useCampaignStore(getUIValue('activeLayout'));
-  const name = useCampaignStore(getLayoutValue(layoutId, 'name'));
+  const activeLayout = useStore(getUIValue('activeLayout'));
+  const name = useStore(getLayoutValue(layoutId, 'name'));
 
   const setActiveLayout = () => {
-    campaignActions.ui.update({ activeLayout: layoutId });
+    actions.ui.update({ activeLayout: layoutId });
   };
 
   const deleteLayout = () => {
-    campaignActions.layouts.delete([layoutId]);
+    actions.layouts.delete([layoutId]);
   };
 
   const isActive = activeLayout === layoutId;

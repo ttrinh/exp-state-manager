@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { campaignActions, useCampaignStore } from 'state/use-store';
+import { actions, useStore } from 'state/use-store';
 import { getLayoutValue, getUIValue } from 'state/selectors';
 import { Box, Text, VStack } from '@chakra-ui/react';
 import { SymbolWithoutPosition } from 'components/symbol';
@@ -10,11 +10,11 @@ interface StyleLibListItemProps {
 }
 
 const StyleLibListItemCom = ({ symbolId, layoutId }: StyleLibListItemProps) => {
-  const activeLayout = useCampaignStore(getUIValue('activeLayout'));
-  const layoutName = useCampaignStore(getLayoutValue(layoutId, 'name'));
+  const activeLayout = useStore(getUIValue('activeLayout'));
+  const layoutName = useStore(getLayoutValue(layoutId, 'name'));
 
   const applyStyle = () => {
-    campaignActions.symbols.applyStyles([
+    actions.symbols.applyStyles([
       {
         symbolId,
         sourceLayoutId: layoutId,

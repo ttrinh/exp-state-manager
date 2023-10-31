@@ -1,6 +1,6 @@
 import { actionMap } from './action-map/middleware';
 import { appInit } from './app-init';
-import { create, useStore } from 'zustand';
+import { create, useStore as useZustandStore } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { initial } from './initial';
@@ -47,14 +47,14 @@ const storeWithZundo = temporal(storeWithImmer, {
 });
 const storeWithDevtool = devtools(storeWithZundo);
 
-export const useCampaignStore = create(storeWithDevtool);
+export const useStore = create(storeWithDevtool);
 
 export const useTemporalStore = <T>(
   selector: (state: TemporalState<State>) => T,
   equality?: (a: T, b: T) => boolean
-) => useStore(useCampaignStore.temporal, selector, equality);
+) => useZustandStore(useStore.temporal, selector, equality);
 
-export const campaignActions = useCampaignStore.actions;
+export const actions = useStore.actions;
 
 /**
  * Zustand's shallow compare prev and next props

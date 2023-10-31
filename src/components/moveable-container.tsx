@@ -9,7 +9,7 @@ import Moveable, {
 } from 'react-moveable';
 
 import { State } from 'state/types';
-import { campaignActions, useCampaignStore } from 'state/use-store';
+import { actions, useStore } from 'state/use-store';
 
 const getSelectedSymbols = (state: State) => state.ui.selectedSymbols;
 const getActiveLayout = (state: State) => state.ui.activeLayout;
@@ -31,8 +31,8 @@ export const MoveableContainer = ({
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
-  const selectedSymbols = useCampaignStore(getSelectedSymbols);
-  const activeLayout = useCampaignStore(getActiveLayout);
+  const selectedSymbols = useStore(getSelectedSymbols);
+  const activeLayout = useStore(getActiveLayout);
 
   const handleDragStart = ({ target, clientX, clientY }: OnDragStart) => {
     // console.log('onDragStart', target);
@@ -50,7 +50,7 @@ export const MoveableContainer = ({
     target!.style.left = l;
     target!.style.top = t;
 
-    campaignActions.symbols.updateStyles([
+    actions.symbols.updateStyles([
       {
         symbolId: id,
         layoutId: activeLayout,
@@ -72,7 +72,7 @@ export const MoveableContainer = ({
       w && (target!.style.width = w);
       h && (target!.style.height = h);
 
-      campaignActions.symbols.updateStyles([
+      actions.symbols.updateStyles([
         {
           symbolId: id,
           layoutId: activeLayout,
@@ -103,7 +103,7 @@ export const MoveableContainer = ({
     e.stopPropagation();
 
     if (id !== 'stage') {
-      campaignActions.ui.update({
+      actions.ui.update({
         selectedSymbols: [id],
       });
     }

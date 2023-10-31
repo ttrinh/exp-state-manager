@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { MoveableContainer } from './moveable-container';
-import { useCampaignStore, shallow } from 'state/use-store';
+import { useStore, shallow } from 'state/use-store';
 import {
   getSymbolChildren,
   getSymbolPosition,
@@ -13,13 +13,10 @@ interface SymbolProps {
 }
 
 export const Symbol = memo(({ id }: SymbolProps) => {
-  const activeLayout = useCampaignStore(getUIValue('activeLayout'));
-  const children = useCampaignStore(getSymbolChildren(id), shallow);
-  const style = useCampaignStore(
-    getSymbolStylesByLayout(id, activeLayout),
-    shallow
-  );
-  const position = useCampaignStore(getSymbolPosition(id), shallow);
+  const activeLayout = useStore(getUIValue('activeLayout'));
+  const children = useStore(getSymbolChildren(id), shallow);
+  const style = useStore(getSymbolStylesByLayout(id, activeLayout), shallow);
+  const position = useStore(getSymbolPosition(id), shallow);
 
   return (
     <MoveableContainer id={id} {...position}>
@@ -50,11 +47,8 @@ export const SymbolWithoutPosition = ({
   symbolId,
   layoutId,
 }: SymbolWithoutPositionProps) => {
-  const children = useCampaignStore(getSymbolChildren(symbolId), shallow);
-  const style = useCampaignStore(
-    getSymbolStylesByLayout(symbolId, layoutId),
-    shallow
-  );
+  const children = useStore(getSymbolChildren(symbolId), shallow);
+  const style = useStore(getSymbolStylesByLayout(symbolId, layoutId), shallow);
 
   return (
     <div style={style}>

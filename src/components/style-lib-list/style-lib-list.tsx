@@ -1,14 +1,14 @@
 import { getLayoutIds, getUIValue } from 'state/selectors';
 import { memo } from 'react';
 import { StyleLibListItem } from './style-lib-list-item';
-import { useCampaignStore, shallow } from 'state/use-store';
+import { useStore, shallow } from 'state/use-store';
 import { Heading, VStack } from '@chakra-ui/react';
 
 const StyleLibListCom = () => {
-  const activeSymbolIds = useCampaignStore(getUIValue('selectedSymbols'));
-  const layoutIds = useCampaignStore(getLayoutIds, shallow);
+  const activeSymbolIds = useStore(getUIValue('selectedSymbols'));
+  const layoutIds = useStore(getLayoutIds, shallow);
 
-  if (layoutIds.length < 2 && activeSymbolIds.length === 0) {
+  if (layoutIds.length < 2 || activeSymbolIds.length === 0) {
     return null;
   }
 

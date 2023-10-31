@@ -112,10 +112,12 @@ export interface Addon {
   outerDisplay: (passingAppState: {
     state: State;
     action: unknown;
+    selector: unknown;
   }) => ReactNode; // display this component in the `placement` above. Ex: a button to go into innerDisplay, or a search component
   innerDisplay?: (passingAppState: {
     state: State;
     action: unknown;
+    selector: unknown;
   }) => ReactNode;
 }
 
