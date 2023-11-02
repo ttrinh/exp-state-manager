@@ -1,6 +1,15 @@
 import { omit } from 'remeda';
 import { isGroupType, isStage } from './type-check';
-import { Layout, Stage, State, Style, Symbol, UI } from './types';
+import {
+  Layout,
+  SessionState,
+  SessionUI,
+  Stage,
+  State,
+  Style,
+  Symbol,
+  UI,
+} from './types';
 
 export const POSITION_KEYS: (keyof Style)[] = [
   'top',
@@ -115,3 +124,11 @@ export const checkSymbolActive = (symbolId: string) => (state: State) => {
   const selectedSymbols = getUIValue('selectedSymbols')(state);
   return selectedSymbols.includes(symbolId);
 };
+
+/**
+ * Temporary Session
+ */
+export const getSessionUI =
+  <T extends keyof SessionUI>(key: T) =>
+  (sessionState: SessionState): SessionUI[T] =>
+    sessionState.ui[key];

@@ -1,7 +1,7 @@
 import { actions, useStore } from 'state/use-store';
+import { getUIValue } from 'state/selectors';
 import { Symbol } from './symbol';
 import { useEffect, useRef } from 'react';
-import { getUIValue } from 'state/selectors';
 
 const deselectAll = () => actions.ui.update({ selectedSymbols: [] });
 

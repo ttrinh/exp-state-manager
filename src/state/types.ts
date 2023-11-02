@@ -137,3 +137,15 @@ export type State = {
   layouts: Record<string, Layout>;
   ui: UI;
 };
+
+// Temporary session state while working on a campaign.
+export type SessionUI = {
+  top?: number;
+  left?: number;
+  width?: number;
+  height?: number;
+};
+
+export type SessionState = {
+  ui: SessionUI;
+};

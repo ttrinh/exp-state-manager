@@ -6,6 +6,7 @@ import { immer } from 'zustand/middleware/immer';
 import { initial } from './initial';
 import { layoutsCreate } from './layout/layouts-create';
 import { layoutsDelete } from './layout/layouts-delete';
+import { sessionUIUpdate } from './session/session-ui-update';
 import { State } from './types';
 import { stylesApplyByLayout } from './symbol/styles-apply-by-layout';
 import { stylesUpdate } from './symbol/styles-update';
@@ -18,6 +19,12 @@ import type { TemporalState } from 'zundo';
 
 const ZUNDO_THOTTLE_TIME = 1000; // ms
 const ZUNDO_LIMIT = 50;
+
+/**
+ * Zustand's shallow compare prev and next props
+ * https://github.com/pmndrs/zustand/blob/main/src/shallow.ts
+ */
+export { shallow } from 'zustand/shallow';
 
 const campaignActionMap = {
   symbols: {
@@ -45,9 +52,8 @@ const storeWithZundo = temporal(storeWithImmer, {
   handleSet: (handleSet) =>
     throttle<typeof handleSet>((state) => handleSet(state), ZUNDO_THOTTLE_TIME),
 });
-const storeWithDevtool = devtools(storeWithZundo);
 
-export const useStore = create(storeWithDevtool);
+export const useStore = create(devtools(storeWithZundo));
 
 export const useTemporalStore = <T>(
   selector: (state: TemporalState<State>) => T,
@@ -57,7 +63,18 @@ export const useTemporalStore = <T>(
 export const actions = useStore.actions;
 
 /**
- * Zustand's shallow compare prev and next props
- * https://github.com/pmndrs/zustand/blob/main/src/shallow.ts
+ * Temporary Session Store
  */
-export { shallow } from 'zustand/shallow';
+const sessionStateActionMap = {
+  ui: {
+    update: sessionUIUpdate,
+  },
+};
+
+const sessionStoreWithImmer = immer(
+  actionMap(sessionStateActionMap, initial.sessionState)
+);
+
+export const useSessionStore = create(devtools(sessionStoreWithImmer));
+
+export const sessionActions = useSessionStore.actions;

@@ -1,4 +1,4 @@
-import { actions, useStore } from 'state/use-store';
+import { actions, sessionActions, useStore } from 'state/use-store';
 import {
   CSSProperties,
   MouseEventHandler,
@@ -93,6 +93,8 @@ const dragFn =
         },
       },
     ]);
+
+    sessionActions.ui.update({ top, left });
   };
 
 // https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
@@ -117,6 +119,8 @@ const resizeFn =
           },
         },
       ]);
+
+      sessionActions.ui.update({ width, height });
     }
   };
 

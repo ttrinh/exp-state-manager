@@ -5,11 +5,13 @@ import { Control } from 'components/control';
 import { LayoutList } from 'components/layout-list';
 import { Pasteboard } from 'components/paste-board';
 import { ThemeSwitch } from 'components/theme-switch';
-import { useTemporalStore } from 'state/use-store';
+import { useSessionStore, useTemporalStore } from 'state/use-store';
 import { StyleLibList } from 'components/style-lib-list';
+import { getSessionUI } from 'state/selectors';
 
 function Campaign() {
   const { undo, redo } = useTemporalStore((state) => state);
+  const top = useSessionStore(getSessionUI('top'));
 
   return (
     <HStack w="100%" h="100%" align="stretch" justify="stretch">
@@ -52,6 +54,10 @@ function Campaign() {
         <VStack w="100%" align="stretch">
           <StyleLibList />
         </VStack>
+
+        <HStack>
+          <div>{top}</div>
+        </HStack>
 
         {/* <History /> */}
       </VStack>

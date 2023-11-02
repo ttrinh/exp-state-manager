@@ -1,4 +1,12 @@
-import type { Style, Symbol, UI, State, Layout } from './types';
+import type {
+  Style,
+  Symbol,
+  UI,
+  State,
+  Layout,
+  SessionUI,
+  SessionState,
+} from './types';
 
 const style: Style = {
   top: '0px',
@@ -32,10 +40,20 @@ const state: State = {
   ui,
 };
 
+const sessionState: SessionState = {
+  ui: {
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0,
+  },
+};
+
 export const initial = {
   style,
   symbol,
   ui,
   state,
+  sessionState,
   layout,
 };
