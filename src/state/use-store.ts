@@ -17,14 +17,14 @@ import { throttle } from 'lodash';
 import { uiUpdate } from './ui/ui-update';
 import type { TemporalState } from 'zundo';
 
-const ZUNDO_THOTTLE_TIME = 1000; // ms
-const ZUNDO_LIMIT = 50;
-
 /**
  * Zustand's shallow compare prev and next props
  * https://github.com/pmndrs/zustand/blob/main/src/shallow.ts
  */
 export { shallow } from 'zustand/shallow';
+
+const ZUNDO_THOTTLE_TIME = 1000; // ms
+const ZUNDO_LIMIT = 50; // amount of undoable items
 
 const campaignActionMap = {
   symbols: {
@@ -55,6 +55,13 @@ const storeWithZundo = temporal(storeWithImmer, {
 
 export const useStore = create(devtools(storeWithZundo));
 
+/**
+ * Use Temporal Store that exposes undoable actions: undo, redo, clear, ..
+ * - https://github.com/charkour/zundo#then-bind-your-components
+ * ```ts
+ * const { undo, redo, clear } = useTemporalStore((state) => state);
+ * ```
+ **/
 export const useTemporalStore = <T>(
   selector: (state: TemporalState<State>) => T,
   equality?: (a: T, b: T) => boolean
@@ -63,7 +70,7 @@ export const useTemporalStore = <T>(
 export const actions = useStore.actions;
 
 /**
- * Temporary Session Store
+ * Temporary Session Store for the working campaign
  */
 const sessionStateActionMap = {
   ui: {

@@ -7,7 +7,7 @@ import {
   useRef,
 } from 'react';
 import { getUIValue, checkSymbolActive } from 'state/selectors';
-import Moveable, { OnDrag, OnResize } from 'react-moveable';
+import Moveable, { OnDrag, OnDragEnd, OnResize } from 'react-moveable';
 
 interface MoveableContainerProps {
   id: string;
@@ -33,6 +33,10 @@ export const MoveableContainer = ({
 
   const drag = useMemo(() => dragFn(id, activeLayout), [id, activeLayout]);
   const resize = useMemo(() => resizeFn(id, activeLayout), [id, activeLayout]);
+  const dragEnd = useMemo(
+    () => dragEndFn(id, activeLayout),
+    [id, activeLayout]
+  );
 
   return (
     <>
@@ -57,6 +61,7 @@ export const MoveableContainer = ({
           edgeDraggable={true}
           renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
           onDrag={drag}
+          onDragEnd={dragEnd}
           onResize={resize}
         />
       )}
@@ -75,26 +80,33 @@ const clickFn =
 
 const dragFn =
   (symbolId: string, layoutId: string) =>
-  ({ left, top, target }: OnDrag) => {
-    const l = `${left}px`;
-    const t = `${top}px`;
+  ({ left, top, target, transform }: OnDrag) => {
+    target.style.transform = transform;
+    sessionActions.ui.update({ top, left });
+  };
 
-    // React 18 optimize rendering, so we need to adjust dom to sync the fast motion
-    target!.style.left = l;
-    target!.style.top = t;
+const dragEndFn =
+  (symbolId: string, layoutId: string) =>
+  ({ target, isDrag, clientX, clientY, ...rest }: OnDragEnd) => {
+    // target.style.transform = 'unset';
+    // target.style.left = `${clientX}px`;
+    // target.style.top = `${clientY}px`;
 
     actions.symbols.updateStyles([
       {
         symbolId,
         layoutId,
         style: {
-          top: t,
-          left: l,
+          top: clientX,
+          left: clientY,
         },
       },
     ]);
 
-    sessionActions.ui.update({ top, left });
+    const pos = (target as HTMLDivElement).getClientRects();
+    console.log(clientX, clientY, (target as HTMLDivElement).offsetLeft, pos);
+
+    sessionActions.ui.update({ top: undefined, left: undefined });
   };
 
 // https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
@@ -134,8 +146,4 @@ const resizeFn =
 
 // const dragStart = ({ target, clientX, clientY }: OnDragStart) => {
 //   console.log('onDragStart', target);
-// };
-
-// const dragEnd = ({ target, isDrag, clientX, clientY }: OnDragEnd) => {
-//   console.log('onDragEnd', target, isDrag);
 // };
