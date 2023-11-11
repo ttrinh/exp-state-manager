@@ -5,10 +5,10 @@ import { useStore, shallow } from 'state/use-store';
 import { Heading, VStack } from '@chakra-ui/react';
 
 const StyleLibListCom = () => {
-  const activeSymbolIds = useStore(getUIValue('selectedSymbols'));
+  const activeElementIds = useStore(getUIValue('selectedElements'));
   const layoutIds = useStore(getLayoutIds, shallow);
 
-  if (layoutIds.length < 2 || activeSymbolIds.length === 0) {
+  if (layoutIds.length < 2 || activeElementIds.length === 0) {
     return null;
   }
 
@@ -21,7 +21,7 @@ const StyleLibListCom = () => {
         <StyleLibListItem
           key={layoutId}
           layoutId={layoutId}
-          symbolId={activeSymbolIds[0]}
+          elementId={activeElementIds[0]}
         />
       ))}
     </VStack>

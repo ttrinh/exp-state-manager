@@ -1,7 +1,7 @@
 import { generateId } from 'lib/generate-id';
 import { initial } from 'state/initial';
 import { getUIValue } from 'state/selectors';
-import { stylesCreate } from 'state/symbol/styles-create';
+import { stylesCreate } from 'state/element/styles-create';
 import { Layout, State } from 'state/types';
 
 export type LayoutsCreatePayload = Array<{
@@ -21,11 +21,11 @@ export function layoutsCreate(draft: State, payload: LayoutsCreatePayload) {
     };
 
     if (activeLayout) {
-      Object.keys(draft.symbols).map((symbolId) => {
+      Object.keys(draft.elements).map((elementId) => {
         const currentLayoutStyle =
-          draft.symbols[symbolId]?.styles[activeLayout] ?? {};
+          draft.elements[elementId]?.styles[activeLayout] ?? {};
         stylesCreate(draft, [
-          { symbolId, layoutId: id, style: currentLayoutStyle },
+          { elementId, layoutId: id, style: currentLayoutStyle },
         ]);
       });
     }

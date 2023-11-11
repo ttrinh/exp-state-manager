@@ -6,7 +6,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { getUIValue, checkSymbolActive } from 'state/selectors';
+import { getUIValue, checkElementActive } from 'state/selectors';
 import Moveable, { OnDrag, OnDragEnd, OnResize } from 'react-moveable';
 
 interface MoveableContainerProps {
@@ -28,7 +28,7 @@ export const MoveableContainer = ({
   const elementRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<Moveable>(null);
 
-  const isActive = useStore(checkSymbolActive(id));
+  const isActive = useStore(checkElementActive(id));
   const activeLayout = useStore(getUIValue('activeLayout'));
 
   const drag = useMemo(() => dragFn(id, activeLayout), [id, activeLayout]);
@@ -71,30 +71,30 @@ export const MoveableContainer = ({
 
 // select on click
 const clickFn =
-  (symbolId: string): MouseEventHandler<HTMLDivElement> =>
+  (elementId: string): MouseEventHandler<HTMLDivElement> =>
   (e) => {
     e.stopPropagation();
-    const selectedSymbols = symbolId === 'stage' ? [] : [symbolId];
-    actions.ui.update({ selectedSymbols });
+    const selectedElements = elementId === 'stage' ? [] : [elementId];
+    actions.ui.update({ selectedElements });
   };
 
 const dragFn =
-  (symbolId: string, layoutId: string) =>
+  (elementId: string, layoutId: string) =>
   ({ left, top, target, transform }: OnDrag) => {
     target.style.transform = transform;
     sessionActions.ui.update({ top, left });
   };
 
 const dragEndFn =
-  (symbolId: string, layoutId: string) =>
+  (elementId: string, layoutId: string) =>
   ({ target, isDrag, clientX, clientY, ...rest }: OnDragEnd) => {
     // target.style.transform = 'unset';
     // target.style.left = `${clientX}px`;
     // target.style.top = `${clientY}px`;
 
-    actions.symbols.updateStyles([
+    actions.elements.updateStyles([
       {
-        symbolId,
+        elementId,
         layoutId,
         style: {
           top: clientX,
@@ -111,7 +111,7 @@ const dragEndFn =
 
 // https://daybrush.com/moveable/storybook/?path=/story/basic--resizable
 const resizeFn =
-  (symbolId: string, layoutId: string) =>
+  (elementId: string, layoutId: string) =>
   ({ target, width, height, delta }: OnResize) => {
     const w = delta[0] ? `${width}px` : undefined;
     const h = delta[1] ? `${height}px` : undefined;
@@ -121,9 +121,9 @@ const resizeFn =
       w && (target!.style.width = w);
       h && (target!.style.height = h);
 
-      actions.symbols.updateStyles([
+      actions.elements.updateStyles([
         {
-          symbolId,
+          elementId,
           layoutId,
           style: {
             width: w,

@@ -1,9 +1,9 @@
 import { actions, useStore } from 'state/use-store';
 import { getUIValue } from 'state/selectors';
-import { Symbol } from './symbol';
+import { Element } from './element';
 import { useEffect, useRef } from 'react';
 
-const deselectAll = () => actions.ui.update({ selectedSymbols: [] });
+const deselectAll = () => actions.ui.update({ selectedElements: [] });
 
 export const Pasteboard = () => {
   const activeStage = useStore(getUIValue('activeStage'));
@@ -24,7 +24,7 @@ export const Pasteboard = () => {
         background: 'rgba(0,0,0,0.1)',
       }}
     >
-      <Symbol id={activeStage ?? ''} />
+      <Element id={activeStage ?? ''} />
     </div>
   );
 };

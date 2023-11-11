@@ -1,6 +1,6 @@
 import { ArrowUUpLeft, ArrowUUpRight } from '@phosphor-icons/react';
 import { Button, HStack, VStack } from '@chakra-ui/react';
-import { ButtonsSymbolCreate } from 'components/buttons-symbol-create';
+import { ButtonsElementCreate } from 'components/buttons-element-create';
 import { Control } from 'components/control';
 import { LayoutList } from 'components/layout-list';
 import { Pasteboard } from 'components/paste-board';
@@ -16,7 +16,7 @@ function Campaign() {
   return (
     <HStack w="100%" h="100%" align="stretch" justify="stretch">
       <VStack bg="whiteAlpha.100">
-        <ButtonsSymbolCreate />
+        <ButtonsElementCreate />
       </VStack>
       <VStack flex="1" align="stretch" h="100%" spacing="0">
         <LayoutList />

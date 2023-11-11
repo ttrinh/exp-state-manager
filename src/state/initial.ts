@@ -1,12 +1,4 @@
-import type {
-  Style,
-  Symbol,
-  UI,
-  State,
-  Layout,
-  SessionUI,
-  SessionState,
-} from './types';
+import type { Style, Element, UI, State, Layout, SessionState } from './types';
 
 const style: Style = {
   top: '0px',
@@ -15,7 +7,7 @@ const style: Style = {
   height: '100px',
 };
 
-const symbol: Symbol = {
+const element: Element = {
   id: 'text1',
   type: 'text',
   styles: {},
@@ -30,12 +22,12 @@ const layout: Layout = {
 
 const ui: UI = {
   activeStage: 'stage',
-  selectedSymbols: [],
+  selectedElements: [],
   activeLayout: '',
 };
 
 const state: State = {
-  symbols: {},
+  elements: {},
   layouts: {},
   ui,
 };
@@ -51,7 +43,7 @@ const sessionState: SessionState = {
 
 export const initial = {
   style,
-  symbol,
+  element,
   ui,
   state,
   sessionState,

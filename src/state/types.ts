@@ -1,32 +1,34 @@
 import { CSSProperties, ReactNode } from 'react';
 
-export interface BaseSymbol {
+interface BasicElement {
   id: string;
-  symbolIdRef?: string; // reference to original copied symbol if any
+  type: string;
+  elementIdRef?: string; // reference to original copied element if any
   name?: string;
   styles: Record<string, Style>;
+  attributes?: Record<string, Attribute>;
   interactions?: Record<string, Interaction>;
-  timeline?: Record<string, Timeline>;
+  timelines?: Record<string, Timeline>;
 }
 
-export type Symbol = BasicSymbol | Group;
+export type Element = BasicElement | Group;
 
-export interface BasicSymbol extends BaseSymbol {
-  type: 'image' | 'text' | 'box' | 'element';
-}
-
-export interface Group extends BaseSymbol {
+export interface Group extends BasicElement {
   type: 'group' | 'scene';
   children?: string[];
 }
 
-export interface Stage extends BaseSymbol {
+export interface Stage extends BasicElement {
   type: 'stage';
   children?: string[];
   layout?: Layout;
 }
 
 export interface Style extends CSSProperties {
+  // id: string;
+}
+
+export interface Attribute extends Record<string, unknown> {
   // id: string;
 }
 
@@ -125,15 +127,15 @@ export interface UI {
   // indicate which layout's size is active
   activeStage: string;
 
-  // mark selected symbols on stage
-  selectedSymbols: string[];
+  // mark selected elements on stage
+  selectedElements: string[];
 
   // indicate which layout's size is active
   activeLayout: string;
 }
 
 export type State = {
-  symbols: Record<string, Symbol | Stage>;
+  elements: Record<string, Element | Stage>;
   layouts: Record<string, Layout>;
   ui: UI;
 };

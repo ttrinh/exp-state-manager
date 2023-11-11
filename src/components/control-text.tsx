@@ -1,24 +1,24 @@
 import { FormControl, FormLabel, HStack, Input } from '@chakra-ui/react';
 import { ChangeEventHandler, memo } from 'react';
 
-import { Symbol } from 'state/types';
+import { Element } from 'state/types';
 import { actions, useStore } from 'state/use-store';
 
 interface ControlTextProps {
   label: string;
-  symbolKey: keyof Symbol;
+  elementKey: keyof Element;
 }
 
-const ControlTextCom = ({ symbolKey, label }: ControlTextProps) => {
+const ControlTextCom = ({ elementKey, label }: ControlTextProps) => {
   const id = 'stage';
-  const value = useStore((state) => state.symbols[id]?.[symbolKey]);
+  const value = useStore((state) => state.elements[id]?.[elementKey]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    actions.symbols.update([
+    actions.elements.update([
       {
-        symbolId: id,
-        partialSymbol: {
-          [symbolKey]: e.target.value,
+        elementId: id,
+        partialElement: {
+          [elementKey]: e.target.value,
         },
       },
     ]);
@@ -27,11 +27,11 @@ const ControlTextCom = ({ symbolKey, label }: ControlTextProps) => {
   return (
     <FormControl size="sm">
       <HStack>
-        <FormLabel flex="0 0 50px" m="0" fontSize="sm" htmlFor={symbolKey}>
+        <FormLabel flex="0 0 50px" m="0" fontSize="sm" htmlFor={elementKey}>
           {label}
         </FormLabel>
         <Input
-          id={symbolKey}
+          id={elementKey}
           size="sm"
           value={`${value ?? ''}`}
           onChange={handleChange}

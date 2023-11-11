@@ -1,11 +1,11 @@
 import {
-  getSymbolPositionByLayout,
-  getSymbolStylesByLayout,
+  getElementPositionByLayout,
+  getElementStylesByLayout,
 } from 'state/selectors';
 import { State } from 'state/types';
 
 type StylesApplyByLayoutPayload = Array<{
-  symbolId: string;
+  elementId: string;
   sourceLayoutId: string;
   targetLayoutId: string;
 }>;
@@ -17,13 +17,13 @@ export function stylesApplyByLayout(
   draft: State,
   payload: StylesApplyByLayoutPayload
 ) {
-  payload.forEach(({ symbolId, targetLayoutId, sourceLayoutId }) => {
+  payload.forEach(({ elementId, targetLayoutId, sourceLayoutId }) => {
     const sourceStyle =
-      getSymbolStylesByLayout(symbolId, sourceLayoutId)(draft) ?? {};
+      getElementStylesByLayout(elementId, sourceLayoutId)(draft) ?? {};
     const targetPosition =
-      getSymbolPositionByLayout(symbolId, targetLayoutId)(draft) ?? {};
+      getElementPositionByLayout(elementId, targetLayoutId)(draft) ?? {};
 
-    draft.symbols[symbolId].styles[targetLayoutId] = {
+    draft.elements[elementId].styles[targetLayoutId] = {
       ...sourceStyle,
       ...targetPosition, // keep target position
     };

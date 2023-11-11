@@ -8,10 +8,10 @@ import { layoutsCreate } from './layout/layouts-create';
 import { layoutsDelete } from './layout/layouts-delete';
 import { sessionUIUpdate } from './session/session-ui-update';
 import { State } from './types';
-import { stylesApplyByLayout } from './symbol/styles-apply-by-layout';
-import { stylesUpdate } from './symbol/styles-update';
-import { symbolsCreate } from './symbol/symbols-create';
-import { symbolsUpdate } from './symbol/symbols-update';
+import { stylesApplyByLayout } from './element/styles-apply-by-layout';
+import { stylesUpdate } from './element/styles-update';
+import { elementsCreate } from './element/elements-create';
+import { elementsUpdate } from './element/elements-update';
 import { temporal } from 'zundo';
 import { throttle } from 'lodash';
 import { uiUpdate } from './ui/ui-update';
@@ -27,9 +27,9 @@ const ZUNDO_THOTTLE_TIME = 1000; // ms
 const ZUNDO_LIMIT = 50; // amount of undoable items
 
 const campaignActionMap = {
-  symbols: {
-    create: symbolsCreate,
-    update: symbolsUpdate,
+  elements: {
+    create: elementsCreate,
+    update: elementsUpdate,
     updateStyles: stylesUpdate,
     applyStyles: stylesApplyByLayout,
   },

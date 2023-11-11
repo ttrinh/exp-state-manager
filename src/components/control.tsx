@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { actions, useStore, shallow } from 'state/use-store';
 import { Style } from 'state/types';
-import { getSymbolAllStylesByLayout, getUIValue } from 'state/selectors';
+import { getElementAllStylesByLayout, getUIValue } from 'state/selectors';
 
 interface ControlProps {
   label: string;
@@ -21,18 +21,18 @@ interface ControlProps {
 
 const ControlCom = ({ styleKey, label }: ControlProps) => {
   const activeLayout = useStore(getUIValue('activeLayout'));
-  const selectedSymbols = useStore(getUIValue('selectedSymbols'));
-  const symbolId = selectedSymbols?.[0] ?? 'stage';
+  const selectedElements = useStore(getUIValue('selectedElements'));
+  const elementId = selectedElements?.[0] ?? 'stage';
 
   const value = useStore((state) => {
-    const styles = getSymbolAllStylesByLayout(symbolId, activeLayout)(state);
+    const styles = getElementAllStylesByLayout(elementId, activeLayout)(state);
     return styles?.[styleKey];
   }, shallow);
 
   const handleChange: UseCounterProps['onChange'] = (valueString) => {
-    actions.symbols.updateStyles([
+    actions.elements.updateStyles([
       {
-        symbolId,
+        elementId,
         layoutId: activeLayout,
         style: {
           [styleKey]: `${valueString}px`,

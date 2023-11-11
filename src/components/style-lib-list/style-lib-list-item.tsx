@@ -2,21 +2,24 @@ import { memo } from 'react';
 import { actions, useStore } from 'state/use-store';
 import { getLayoutValue, getUIValue } from 'state/selectors';
 import { Box, Text, VStack } from '@chakra-ui/react';
-import { SymbolWithoutPosition } from 'components/symbol';
+import { ElementWithoutPosition } from 'components/element';
 
 interface StyleLibListItemProps {
-  symbolId: string;
+  elementId: string;
   layoutId: string;
 }
 
-const StyleLibListItemCom = ({ symbolId, layoutId }: StyleLibListItemProps) => {
+const StyleLibListItemCom = ({
+  elementId,
+  layoutId,
+}: StyleLibListItemProps) => {
   const activeLayout = useStore(getUIValue('activeLayout'));
   const layoutName = useStore(getLayoutValue(layoutId, 'name'));
 
   const applyStyle = () => {
-    actions.symbols.applyStyles([
+    actions.elements.applyStyles([
       {
-        symbolId,
+        elementId,
         sourceLayoutId: layoutId,
         targetLayoutId: activeLayout,
       },
@@ -44,7 +47,7 @@ const StyleLibListItemCom = ({ symbolId, layoutId }: StyleLibListItemProps) => {
         {layoutName}
       </Text>
       <Box w="100%" h="50px" overflow="auto">
-        <SymbolWithoutPosition symbolId={symbolId} layoutId={layoutId} />
+        <ElementWithoutPosition elementId={elementId} layoutId={layoutId} />
       </Box>
     </VStack>
   );

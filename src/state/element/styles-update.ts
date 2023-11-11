@@ -3,20 +3,20 @@ import { State, Style } from 'state/types';
 import { WithoutId } from 'lib/type-utils';
 
 type StylesUpdatePayload = Array<{
-  symbolId: string;
+  elementId: string;
   layoutId: string;
   style: WithoutId<Style>;
 }>;
 
 /**
- * Shallowly update styles of symbols
+ * Shallowly update styles of elements
  */
 export function stylesUpdate(draft: State, payload: StylesUpdatePayload) {
-  payload.forEach(({ symbolId, layoutId, style }) => {
-    const prevStyle = draft.symbols[symbolId].styles[layoutId] ?? {};
+  payload.forEach(({ elementId, layoutId, style }) => {
+    const prevStyle = draft.elements[elementId].styles[layoutId] ?? {};
     const s = cleanObject(style);
 
-    draft.symbols[symbolId].styles[layoutId] = {
+    draft.elements[elementId].styles[layoutId] = {
       ...prevStyle,
       ...s,
     };

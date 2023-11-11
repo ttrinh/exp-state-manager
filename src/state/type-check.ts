@@ -1,14 +1,16 @@
-import { Group, Stage, Symbol } from './types';
+import { Group, Stage, Element } from './types';
 
 export const isGroupType = (
-  symbol: Symbol | Stage | undefined
-): symbol is Group | Stage =>
-  symbol?.type === 'group' ||
-  symbol?.type === 'scene' ||
-  symbol?.type === 'stage';
+  element: Element | Stage | undefined
+): element is Group | Stage =>
+  element?.type === 'group' ||
+  element?.type === 'scene' ||
+  element?.type === 'stage';
 
-export const isStage = (symbol: Symbol | Stage | undefined): symbol is Stage =>
-  symbol?.type === 'stage';
+export const isStage = (
+  element: Element | Stage | undefined
+): element is Stage => element?.type === 'stage';
 
-export const isGroup = (symbol: Symbol | Stage | undefined): symbol is Group =>
-  symbol?.type === 'group' || symbol?.type === 'scene';
+export const isGroup = (
+  element: Element | Stage | undefined
+): element is Group => element?.type === 'group' || element?.type === 'scene';

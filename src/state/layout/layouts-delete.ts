@@ -1,6 +1,6 @@
 import { difference, omit } from 'remeda';
 import { getLayoutIds, getUIValue } from 'state/selectors';
-import { stylesDelete } from 'state/symbol/styles-delete';
+import { stylesDelete } from 'state/element/styles-delete';
 import { State } from 'state/types';
 import { uiUpdate } from 'state/ui/ui-update';
 
@@ -15,10 +15,10 @@ export function layoutsDelete(draft: State, payload: LayoutsDeletePayload) {
     return draft;
   }
 
-  // remove the style layout from the symbol object
+  // remove the style layout from the element object
   payload.forEach((layoutId) => {
-    Object.keys(draft.symbols).map((symbolId) => {
-      stylesDelete(draft, [{ symbolId, layoutId }]);
+    Object.keys(draft.elements).map((elementId) => {
+      stylesDelete(draft, [{ elementId, layoutId }]);
     });
   });
 

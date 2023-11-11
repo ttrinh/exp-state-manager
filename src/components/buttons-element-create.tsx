@@ -1,5 +1,5 @@
 import { IconButton, VStack } from '@chakra-ui/react';
-import { Style, Symbol } from 'state/types';
+import { Style, Element } from 'state/types';
 import { actions } from 'state/use-store';
 import { TextT, Image, Rectangle } from '@phosphor-icons/react';
 import { memo } from 'react';
@@ -47,7 +47,7 @@ const createButtons = [
   },
 ];
 
-const ButtonsSymbolCreateCom = () => {
+const ButtonsElementCreateCom = () => {
   return (
     <VStack align="stretch" px="2" py="20" spacing="5" pl="18">
       {createButtons.map((b) => (
@@ -57,7 +57,7 @@ const ButtonsSymbolCreateCom = () => {
           color="inherit"
           variant="ghost"
           icon={<b.icon size="24" />}
-          onClick={createSymbol(b.label, b.style)}
+          onClick={createElement(b.label, b.style)}
           aria-label={b.label}
         />
       ))}
@@ -65,15 +65,15 @@ const ButtonsSymbolCreateCom = () => {
   );
 };
 
-export const ButtonsSymbolCreate = memo(ButtonsSymbolCreateCom);
+export const ButtonsElementCreate = memo(ButtonsElementCreateCom);
 
-const createSymbol = (type: string, style: Style) => () => {
-  actions.symbols.create([
+const createElement = (type: string, style: Style) => () => {
+  actions.elements.create([
     {
       parentId: 'stage',
-      symbol: {
+      element: {
         id: '',
-        type: type as Symbol['type'],
+        type: type as Element['type'],
         styles: {},
       },
       baseStyle: style,

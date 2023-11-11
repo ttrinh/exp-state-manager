@@ -1,15 +1,15 @@
 import { generateId } from 'lib/generate-id';
-import { SymbolsCreatePayload } from 'state/symbol/symbols-create';
+import { ElementsCreatePayload } from 'state/element/elements-create';
 import { Layout } from 'state/types';
 
-const generateSymbol = (
+const generateElement = (
   left: number,
   top: number,
   hue: number
-): SymbolsCreatePayload[0] => {
+): ElementsCreatePayload[0] => {
   return {
     parentId: 'stage',
-    symbol: {
+    element: {
       id: generateId('box'),
       type: 'box',
       styles: {
@@ -33,21 +33,21 @@ const generateSymbol = (
   };
 };
 
-export const mockSymbols = Array.from({ length: 1000 }, (_, i) => i).map(
+export const mockElements = Array.from({ length: 1000 }, (_, i) => i).map(
   (i) => {
     const rowLength = 30;
     const pad = 10;
     const hue = i % 360;
     const offsetTop = Math.floor(i / rowLength) * 40 + pad;
     const offsetLeft = (i % rowLength) * 40 + pad;
-    return generateSymbol(offsetLeft, offsetTop, hue);
+    return generateElement(offsetLeft, offsetTop, hue);
   }
 );
 
-export const mockStage: SymbolsCreatePayload = [
+export const mockStage: ElementsCreatePayload = [
   {
     parentId: '',
-    symbol: {
+    element: {
       id: 'stage',
       type: 'stage',
       children: [],

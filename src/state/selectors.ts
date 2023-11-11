@@ -7,7 +7,7 @@ import {
   Stage,
   State,
   Style,
-  Symbol,
+  Element,
   UI,
 } from './types';
 
@@ -20,50 +20,50 @@ export const POSITION_KEYS: (keyof Style)[] = [
 ];
 
 /**
- * Symbols
+ * Elements
  **/
-export const getSymbol =
-  (symbolId: string) =>
-  (state: State): Symbol | Stage | undefined =>
-    state.symbols[symbolId];
+export const getElement =
+  (elementId: string) =>
+  (state: State): Element | Stage | undefined =>
+    state.elements[elementId];
 
-export const getSymbolChildren =
-  (symbolId: string) =>
+export const getElementChildren =
+  (elementId: string) =>
   (state: State): string[] | undefined => {
-    const symbol = getSymbol(symbolId)(state);
-    return isGroupType(symbol) ? symbol.children : [];
+    const element = getElement(elementId)(state);
+    return isGroupType(element) ? element.children : [];
   };
 
-/** Get all symbol's styles (including positions) by layout */
-export const getSymbolAllStylesByLayout =
-  (symbolId: string, layoutId: string) =>
+/** Get all element's styles (including positions) by layout */
+export const getElementAllStylesByLayout =
+  (elementId: string, layoutId: string) =>
   (state: State): Style | undefined => {
-    const symbol = getSymbol(symbolId)(state);
-    return symbol?.styles?.[layoutId];
+    const element = getElement(elementId)(state);
+    return element?.styles?.[layoutId];
   };
 
-/** Get symbol's styles (without position) by layout */
-export const getSymbolStylesByLayout =
-  (symbolId: string, layoutId: string) =>
+/** Get element's styles (without position) by layout */
+export const getElementStylesByLayout =
+  (elementId: string, layoutId: string) =>
   (state: State): Style | undefined => {
-    const style = getSymbolAllStylesByLayout(symbolId, layoutId)(state);
+    const style = getElementAllStylesByLayout(elementId, layoutId)(state);
     return style ? omit(style, POSITION_KEYS) : undefined;
   };
 
-// export const getSymbolStyleValue =
-//   <T extends keyof Style>(symbolId: string, key: T) =>
+// export const getElementStyleValue =
+//   <T extends keyof Style>(elementId: string, key: T) =>
 //   (state: State): Style[T] =>
-//     getSymbolStyles(symbolId)(state)?.[key];
+//     getElementStyles(elementId)(state)?.[key];
 
-/** Get symbol's position by layout */
-export const getSymbolPositionByLayout =
-  (symbolId: string, layoutId: string) => (state: State) => {
-    const symbol = getSymbol(symbolId)(state);
+/** Get element's position by layout */
+export const getElementPositionByLayout =
+  (elementId: string, layoutId: string) => (state: State) => {
+    const element = getElement(elementId)(state);
     const layout = getLayout(layoutId)(state);
-    const styles = getSymbolAllStylesByLayout(symbolId, layoutId)(state);
+    const styles = getElementAllStylesByLayout(elementId, layoutId)(state);
 
     // width and height of Stage depends on the current layout
-    const isLayoutPosition = isStage(symbol) && layout;
+    const isLayoutPosition = isStage(element) && layout;
     const width = isLayoutPosition ? layout.w : `${styles?.width ?? '100px'}`;
     const height = isLayoutPosition ? layout.h : `${styles?.height ?? '100px'}`;
     const rotate = isLayoutPosition ? '0deg' : `${styles?.rotate}`;
@@ -77,18 +77,18 @@ export const getSymbolPositionByLayout =
     };
   };
 
-/** Get symbol's styles (without position) of the current layout */
-export const getSymbolStyles =
-  (symbolId: string) =>
+/** Get element's styles (without position) of the current layout */
+export const getElementStyles =
+  (elementId: string) =>
   (state: State): Style | undefined => {
     const activeLayout = getUIValue('activeLayout')(state);
-    return getSymbolStylesByLayout(symbolId, activeLayout)(state);
+    return getElementStylesByLayout(elementId, activeLayout)(state);
   };
 
-/** Get symbol's position of the current layout */
-export const getSymbolPosition = (symbolId: string) => (state: State) => {
+/** Get element's position of the current layout */
+export const getElementPosition = (elementId: string) => (state: State) => {
   const activeLayout = getUIValue('activeLayout')(state);
-  return getSymbolPositionByLayout(symbolId, activeLayout)(state);
+  return getElementPositionByLayout(elementId, activeLayout)(state);
 };
 
 /**
@@ -120,9 +120,9 @@ export const getUIValue =
   (state: State): UI[T] =>
     state.ui[key];
 
-export const checkSymbolActive = (symbolId: string) => (state: State) => {
-  const selectedSymbols = getUIValue('selectedSymbols')(state);
-  return selectedSymbols.includes(symbolId);
+export const checkElementActive = (elementId: string) => (state: State) => {
+  const selectedElements = getUIValue('selectedElements')(state);
+  return selectedElements.includes(elementId);
 };
 
 /**
